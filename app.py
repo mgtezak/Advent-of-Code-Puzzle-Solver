@@ -1,27 +1,23 @@
 # External imports
 import streamlit as st
-from streamlit_option_menu import option_menu
+# from streamlit_option_menu import option_menu
 
 # Native imports
-import inspect
+# import inspect
 
 # Internal imports
-from my_functions.solve import solve_function
+from my_functions.solve import *
 from my_functions.db import *
+from my_functions.utils import *
+from messages import *
 
 
 st.set_page_config(layout='wide')
 
-def reset():
-    st.session_state['solution'] = False
-
-def get_valid_days(year):
-    return [d for d in range(1, 26) if f'aoc{year}_day{d}_part1' in solve_function]
-
-year = st.sidebar.radio('Year:', list(range(2021, 2023)), key='year', on_change=reset)
+year = st.sidebar.radio('Year:', list(range(2020, 2023)), key='year', on_change=return_to_puzzle_input)
 
 st.title(f'Advent of Code {year}')
-day = st.selectbox('Day:', get_valid_days(year), key='day', on_change=reset)
+day = st.selectbox('Day:', get_valid_days(year), key='day', on_change=return_to_puzzle_input)
 
 # GET PUZZLE INPUT
 if not st.session_state.get('solution', False):
@@ -61,55 +57,46 @@ if not st.session_state.get('solution', False):
 # GET SOLUTION
 else:
     col1, col2, col3 = st.columns(3)
-    puzzle_input = get_puzzle_input(year, day)
-    failure_msg = """
-        :scream: Oops, something went wrong!  
-        :thinking_face: Perhaps there's an issue with the puzzle input you provided...  
-        :crossed_fingers: Please try re-entering it.
-    """
-
     if col1.button('Solve part 1', key='solve1') or st.session_state.get('show_solution_1', False):
         solution = get_solution(year, day, 1)
-        function = solve_function[f'aoc{year}_day{day}_part1']
         if solution:
             st.write('')
             st.write('The solution for part 1 is:')
             st.subheader(solution)
             st.divider()
             with st.expander('Let me see the code!'):
-                st.text(inspect.getsource(function))
+                st.text(get_source_code(year, day, 1))
             st.session_state['show_solution_1'] = False
         else:
             try:
                 with st.spinner('Calculating solution...'):
-                    solution = function(puzzle_input)
+                    solution = solve(year, day, 1)
                 put_solution(year, day, 1, solution)
                 st.session_state['show_solution_1'] = True
             except:
-                st.error(failure_msg)
+                st.error(failure_to_solve_msg)
                 st.session_state['bad_input'] = True
             if st.session_state.get('show_solution_1', False):
                 st.rerun()
 
     if col2.button('Solve part 2', key='solve2') or st.session_state.get('show_solution_2', False):
         solution = get_solution(year, day, 2)
-        function = solve_function[f'aoc{year}_day{day}_part2']
         if solution:
             st.write('')
             st.write('The solution for part 2 is:')
             st.subheader(solution)
             st.divider()
             with st.expander('Let me see the code!'):
-                st.text(inspect.getsource(function))
+                st.text(get_source_code(year, day, 2))
             st.session_state['show_solution_2'] = False
         else:
             try:
                 with st.spinner('Calculating solution...'):
-                    solution = function(puzzle_input)
+                    solution = solve(year, day, 2)
                 put_solution(year, day, 2, solution)
                 st.session_state['show_solution_2'] = True
             except:
-                st.error(failure_msg)
+                st.error(failure_to_solve_msg)
                 st.session_state['bad_input'] = True
             if st.session_state.get('show_solution_2', False):
                 st.rerun()

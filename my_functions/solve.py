@@ -1,14 +1,29 @@
+from inspect import getsource
+
 # from my_functions.aoc2015 import *
 # from my_functions.aoc2016 import *
 # from my_functions.aoc2017 import *
 # from my_functions.aoc2018 import *
 # from my_functions.aoc2019 import *
-# from my_functions.aoc2020 import *
+from my_functions.aoc2020 import *
 from my_functions.aoc2021 import *
 from my_functions.aoc2022 import *
 # from my_functions.aoc2023 import *
+from my_functions.db import get_puzzle_input
 
-solve_function = {
+
+def solve(year, day, part):
+    f = function_dict[f"aoc{year}_day{day}_part{part}"]
+    puzzle_input = get_puzzle_input(year, day)
+    return f(puzzle_input)
+
+
+def get_source_code(year, day, part):
+    f = function_dict[f"aoc{year}_day{day}_part{part}"]
+    return getsource(f)
+
+
+function_dict = {
     # 'aoc2015_day1_part1': aoc2015_day1_part1,
     # 'aoc2015_day1_part2': aoc2015_day1_part2,
     # 'aoc2015_day2_part1': aoc2015_day2_part1,
@@ -259,26 +274,26 @@ solve_function = {
     # 'aoc2019_day24_part2': aoc2019_day24_part2,
     # 'aoc2019_day25_part1': aoc2019_day25_part1,
     # 'aoc2019_day25_part2': aoc2019_day25_part2,
-    # 'aoc2020_day1_part1': aoc2020_day1_part1,
-    # 'aoc2020_day1_part2': aoc2020_day1_part2,
-    # 'aoc2020_day2_part1': aoc2020_day2_part1,
-    # 'aoc2020_day2_part2': aoc2020_day2_part2,
-    # 'aoc2020_day3_part1': aoc2020_day3_part1,
-    # 'aoc2020_day3_part2': aoc2020_day3_part2,
-    # 'aoc2020_day4_part1': aoc2020_day4_part1,
-    # 'aoc2020_day4_part2': aoc2020_day4_part2,
-    # 'aoc2020_day5_part1': aoc2020_day5_part1,
-    # 'aoc2020_day5_part2': aoc2020_day5_part2,
-    # 'aoc2020_day6_part1': aoc2020_day6_part1,
-    # 'aoc2020_day6_part2': aoc2020_day6_part2,
-    # 'aoc2020_day7_part1': aoc2020_day7_part1,
-    # 'aoc2020_day7_part2': aoc2020_day7_part2,
-    # 'aoc2020_day8_part1': aoc2020_day8_part1,
-    # 'aoc2020_day8_part2': aoc2020_day8_part2,
-    # 'aoc2020_day9_part1': aoc2020_day9_part1,
-    # 'aoc2020_day9_part2': aoc2020_day9_part2,
-    # 'aoc2020_day10_part1': aoc2020_day10_part1,
-    # 'aoc2020_day10_part2': aoc2020_day10_part2,
+    'aoc2020_day1_part1': aoc2020_day1_part1,
+    'aoc2020_day1_part2': aoc2020_day1_part2,
+    'aoc2020_day2_part1': aoc2020_day2_part1,
+    'aoc2020_day2_part2': aoc2020_day2_part2,
+    'aoc2020_day3_part1': aoc2020_day3_part1,
+    'aoc2020_day3_part2': aoc2020_day3_part2,
+    'aoc2020_day4_part1': aoc2020_day4_part1,
+    'aoc2020_day4_part2': aoc2020_day4_part2,
+    'aoc2020_day5_part1': aoc2020_day5_part1,
+    'aoc2020_day5_part2': aoc2020_day5_part2,
+    'aoc2020_day6_part1': aoc2020_day6_part1,
+    'aoc2020_day6_part2': aoc2020_day6_part2,
+    'aoc2020_day7_part1': aoc2020_day7_part1,
+    'aoc2020_day7_part2': aoc2020_day7_part2,
+    'aoc2020_day8_part1': aoc2020_day8_part1,
+    'aoc2020_day8_part2': aoc2020_day8_part2,
+    'aoc2020_day9_part1': aoc2020_day9_part1,
+    'aoc2020_day9_part2': aoc2020_day9_part2,
+    'aoc2020_day10_part1': aoc2020_day10_part1,
+    'aoc2020_day10_part2': aoc2020_day10_part2,
     # 'aoc2020_day11_part1': aoc2020_day11_part1,
     # 'aoc2020_day11_part2': aoc2020_day11_part2,
     # 'aoc2020_day12_part1': aoc2020_day12_part1,

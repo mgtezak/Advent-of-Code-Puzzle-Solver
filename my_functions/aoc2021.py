@@ -193,7 +193,7 @@ def aoc2021_day5_part1(puzzle_input):
                 covered[(x, y)] += 1
     return len([(x, y) for x, y in covered if covered[(x, y)] > 1])
 
-
+#WRONG:
 def aoc2021_day5_part2(puzzle_input):
     regex = r'(\d+),(\d+) -> (\d+),(\d+)'
     lines = [tuple(map(int, coords)) for coords in re.findall(regex, puzzle_input)]
@@ -254,7 +254,7 @@ def aoc2021_day6_part2(puzzle_input):
 
 ########################################################################################
 
-
+# part 1 and two switched
 def aoc2021_day7_part1(puzzle_input):
 
     def calc_fuel(pos):
