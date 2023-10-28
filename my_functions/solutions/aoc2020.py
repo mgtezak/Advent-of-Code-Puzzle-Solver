@@ -245,7 +245,7 @@ def aoc2020_day6_part2(puzzle_input):
 
 ####################################################################################################
 
-# 1 TOO HIGH answer: 378
+
 def aoc2020_day7_part1(puzzle_input):
 
     lines = puzzle_input.split('\n')

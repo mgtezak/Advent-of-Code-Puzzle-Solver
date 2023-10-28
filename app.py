@@ -12,19 +12,11 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- HIDE STREAMLIT STYLE ---
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+with open('assets/style.css') as style:
+    st.markdown(f'<style>{style.read()}</style>', unsafe_allow_html=True)
 
 if not st.session_state:
     st.snow()
-
 
 year = st.sidebar.radio('Year:', list(reversed(range(2017, 2023))), key='year', on_change=utils.return_to_puzzle_input)
 
@@ -96,7 +88,7 @@ else:
         if solution:
             st.write('')
             st.write('The solution for part 2 is:')
-            st.subheader(solution)
+            utils.display_solution(solution)
             st.divider()
             with st.expander('Let me see the code!'):
                 st.text(aoc.get_source_code(year, day, 2))

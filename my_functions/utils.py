@@ -1,5 +1,5 @@
 import streamlit as st
-from Advent_of_Code.streamlit.my_functions.aoc import function_dict
+from my_functions.aoc import function_dict
 
 
 def return_to_puzzle_input():
@@ -11,7 +11,8 @@ def get_valid_days(year):
 
 
 def display_solution(solution):
-    if '\n' in solution:
+    if type(solution) is str and '\n' in solution:
+        st.write('')
         st.text(solution)
     else:
         st.subheader(solution)

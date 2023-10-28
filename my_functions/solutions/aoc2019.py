@@ -11,7 +11,7 @@ def aoc2019_day1_part1(puzzle_input):
         fuel = x // 3 - 2
         return max(0, fuel)
 
-    return sum(calculate_fuel(x) for x in data)
+    return sum(calculate_fuel(int(x)) for x in data)
 
 
 def aoc2019_day1_part2(puzzle_input):
@@ -174,20 +174,6 @@ def aoc2019_day5_part1(puzzle_input):
             output_val = args[1]
             i += 2
 
-        # elif n[-1] == '5': # part 2
-        #     i = args[2] if args[1] else i + 3
-
-        # elif n[-1] == '6': # part 2
-        #     i = args[2] if not args[1] else i + 3
-
-        # elif n[-1] == '7': # part 2
-        #     nums[nums[i+3]] = 1 if args[1] < args[2] else 0
-        #     i += 4
-
-        # elif n[-1] == '8': # part 2
-        #     nums[nums[i+3]] = 1 if args[1] == args[2] else 0
-        #     i += 4
-
     return output_val            
 
 
@@ -299,33 +285,34 @@ def aoc2019_day7_part1(puzzle_input):
                 output_val = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 i += 2
 
-            elif n[-1] == '5': # part 2
+            elif n[-1] == '5':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 if val1:
                     i = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 else:
                     i += 3
 
-            elif n[-1] == '6': # part 2
+            elif n[-1] == '6':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 if not val1:
                     i = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 else:
                     i += 3
 
-            elif n[-1] == '7': # part 2
+            elif n[-1] == '7':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 val2 = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 nums[nums[i+3]] = 1 if val1 < val2 else 0
                 i += 4
 
-            elif n[-1] == '8': # part 2
+            elif n[-1] == '8':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 val2 = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 nums[nums[i+3]] = 1 if val1 == val2 else 0
                 i += 4
 
         return output_val, nums, 'done'            
+
 
     def get_thruster_signal(perm):
         output = 0
@@ -384,27 +371,27 @@ def aoc2019_day7_part2(puzzle_input):
                 output_val = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 i += 2
 
-            elif n[-1] == '5': # part 2
+            elif n[-1] == '5':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 if val1:
                     i = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 else:
                     i += 3
 
-            elif n[-1] == '6': # part 2
+            elif n[-1] == '6':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 if not val1:
                     i = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 else:
                     i += 3
 
-            elif n[-1] == '7': # part 2
+            elif n[-1] == '7':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 val2 = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 nums[nums[i+3]] = 1 if val1 < val2 else 0
                 i += 4
 
-            elif n[-1] == '8': # part 2
+            elif n[-1] == '8':
                 val1 = nums[i+1] if len(n) >= 3 and n[-3] == '1' else nums[nums[i+1]]
                 val2 = nums[i+2] if len(n) == 4 else nums[nums[i+2]]
                 nums[nums[i+3]] = 1 if val1 == val2 else 0
