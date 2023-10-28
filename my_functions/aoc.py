@@ -1,15 +1,15 @@
 from inspect import getsource
 
-# from my_functions.aoc2015 import *
-# from my_functions.aoc2016 import *
-# from my_functions.aoc2017 import *
-# from my_functions.aoc2018 import *
-from my_functions.aoc2019 import *
-from my_functions.aoc2020 import *
-from my_functions.aoc2021 import *
-from my_functions.aoc2022 import *
-# from my_functions.aoc2023 import *
 from my_functions.db import get_puzzle_input
+from my_functions.solutions.aoc2015 import *
+from my_functions.solutions.aoc2016 import *
+from my_functions.solutions.aoc2017 import *
+from my_functions.solutions.aoc2018 import *
+from my_functions.solutions.aoc2019 import *
+from my_functions.solutions.aoc2020 import *
+from my_functions.solutions.aoc2021 import *
+from my_functions.solutions.aoc2022 import *
+from my_functions.solutions.aoc2023 import *
 
 
 def solve(year, day, part):
@@ -124,26 +124,26 @@ function_dict = {
     # 'aoc2016_day24_part2': aoc2016_day24_part2,
     # 'aoc2016_day25_part1': aoc2016_day25_part1,
     # 'aoc2016_day25_part2': aoc2016_day25_part2,
-    # 'aoc2017_day1_part1': aoc2017_day1_part1,
-    # 'aoc2017_day1_part2': aoc2017_day1_part2,
-    # 'aoc2017_day2_part1': aoc2017_day2_part1,
-    # 'aoc2017_day2_part2': aoc2017_day2_part2,
-    # 'aoc2017_day3_part1': aoc2017_day3_part1,
-    # 'aoc2017_day3_part2': aoc2017_day3_part2,
-    # 'aoc2017_day4_part1': aoc2017_day4_part1,
-    # 'aoc2017_day4_part2': aoc2017_day4_part2,
-    # 'aoc2017_day5_part1': aoc2017_day5_part1,
-    # 'aoc2017_day5_part2': aoc2017_day5_part2,
-    # 'aoc2017_day6_part1': aoc2017_day6_part1,
-    # 'aoc2017_day6_part2': aoc2017_day6_part2,
-    # 'aoc2017_day7_part1': aoc2017_day7_part1,
-    # 'aoc2017_day7_part2': aoc2017_day7_part2,
-    # 'aoc2017_day8_part1': aoc2017_day8_part1,
-    # 'aoc2017_day8_part2': aoc2017_day8_part2,
-    # 'aoc2017_day9_part1': aoc2017_day9_part1,
-    # 'aoc2017_day9_part2': aoc2017_day9_part2,
-    # 'aoc2017_day10_part1': aoc2017_day10_part1,
-    # 'aoc2017_day10_part2': aoc2017_day10_part2,
+    'aoc2017_day1_part1': aoc2017_day1_part1,
+    'aoc2017_day1_part2': aoc2017_day1_part2,
+    'aoc2017_day2_part1': aoc2017_day2_part1,
+    'aoc2017_day2_part2': aoc2017_day2_part2,
+    'aoc2017_day3_part1': aoc2017_day3_part1,
+    'aoc2017_day3_part2': aoc2017_day3_part2,
+    'aoc2017_day4_part1': aoc2017_day4_part1,
+    'aoc2017_day4_part2': aoc2017_day4_part2,
+    'aoc2017_day5_part1': aoc2017_day5_part1,
+    'aoc2017_day5_part2': aoc2017_day5_part2,
+    'aoc2017_day6_part1': aoc2017_day6_part1,
+    'aoc2017_day6_part2': aoc2017_day6_part2,
+    'aoc2017_day7_part1': aoc2017_day7_part1,
+    'aoc2017_day7_part2': aoc2017_day7_part2,
+    'aoc2017_day8_part1': aoc2017_day8_part1,
+    'aoc2017_day8_part2': aoc2017_day8_part2,
+    'aoc2017_day9_part1': aoc2017_day9_part1,
+    'aoc2017_day9_part2': aoc2017_day9_part2,
+    'aoc2017_day10_part1': aoc2017_day10_part1,
+    'aoc2017_day10_part2': aoc2017_day10_part2,
     # 'aoc2017_day11_part1': aoc2017_day11_part1,
     # 'aoc2017_day11_part2': aoc2017_day11_part2,
     # 'aoc2017_day12_part1': aoc2017_day12_part1,
@@ -174,26 +174,26 @@ function_dict = {
     # 'aoc2017_day24_part2': aoc2017_day24_part2,
     # 'aoc2017_day25_part1': aoc2017_day25_part1,
     # 'aoc2017_day25_part2': aoc2017_day25_part2,
-    # 'aoc2018_day1_part1': aoc2018_day1_part1,
-    # 'aoc2018_day1_part2': aoc2018_day1_part2,
-    # 'aoc2018_day2_part1': aoc2018_day2_part1,
-    # 'aoc2018_day2_part2': aoc2018_day2_part2,
-    # 'aoc2018_day3_part1': aoc2018_day3_part1,
-    # 'aoc2018_day3_part2': aoc2018_day3_part2,
-    # 'aoc2018_day4_part1': aoc2018_day4_part1,
-    # 'aoc2018_day4_part2': aoc2018_day4_part2,
-    # 'aoc2018_day5_part1': aoc2018_day5_part1,
-    # 'aoc2018_day5_part2': aoc2018_day5_part2,
-    # 'aoc2018_day6_part1': aoc2018_day6_part1,
-    # 'aoc2018_day6_part2': aoc2018_day6_part2,
-    # 'aoc2018_day7_part1': aoc2018_day7_part1,
-    # 'aoc2018_day7_part2': aoc2018_day7_part2,
-    # 'aoc2018_day8_part1': aoc2018_day8_part1,
-    # 'aoc2018_day8_part2': aoc2018_day8_part2,
-    # 'aoc2018_day9_part1': aoc2018_day9_part1,
-    # 'aoc2018_day9_part2': aoc2018_day9_part2,
-    # 'aoc2018_day10_part1': aoc2018_day10_part1,
-    # 'aoc2018_day10_part2': aoc2018_day10_part2,
+    'aoc2018_day1_part1': aoc2018_day1_part1,
+    'aoc2018_day1_part2': aoc2018_day1_part2,
+    'aoc2018_day2_part1': aoc2018_day2_part1,
+    'aoc2018_day2_part2': aoc2018_day2_part2,
+    'aoc2018_day3_part1': aoc2018_day3_part1,
+    'aoc2018_day3_part2': aoc2018_day3_part2,
+    'aoc2018_day4_part1': aoc2018_day4_part1,
+    'aoc2018_day4_part2': aoc2018_day4_part2,
+    'aoc2018_day5_part1': aoc2018_day5_part1,
+    'aoc2018_day5_part2': aoc2018_day5_part2,
+    'aoc2018_day6_part1': aoc2018_day6_part1,
+    'aoc2018_day6_part2': aoc2018_day6_part2,
+    'aoc2018_day7_part1': aoc2018_day7_part1,
+    'aoc2018_day7_part2': aoc2018_day7_part2,
+    'aoc2018_day8_part1': aoc2018_day8_part1,
+    'aoc2018_day8_part2': aoc2018_day8_part2,
+    'aoc2018_day9_part1': aoc2018_day9_part1,
+    'aoc2018_day9_part2': aoc2018_day9_part2,
+    'aoc2018_day10_part1': aoc2018_day10_part1,
+    'aoc2018_day10_part2': aoc2018_day10_part2,
     # 'aoc2018_day11_part1': aoc2018_day11_part1,
     # 'aoc2018_day11_part2': aoc2018_day11_part2,
     # 'aoc2018_day12_part1': aoc2018_day12_part1,

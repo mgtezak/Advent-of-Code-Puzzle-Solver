@@ -81,6 +81,7 @@ def aoc2017_day4_part1(puzzle_input):
 
 
 def aoc2017_day4_part2(puzzle_input):
+    lines = [line.split() for line in puzzle_input.split('\n')]
     lines = [[''.join(sorted(word)) for word in line] for line in lines]
     return sum(len(set(line)) == len(line) for line in lines)
 
@@ -100,6 +101,7 @@ def aoc2017_day5_part1(puzzle_input):
     return steps
 
 
+# VERY SLOW:
 def aoc2017_day5_part2(puzzle_input):
     lines = [int(line) for line in puzzle_input.split('\n')]
     pos = 0
@@ -107,7 +109,7 @@ def aoc2017_day5_part2(puzzle_input):
     while pos in range(0, len(lines)):
         steps += 1
         move = lines[pos]
-        lines[pos] += 1 if lines[pos] < 3 or not part2 else -1 
+        lines[pos] += 1 if lines[pos] < 3 else -1 
         pos += move
     return steps
 
@@ -136,7 +138,7 @@ def aoc2017_day6_part1(puzzle_input):
 
 
 def aoc2017_day6_part2(puzzle_input):
-    blocks = [int(x) for x in puzzle_input.split()
+    blocks = [int(x) for x in puzzle_input.split()]
     visited = dict()
     cycles = 0
     loop_detected = False
@@ -217,7 +219,8 @@ def aoc2017_day8_part1(puzzle_input):
 
     def check(condition):
         key, comp, amt = condition
-        return ops[condition](d[key], int(amt))
+        first, compare, second = d[key], ops[comp], int(amt)
+        return compare(first, second)
 
     def perform(operation):
         key, sig, amt = operation
@@ -249,7 +252,8 @@ def aoc2017_day8_part2(puzzle_input):
 
     def check(condition):
         key, comp, amt = condition
-        return ops[condition](d[key], int(amt))
+        first, compare, second = d[key], ops[comp], int(amt)
+        return compare(first, second)
 
     def perform(operation):
         key, sig, amt = operation

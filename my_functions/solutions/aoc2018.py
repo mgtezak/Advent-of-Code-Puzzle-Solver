@@ -65,7 +65,7 @@ def aoc2018_day3_part1(puzzle_input):
                 else:
                     claimed[(x, y)] = [claim_id]
 
-    return len(ids for ids in claimed.values() if len(ids) > 1)
+    return len([ids for ids in claimed.values() if len(ids) > 1])
 
 
 def aoc2018_day3_part2(puzzle_input):
@@ -203,8 +203,6 @@ def aoc2018_day6_part1(puzzle_input):
     def get_nearest_coord(x, y):
         distances = {(v, w): abs(x-v) + abs(y-w) for v, w in coords}
         sorted_distances = sorted(distances.items(), key=lambda x: x[1])
-        if sum(distances.values()) < 10_000:   # part 2
-            proximity_region.append(1)
         if sorted_distances[0][1] == sorted_distances[1][1]:
             return None
         return sorted_distances[0][0]
@@ -373,7 +371,7 @@ def aoc2018_day8_part2(puzzle_input):
         total += sum(nums[:n_metadata])
         return total, val, nums[n_metadata:]
 
-    return = parse(nums)[1]
+    return parse(nums)[1]
 
 
 ####################################################################################################
@@ -436,7 +434,7 @@ def aoc2018_day10_part1(puzzle_input):
     grid = [[' ' for _ in range(x_span+1)] for _ in range(y_span+1)]
     for x, y, *_ in points:
         grid[y-y_min][x-x_min] = '#'
-    return ''.join('\n' + ''.join(line) for line in grid) + '\n'
+    return ''.join('\n' + ''.join(line) for line in grid)
 
 
 def aoc2018_day10_part2(puzzle_input):
