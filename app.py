@@ -18,7 +18,7 @@ with open('assets/style.css') as style:
 if not st.session_state:
     st.snow()
 
-year = st.sidebar.radio('Year:', list(reversed(range(2017, 2023))), key='year', on_change=utils.return_to_puzzle_input)
+year = st.sidebar.radio('Year:', list(reversed(range(2016, 2023))), key='year', on_change=utils.return_to_puzzle_input)
 
 st.title(f'✨🎄Advent of Code {year}🎄✨')
 day = st.selectbox('Day:', utils.get_valid_days(year), key='day', on_change=utils.return_to_puzzle_input)
