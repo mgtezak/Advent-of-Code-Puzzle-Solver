@@ -2,21 +2,34 @@
 import streamlit as st
 # from streamlit_option_menu import option_menu
 
-# Native imports
-# import inspect
-
 # Internal imports
 from my_functions.solve import *
 from my_functions.db import *
 from my_functions.utils import *
 from messages import *
 
+st.set_page_config(
+    page_title="Advent-of-Code-Solver", 
+    page_icon=":christmas_tree:", 
+    layout="wide"
+)
 
-st.set_page_config(layout='wide')
+# --- HIDE STREAMLIT STYLE ---
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
-year = st.sidebar.radio('Year:', list(range(2020, 2023)), key='year', on_change=return_to_puzzle_input)
+if not st.session_state:
+    st.snow()
 
-st.title(f'Advent of Code {year}')
+year = st.sidebar.radio('Year:', list(reversed(range(2019, 2023))), key='year', on_change=return_to_puzzle_input)
+
+st.title(f'✨🎄Advent of Code {year}🎄✨')
 day = st.selectbox('Day:', get_valid_days(year), key='day', on_change=return_to_puzzle_input)
 
 # GET PUZZLE INPUT
