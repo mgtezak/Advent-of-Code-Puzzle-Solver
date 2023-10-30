@@ -5,6 +5,7 @@ from my_functions import aoc, utils, db
 
 def run():
     st.title(f'✨🎄 Advent of Code Puzzle Solver 🎄✨')
+    st.write('')
     cols = st.columns(5)
     year = cols[0].selectbox('Year:', list(reversed(range(2015, 2023))), key='year', on_change=utils.reset_puzzle_solver)
     day = cols[1].selectbox('Day:', utils.get_valid_days(year), key='day', on_change=utils.reset_puzzle_solver)

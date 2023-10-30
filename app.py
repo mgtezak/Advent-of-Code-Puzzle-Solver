@@ -1,11 +1,9 @@
 # External imports
 import streamlit as st
-# from streamlit_option_menu import option_menu
 from collections import OrderedDict
 
-# Internal imports
 from tabs import solver_tab, stats_tab, about_tab
-from my_functions import aoc, utils, db
+from my_functions import utils
 
 
 st.set_page_config(
@@ -17,19 +15,33 @@ st.set_page_config(
 with open('assets/style.css') as style:
     st.markdown(f'<style>{style.read()}</style>', unsafe_allow_html=True)
 
-if not st.session_state:
-    st.snow()
 
-TABS = OrderedDict({
-    '🎄 Puzzle-Solver': solver_tab,
-    '🎁 Stats-n-Graphs': stats_tab,
-    '🎅🏻 About this Project': about_tab,
-})
+def run():
 
-tab = st.sidebar.radio('Content', TABS.keys(), key='tab', on_change=utils.reset_puzzle_solver)
+    if not st.session_state:
+        st.snow()
 
-# ['✨🎄Puzzle-Solver🎄✨💫', '🕯️🎁Stats-n-Graphs🎁🕯️', '🌟🎅🏻About this Project🎅🏻🌟']
+    TABS = OrderedDict({
+        '🎄 Puzzle-Solver': solver_tab,
+        '🎁 Stats-n-Graphs': stats_tab,
+        '🎅🏻 About this Project': about_tab,
+    })
 
-# st.title(f'✨🎄Advent of Code {year}🎄✨')
+    st.sidebar.image('assets/aoc_tree.png')
 
-TABS[tab].run()
+    current_tab = st.sidebar.radio('Content:', TABS.keys(), on_change=utils.reset_puzzle_solver)
+
+    for _ in range(8):
+        st.sidebar.write('')
+
+    st.sidebar.markdown('''
+        <span style="font-size: 0.9em;">Links:</span>   
+        <a href="https://mgtezak.github.io" style="color: #FFD700; font-weight: Normal;"> ~ My Website  </a>  
+        <a href="https://github.com/mgtezak" style="color: #FFD700; font-weight: Normal;"> ~ Github  </a>  
+    ''', unsafe_allow_html=True)
+
+    TABS[current_tab].run()
+
+
+if __name__ == '__main__':
+    run()
