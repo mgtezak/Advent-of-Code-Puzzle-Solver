@@ -2,7 +2,7 @@ import streamlit as st
 from my_functions.aoc import function_dict
 
 
-def return_to_puzzle_input():
+def reset_puzzle_solver():
     st.session_state['solution'] = False
 
 

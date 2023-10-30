@@ -1,3 +1,33 @@
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
+
+/* Style for all links */
+a {
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make text bold */
+  }
+    
+    /* Style for unvisited links */
+    a:link {
+    color: green;
+    }
+
+
+    /* Style for visited links */
+    a:visited {
+        color: green;
+    }
+  
+    /* Style for links when mouse is over them */
+    a:hover {
+        color: red;
+        text-decoration: underline; /* Add underline */
+    }
+  
+    /* Style for links at the moment they are being clicked */
+    a:active {
+        color: yellow;
+    }
+  
+  
