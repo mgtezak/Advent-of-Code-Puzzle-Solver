@@ -65,7 +65,7 @@ def put_solution(year, day, part, solution=None):
         db[year] = {}
     if not db[year].get(day, False):
         db[year][day] = {}
-    db[year][day][part] = solution
+    db[year][day][part] = str(solution)
     with open(SOLUTION_DB_PATH, 'w') as f:
         json.dump(db, f, indent=4)
 

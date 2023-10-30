@@ -12,8 +12,7 @@ def get_valid_days(year):
 
 def display_solution(solution):
     if type(solution) is str and '\n' in solution:
-        st.write('')
-        st.text(solution)
+        st.text('Visual output:\n' + solution)
     else:
         st.subheader(solution)
 

@@ -2,6 +2,8 @@ import string
 import hashlib
 import re
 import numpy as np
+from math import prod
+
 
 
 
@@ -172,17 +174,19 @@ def aoc2016_day5_part1(puzzle_input):
     return pw
 
 
+# VERY SLOW:
 def aoc2016_day5_part2(puzzle_input):
     pw = {}
     i = 1
     while len(pw) < 8:
         hash = hashlib.md5((puzzle_input + str(i)).encode()).hexdigest()
-        if hash[:5] == '00000' and hash[5].isnumeric():
-            index = int(hash[5])
-            if index in range(8) and index not in pw:                    
-                pw[index] = hash[6]
+        if (hash[:5] == '00000' and \
+            hash[5].isnumeric() and \
+            int(hash[5]) in range(8) and \
+            int(hash[5]) not in pw):                    
+                pw[int(hash[5])] = hash[6]
         i += 1
-    pw = ''.join(pw[i] for i in range(8))
+    return ''.join(pw[i] for i in range(8))
 
 
 ####################################################################################################
@@ -255,6 +259,7 @@ def aoc2016_day7_part2(puzzle_input):
         for b in bracketed:
             if contains_bab(b, bab_set):
                 return True
+        return False
         
     return sum(supports_SSL(ip) for ip in puzzle_input.split('\n'))
 
@@ -323,7 +328,7 @@ def aoc2016_day8_part2(puzzle_input):
     formatted = ''
     for row in display:
         row = ['#' if element == 1 else ' ' for element in row]
-        formatted += '\n' + ''.join(row)
+        formatted += ''.join(row) + '\n'
     return formatted
 
 
@@ -339,9 +344,12 @@ def aoc2016_day9_part1(puzzle_input):
             chars, repeat = map(int, marker.groups())
             length += start + chars * repeat
             puzzle_input = puzzle_input[stop+chars:]
+
         else:
             length += len(puzzle_input)
-            return length
+            break
+        
+    return length
         
 
 def aoc2016_day9_part2(puzzle_input):
@@ -358,20 +366,81 @@ def aoc2016_day9_part2(puzzle_input):
 
             else:
                 length += len(compressed)
-                return length
+                break
+            
+        return length
                 
-        return decompress(puzzle_input)
+    return decompress(puzzle_input)
 
 
 ####################################################################################################
 
 
 def aoc2016_day10_part1(puzzle_input):
-    pass
+    lines = [line.split() for line in puzzle_input.split('\n')]
+
+    def give_to(type, id, val):
+        if type == 'bot':
+            if bots.get(id):
+                bots[id].append(val)
+                fully_loaded.append(id)
+            else:
+                bots[id] = [val]
+        else:
+            outputs[id] = val
+
+    bots = {}
+    outputs = {}
+    fully_loaded = []
+
+    for line in lines:
+        if line[0] == 'value':
+            val, bot_id = line[1], line[-1]
+            give_to('bot', bot_id, int(val))
+
+    while fully_loaded:
+        bot_id = fully_loaded.pop()
+        for line in lines:
+            if line[0] == 'bot' and line[1] == bot_id:
+                low, high = sorted(bots[bot_id])
+                if (low, high) == (17, 61):
+                    return bot_id
+                
+                give_to(line[5], line[6], low)
+                give_to(line[-2], line[-1], high)
 
 
 def aoc2016_day10_part2(puzzle_input):
-    pass
+    lines = [line.split() for line in puzzle_input.split('\n')]
+
+    def give_to(type, id, val):
+        if type == 'bot':
+            if bots.get(id):
+                bots[id].append(val)
+                fully_loaded.append(id)
+            else:
+                bots[id] = [val]
+        else:
+            outputs[id] = val
+
+    bots = {}
+    outputs = {}
+    fully_loaded = []
+
+    for line in lines:
+        if line[0] == 'value':
+            val, bot_id = line[1], line[-1]
+            give_to('bot', bot_id, int(val))
+
+    while fully_loaded:
+        bot_id = fully_loaded.pop()
+        for line in lines:
+            if line[0] == 'bot' and line[1] == bot_id:
+                low, high = sorted(bots[bot_id])
+                give_to(line[5], line[6], low)
+                give_to(line[-2], line[-1], high)
+
+    return prod(outputs[str(i)] for i in range(3))
 
 
 ####################################################################################################
