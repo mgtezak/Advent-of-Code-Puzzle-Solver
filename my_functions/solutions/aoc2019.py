@@ -458,7 +458,7 @@ def aoc2019_day8_part2(puzzle_input):
         line = i // 25
         lines[line].append(image[i])
 
-    return '\n' + '\n'.join(''.join(line) for line in lines)
+    return '\n'.join(''.join(line) for line in lines)
 
 
 ####################################################################################################

@@ -39,7 +39,7 @@ def run():
                 st.session_state['solution'] = True
                 st.rerun()
             else:                                           # puzzle input stored in memory to be stored in db
-                puzzle_input = st.session_state['puzzle_memory'].strip()
+                puzzle_input = st.session_state['puzzle_memory'].rstrip()
                 if not puzzle_input:
                     st.error('You did not provide any puzzle input.')
                     st.session_state['solution'] = False
@@ -53,13 +53,12 @@ def run():
 
         # GET SOLUTION
         else:
-            st.write('')
             col1, col2, col3 = st.columns(3)
             if col1.button('Part 1', key='solve1') or st.session_state.get('show_solution_1', False):
                 solution = db.get_solution(year, day, 1)
                 if solution:
                     st.write('The solution for part 1 is:')
-                    utils.display_solution(solution)
+                    utils.display_solution(*solution)
                     st.divider()
                     st.session_state['show_solution_1'] = False
                 else:
@@ -78,7 +77,7 @@ def run():
                 solution = db.get_solution(year, day, 2)
                 if solution:
                     st.write('The solution for part 2 is:')
-                    utils.display_solution(solution)
+                    utils.display_solution(*solution)
                     st.divider()
                     st.session_state['show_solution_2'] = False
                 else:

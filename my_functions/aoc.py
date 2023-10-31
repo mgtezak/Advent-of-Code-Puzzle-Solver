@@ -1,4 +1,5 @@
 from inspect import getsource
+from time import time
 
 from my_functions.db import get_puzzle_input
 from my_functions.solutions.aoc2015 import *
@@ -13,9 +14,12 @@ from my_functions.solutions.aoc2023 import *
 
 
 def solve(year, day, part):
+    start = time()
     f = function_dict[f"aoc{year}_day{day}_part{part}"]
     puzzle_input = get_puzzle_input(year, day)
-    return f(puzzle_input)
+    solution = f(puzzle_input)
+    runtime = time() - start
+    return {'solution': str(solution), 'runtime': runtime}
 
 
 def get_source_code(year, day, part):
@@ -378,22 +382,22 @@ function_dict = {
     'aoc2022_day1_part2': aoc2022_day1_part2,
     'aoc2022_day2_part1': aoc2022_day2_part1,
     'aoc2022_day2_part2': aoc2022_day2_part2,
-    # 'aoc2022_day3_part1': aoc2022_day3_part1,
-    # 'aoc2022_day3_part2': aoc2022_day3_part2,
-    # 'aoc2022_day4_part1': aoc2022_day4_part1,
-    # 'aoc2022_day4_part2': aoc2022_day4_part2,
-    # 'aoc2022_day5_part1': aoc2022_day5_part1,
-    # 'aoc2022_day5_part2': aoc2022_day5_part2,
-    # 'aoc2022_day6_part1': aoc2022_day6_part1,
-    # 'aoc2022_day6_part2': aoc2022_day6_part2,
-    # 'aoc2022_day7_part1': aoc2022_day7_part1,
-    # 'aoc2022_day7_part2': aoc2022_day7_part2,
-    # 'aoc2022_day8_part1': aoc2022_day8_part1,
-    # 'aoc2022_day8_part2': aoc2022_day8_part2,
-    # 'aoc2022_day9_part1': aoc2022_day9_part1,
-    # 'aoc2022_day9_part2': aoc2022_day9_part2,
-    # 'aoc2022_day10_part1': aoc2022_day10_part1,
-    # 'aoc2022_day10_part2': aoc2022_day10_part2,
+    'aoc2022_day3_part1': aoc2022_day3_part1,
+    'aoc2022_day3_part2': aoc2022_day3_part2,
+    'aoc2022_day4_part1': aoc2022_day4_part1,
+    'aoc2022_day4_part2': aoc2022_day4_part2,
+    'aoc2022_day5_part1': aoc2022_day5_part1,
+    'aoc2022_day5_part2': aoc2022_day5_part2,
+    'aoc2022_day6_part1': aoc2022_day6_part1,
+    'aoc2022_day6_part2': aoc2022_day6_part2,
+    'aoc2022_day7_part1': aoc2022_day7_part1,
+    'aoc2022_day7_part2': aoc2022_day7_part2,
+    'aoc2022_day8_part1': aoc2022_day8_part1,
+    'aoc2022_day8_part2': aoc2022_day8_part2,
+    'aoc2022_day9_part1': aoc2022_day9_part1,
+    'aoc2022_day9_part2': aoc2022_day9_part2,
+    'aoc2022_day10_part1': aoc2022_day10_part1,
+    'aoc2022_day10_part2': aoc2022_day10_part2,
     # 'aoc2022_day11_part1': aoc2022_day11_part1,
     # 'aoc2022_day11_part2': aoc2022_day11_part2,
     # 'aoc2022_day12_part1': aoc2022_day12_part1,

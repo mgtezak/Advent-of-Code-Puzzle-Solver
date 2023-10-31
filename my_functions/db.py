@@ -54,7 +54,10 @@ def get_solution(year, day, part):
         return False
     if not db[year].get(day, False):
         return False
-    return db[year][day].get(part, False)
+    if not db[year][day].get(part, False):
+        return False
+    entry = db[year][day][part]
+    return entry['solution'], entry['runtime']
 
 
 def put_solution(year, day, part, solution=None):
@@ -65,7 +68,7 @@ def put_solution(year, day, part, solution=None):
         db[year] = {}
     if not db[year].get(day, False):
         db[year][day] = {}
-    db[year][day][part] = str(solution)
+    db[year][day][part] = solution
     with open(SOLUTION_DB_PATH, 'w') as f:
         json.dump(db, f, indent=4)
 

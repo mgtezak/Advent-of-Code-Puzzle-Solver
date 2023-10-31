@@ -434,7 +434,7 @@ def aoc2018_day10_part1(puzzle_input):
     grid = [[' ' for _ in range(x_span+1)] for _ in range(y_span+1)]
     for x, y, *_ in points:
         grid[y-y_min][x-x_min] = '#'
-    return ''.join('\n' + ''.join(line) for line in grid)
+    return '\n'.join(''.join(row) for row in grid)
 
 
 def aoc2018_day10_part2(puzzle_input):

@@ -325,11 +325,12 @@ def aoc2016_day8_part2(puzzle_input):
             for row in range(6):
                 display[row][col] = lights[row]
 
-    formatted = ''
-    for row in display:
-        row = ['#' if element == 1 else ' ' for element in row]
-        formatted += ''.join(row) + '\n'
-    return formatted
+    # formatted = ''
+    # for row in display:
+    #     row = ['#' if element == 1 else ' ' for element in row]
+    #     formatted += ''.join(row) + '\n'
+    # return formatted
+    return '\n'.join(''.join(['#' if element == 1 else ' ' for element in row]) for row in display)
 
 
 ####################################################################################################
