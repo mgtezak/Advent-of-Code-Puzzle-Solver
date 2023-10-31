@@ -36,8 +36,8 @@ def run():
 
     st.sidebar.markdown('''
         <span style="font-size: 0.9em;">Links:</span>   
-        <a href="https://mgtezak.github.io" style="color: #FFD700; font-weight: Normal;"> ~ My Website  </a>  
-        <a href="https://github.com/mgtezak" style="color: #FFD700; font-weight: Normal;"> ~ Github  </a>  
+        <a href="https://mgtezak.github.io" style="color: #FFD700; font-weight: Normal;"> ~ My Website</a>  
+        <a href="https://github.com/mgtezak" style="color: #FFD700; font-weight: Normal;"> ~ Github</a>  
     ''', unsafe_allow_html=True)
 
     TABS[current_tab].run()

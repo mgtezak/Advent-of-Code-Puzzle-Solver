@@ -64,8 +64,8 @@ def run():
                 else:
                     try:
                         with st.spinner('Calculating solution...'):
-                            solution = aoc.solve(year, day, 1)
-                        db.put_solution(year, day, 1, solution)
+                            solution, runtime = aoc.solve(year, day, 1)
+                        db.put_solution(year, day, 1, solution, runtime)
                         st.session_state['show_solution_1'] = True
                     except:
                         utils.display_fail_msg()
@@ -83,8 +83,8 @@ def run():
                 else:
                     try:
                         with st.spinner('Calculating solution...'):
-                            solution = aoc.solve(year, day, 2)
-                        db.put_solution(year, day, 2, solution)
+                            solution, runtime = aoc.solve(year, day, 2)
+                        db.put_solution(year, day, 2, solution, runtime)
                         st.session_state['show_solution_2'] = True
                     except:
                         utils.display_fail_msg()

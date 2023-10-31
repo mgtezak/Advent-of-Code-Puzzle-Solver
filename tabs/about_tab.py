@@ -3,8 +3,9 @@ import streamlit as st
 def run():
     st.title('🌟🎅🏻 About this Project 🎅🏻🌟')
     st.write('')
+    st.write('')
     st.write("""
-        Hello, I'm [Michael Tezak](https://mgtezak.github.io) and I like solving puzzles on [Advent of Code](https://adventofcode.com).
+        Hello, I'm [Michael Tezak](https://mgtezak.github.io) and I like solving puzzles on [Advent of Code](https://adventofcode.com) with python.
         If you're not familiar with this christmas-themed coding calendar and you're into sharpening your problem-solving skills 
         using your favorite programming language, I highly recommend you check it out!
 

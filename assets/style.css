@@ -2,6 +2,17 @@
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
+
+/* 
+From the config file: 
+primaryColor="#FF0000"
+backgroundColor="#04013b"
+secondaryBackgroundColor="#001d00"
+textColor="#FFD700"
+font="serif"
+*/
+
+
 /* Style for all links */
 a {
     text-decoration: none; /* Remove underline */

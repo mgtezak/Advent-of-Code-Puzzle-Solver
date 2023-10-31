@@ -1,5 +1,5 @@
 import streamlit as st
-from my_functions.aoc import function_dict
+from my_functions import aoc
 
 
 def reset_puzzle_solver():
@@ -7,7 +7,7 @@ def reset_puzzle_solver():
 
 
 def get_valid_days(year):
-    return [d for d in range(1, 26) if f'aoc{year}_day{d}_part1' in function_dict]
+    return [d for d in range(1, 26) if f'aoc{year}_day{d}_part1' in aoc.function_dict]
 
 
 def display_solution(solution, runtime):

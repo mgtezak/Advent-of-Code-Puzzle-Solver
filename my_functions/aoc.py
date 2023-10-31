@@ -19,7 +19,7 @@ def solve(year, day, part):
     puzzle_input = get_puzzle_input(year, day)
     solution = f(puzzle_input)
     runtime = time() - start
-    return {'solution': str(solution), 'runtime': runtime}
+    return solution, runtime
 
 
 def get_source_code(year, day, part):
