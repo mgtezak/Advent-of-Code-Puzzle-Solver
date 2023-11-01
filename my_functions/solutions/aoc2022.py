@@ -5,11 +5,17 @@ import numpy as np
 
 
 def aoc2022_day1_part1(puzzle_input):
-    return sorted([sum(map(int, elf.split('\n'))) for elf in puzzle_input.split('\n\n')], reverse=True)[0]
+    elves = []
+    for elf in puzzle_input.split('\n\n'):
+        elves.append(sum(map(int, elf.split('\n'))))
+    return max(elves)
 
 
 def aoc2022_day1_part2(puzzle_input):
-    return sum(sorted([sum(map(int, elf.split('\n'))) for elf in puzzle_input.split('\n\n')], reverse=True)[:3])
+    elves = []
+    for elf in puzzle_input.split('\n\n'):
+        elves.append(sum(map(int, elf.split('\n'))))
+    return sum(sorted(elves)[-3:])    
 
 
 ####################################################################################################

@@ -5,12 +5,12 @@ from my_functions import aoc, utils, db
 
 def run():
     st.title(f'✨🎄 Advent of Code Puzzle Solver 🎄✨')
-    st.write('')
+    st.divider()
+
     cols = st.columns(5)
     year = cols[0].selectbox('Year:', list(reversed(range(2015, 2023))), key='year', on_change=utils.reset_puzzle_solver)
     day = cols[1].selectbox('Day:', utils.get_valid_days(year), key='day', on_change=utils.reset_puzzle_solver)
     
-    st.write('')
     generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
 
     with generate_tab:
@@ -59,7 +59,6 @@ def run():
                 if solution:
                     st.write('The solution for part 1 is:')
                     utils.display_solution(*solution)
-                    st.divider()
                     st.session_state['show_solution_1'] = False
                 else:
                     try:
@@ -78,7 +77,6 @@ def run():
                 if solution:
                     st.write('The solution for part 2 is:')
                     utils.display_solution(*solution)
-                    st.divider()
                     st.session_state['show_solution_2'] = False
                 else:
                     try:
@@ -103,3 +101,5 @@ def run():
             st.text(aoc.get_source_code(year, day, 1))
         if col2.button('Part 2'):            
             st.text(aoc.get_source_code(year, day, 2))
+    
+    st.divider()

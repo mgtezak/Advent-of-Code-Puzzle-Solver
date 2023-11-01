@@ -22,9 +22,9 @@ def run():
         st.snow()
 
     TABS = OrderedDict({
+        '🎅🏻 About this Project': about_tab,
         '🎄 Puzzle-Solver': solver_tab,
         '🎁 Stats-n-Graphs': stats_tab,
-        '🎅🏻 About this Project': about_tab,
     })
 
     st.sidebar.image('assets/aoc_tree.png')

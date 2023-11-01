@@ -41,9 +41,3 @@ a {
         color: yellow;
     }
   
-    a:hover {
-        color: #a30606;
-        color: #ff9900;
-        
-        text-decoration: underline; /* Add underline */
-    }
