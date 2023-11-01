@@ -31,7 +31,7 @@ def run():
 
     current_tab = st.sidebar.radio('Content:', TABS.keys(), on_change=utils.reset_puzzle_solver)
 
-    for _ in range(8):
+    for _ in range(7):
         st.sidebar.write('')
 
     st.sidebar.markdown('''
