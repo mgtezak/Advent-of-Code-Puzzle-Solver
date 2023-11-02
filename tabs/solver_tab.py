@@ -27,7 +27,7 @@ def run():
                 if db.get_puzzle_input(year, day):
                     if not st.session_state.get('bad_input', False):
                         # st.write('Previous puzzle input detected.')
-                        col1, col2 = st.columns([3, 8.5])
+                        col1, col2 = st.columns([3, 8])
                         col1.info('Previous puzzle input detected.')
                         st.button('Use previous puzzle input', key='use_prev_input')
                 else:
