@@ -3,7 +3,7 @@ import streamlit as st
 from collections import OrderedDict
 
 from tabs import solver_tab, stats_tab, about_tab
-from my_functions import utils
+from my_functions import utils, db
 
 
 st.set_page_config(
@@ -20,6 +20,7 @@ def run():
 
     if not st.session_state:
         st.snow()
+        db.remove_dbs()
 
     TABS = OrderedDict({
         '🎅🏻 About this Project': about_tab,
