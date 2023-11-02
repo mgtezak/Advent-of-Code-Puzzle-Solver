@@ -18,5 +18,4 @@ With this website I'd like to contribute to this community, by sharing my own co
 
 That being said, I put this project together in a very short time and it is still a work in progress that I plan to build upon 
 in the future. For instance, I've only solved about half of the puzzles so far, and I haven't yet uploaded all the solutions I do have. 
-I hope you enjoy this prototype nonetheless! If you're interested in how I built this app, check out its 
-[public GitHub repo](https://github.com/mgtezak/Advent-of-Code-Puzzle-Solver/).
+I hope you enjoy this prototype nonetheless! If you're interested in how I built this app, check out this repo.
