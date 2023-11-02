@@ -26,12 +26,13 @@ def run():
             if not (input_provided or input_retrieved):    
                 if db.get_puzzle_input(year, day):
                     if not st.session_state.get('bad_input', False):
-                        st.write('Previous puzzle input detected.')
+                        # st.write('Previous puzzle input detected.')
+                        st.info('Previous puzzle input detected.')
                         st.button('Use previous puzzle input', key='use_prev_input')
                 else:
-                    st.write('No previous puzzle input detected for this challenge.')
+                    st.info('No previous puzzle input detected for this challenge.')
                 st.write('Enter puzzle input:')
-                new_puzzle_input = st.text_area('Puzzle input:', key='puzzle_memory', label_visibility='collapsed')
+                st.text_area('Puzzle input:', key='puzzle_memory', label_visibility='collapsed')
                 st.session_state['solution'] = False
                 st.button('Submit')
 
