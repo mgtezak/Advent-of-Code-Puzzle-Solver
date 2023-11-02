@@ -17,5 +17,5 @@ I learned a ton about programming in python by trying to solve these problems an
 With this website I'd like to contribute to this community, by sharing my own code and creating a fun interface to play around with.
 
 That being said, I put this project together in a very short time and it is still a work in progress that I plan to build upon 
-in the future. For instance, I've only solved about half of the puzzles so far, and I haven't yet uploaded all the solutions I do have. 
+in the future. For instance, I've only solved about half of the puzzles so far, and I haven't even uploaded all of my solutions yet.
 I hope you enjoy this prototype nonetheless! If you're interested in how I built this app, check out this repo.

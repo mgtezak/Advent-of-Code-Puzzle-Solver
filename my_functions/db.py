@@ -101,5 +101,7 @@ def put_completed(year, day):
 
 # RESET
 def remove_dbs():
-    os.remove(SOLUTION_PATH)
-    os.remove(PUZZLE_INPUT_PATH)
+    if os.path.exists(SOLUTION_PATH):
+        os.remove(SOLUTION_PATH)
+    if os.path.exists(PUZZLE_INPUT_PATH):
+        os.remove(PUZZLE_INPUT_PATH)

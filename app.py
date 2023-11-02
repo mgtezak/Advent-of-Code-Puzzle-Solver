@@ -24,7 +24,7 @@ def run():
 
     TABS = OrderedDict({
         '🎅🏻 About this Project': about_tab,
-        '🎄 Puzzle-Solver': solver_tab,
+        '🎄 Puzzle Solver': solver_tab,
         '🎁 Stats-n-Graphs': stats_tab,
     })
 
