@@ -89,6 +89,8 @@ def plot_runtime():
         ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
         ax.set_facecolor('#04013b')
         ax.tick_params(axis='both', colors=text_color, length=0)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
 
     fig.patch.set_facecolor(background_color)
     ax1.set_ylabel('Runtime in seconds', fontdict=label_font)
@@ -97,8 +99,8 @@ def plot_runtime():
     handles, labels = ax1.get_legend_handles_labels()
     legend = fig.legend(handles, labels, loc='lower center', ncol=3, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_PLOT_PATH, bbox_inches='tight', dpi=300)
@@ -130,6 +132,8 @@ def plot_runtime2():
         ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
         ax.set_facecolor(background_color)
         ax.tick_params(axis='both', colors=text_color, length=0)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
 
     fig.patch.set_facecolor(background_color)
     ax1.set_ylabel('Runtime in seconds', fontdict=label_font)
@@ -138,8 +142,8 @@ def plot_runtime2():
     handles, labels = ax1.get_legend_handles_labels()
     legend = fig.legend(handles, labels, loc='lower center', ncols=2, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_PLOT_PATH2, bbox_inches='tight', dpi=300)
@@ -170,12 +174,18 @@ def plot_runtime_year():
     ax.set_ylabel('Runtime in seconds', fontdict=label_font)
     ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
     ax.tick_params(axis='both', colors=text_color, length=0)
+    ax_empty.tick_params(axis='both', colors=background_color, length=0)
     ax.set_facecolor(background_color)
     ax_empty.set_facecolor(background_color)
-    legend = ax.legend(facecolor=background_color)
+    for ax_ in (ax, ax_empty):
+        for spine in ax_.spines.values():
+            spine.set_visible(False)
+            
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_YEAR_PLOT_PATH, bbox_inches='tight', dpi=300)
@@ -206,12 +216,18 @@ def plot_runtime_day():
     ax.set_ylabel('Runtime in seconds', fontdict=label_font)
     ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
     ax.tick_params(axis='both', colors=text_color, length=0)
+    ax_empty.tick_params(axis='both', colors=background_color, length=0)
     ax.set_facecolor(background_color)
     ax_empty.set_facecolor(background_color)
-    legend = ax.legend(facecolor=background_color)
+    for ax_ in (ax, ax_empty):
+        for spine in ax_.spines.values():
+            spine.set_visible(False)
+            
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_DAY_PLOT_PATH, bbox_inches='tight', dpi=300)
@@ -242,12 +258,18 @@ def plot_runtime_part():
     ax.set_ylabel('Runtime in seconds', fontdict=label_font)
     ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
     ax.tick_params(axis='both', colors=text_color, length=0)
+    ax_empty.tick_params(axis='both', colors=background_color, length=0)
     ax.set_facecolor(background_color)
     ax_empty.set_facecolor(background_color)
-    legend = ax.legend(facecolor=background_color)
+    for ax_ in (ax, ax_empty):
+        for spine in ax_.spines.values():
+            spine.set_visible(False)
+            
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_PART_PLOT_PATH, bbox_inches='tight', dpi=300)
@@ -278,13 +300,19 @@ def plot_runtime_part2():
     ax.set_ylabel('Runtime in seconds', fontdict=label_font)
     ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
     ax.tick_params(axis='both', colors=text_color, length=0)
+    ax_empty.tick_params(axis='both', colors=background_color, length=0)
     ax.set_facecolor(background_color)
     ax_empty.set_facecolor(background_color)
+    for ax_ in (ax, ax_empty):
+        for spine in ax_.spines.values():
+            spine.set_visible(False)
+            
     handles, labels = ax.get_legend_handles_labels()
-    legend = fig.legend(handles, labels, loc='lower center', ncol=3, facecolor=background_color)
+    legend = ax.legend(handles, labels, facecolor=background_color)
     for text in legend.get_texts():
-                text.set_color(text_color)
-                text.set_font('serif')
+        text.set_color(text_color)
+        text.set_font('serif')  
+
 
     # Save the plot      
     plt.savefig(RUNTIME_PART_PLOT_PATH2, bbox_inches='tight', dpi=300)

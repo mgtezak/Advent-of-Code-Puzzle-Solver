@@ -2,7 +2,6 @@
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
-
 /* 
 From the config file: 
 primaryColor="#FF0000"
@@ -11,7 +10,6 @@ secondaryBackgroundColor="#001d00"
 textColor="#FFD700"
 font="serif"
 */
-
 
 /* Style for all links */
 a {
@@ -23,7 +21,6 @@ a {
     a:link {
     color: green;
     }
-
 
     /* Style for visited links */
     a:visited {
@@ -41,6 +38,12 @@ a {
         color: yellow;
     }
   
+/* Fix sidebar width */
 section[data-testid="stSidebar"] {
     width: 50px !important; 
+}
+
+/* Disable anchor tags */
+a.st-emotion-cache-kwu7in.e1nzilvr3 {       
+    display: none;
 }
