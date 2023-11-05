@@ -633,7 +633,7 @@ def aoc2020_day15_part2(puzzle_input):
     curr = starting_nums[-1]
     for i in range(len(starting_nums), 30_000_000):
         nxt = i - last_spoken.get(curr, i)
-        curr, last_spoken[curr] = i
+        last_spoken[curr] = i
         curr = nxt
     return curr
 
