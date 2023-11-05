@@ -3,16 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from lib import db 
-
-
-COMPLETION_PLOT_PATH = 'assets/completion_plot.png'
-RUNTIME_PLOT_PATH = 'assets/runtime_plot.png'
-RUNTIME_YEAR_PLOT_PATH = 'assets/runtime_year_plot.png'
-RUNTIME_DAY_PLOT_PATH = 'assets/runtime_day_plot.png'
-RUNTIME_PART_PLOT_PATH = 'assets/runtime_part_plot.png'
-
-RUNTIME_PLOT_PATH2 = 'assets/runtime_plot2.png'
-RUNTIME_PART_PLOT_PATH2 = 'assets/runtime_part_plot2.png'
+from config import *
 
 
 
@@ -60,7 +51,7 @@ def plot_completion():
     ax.set_yticks(np.arange(2015, 2023, 1))
 
     # Save the plot
-    plt.savefig(COMPLETION_PLOT_PATH, bbox_inches='tight', dpi=300)
+    plt.savefig(COMPLETION_PLOT, bbox_inches='tight', dpi=300)
 
 
 
@@ -103,7 +94,7 @@ def plot_runtime():
         text.set_font('serif')
 
     # Save the plot      
-    plt.savefig(RUNTIME_PLOT_PATH, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_PLOT, bbox_inches='tight', dpi=300)
 
 
 
@@ -146,7 +137,7 @@ def plot_runtime2():
         text.set_font('serif')
 
     # Save the plot      
-    plt.savefig(RUNTIME_PLOT_PATH2, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_PLOT2, bbox_inches='tight', dpi=300)
 
 
 
@@ -188,7 +179,7 @@ def plot_runtime_year():
         text.set_font('serif')
 
     # Save the plot      
-    plt.savefig(RUNTIME_YEAR_PLOT_PATH, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_YEAR_PLOT, bbox_inches='tight', dpi=300)
 
 
 
@@ -230,7 +221,7 @@ def plot_runtime_day():
         text.set_font('serif')
 
     # Save the plot      
-    plt.savefig(RUNTIME_DAY_PLOT_PATH, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_DAY_PLOT, bbox_inches='tight', dpi=300)
 
 
 
@@ -272,7 +263,7 @@ def plot_runtime_part():
         text.set_font('serif')
 
     # Save the plot      
-    plt.savefig(RUNTIME_PART_PLOT_PATH, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_PART_PLOT, bbox_inches='tight', dpi=300)
 
 
 
@@ -315,4 +306,4 @@ def plot_runtime_part2():
 
 
     # Save the plot      
-    plt.savefig(RUNTIME_PART_PLOT_PATH2, bbox_inches='tight', dpi=300)
+    plt.savefig(RUNTIME_PART_PLOT2, bbox_inches='tight', dpi=300)

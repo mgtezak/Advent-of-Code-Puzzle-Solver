@@ -1,4 +1,7 @@
 import streamlit as st
+import json
+
+from config import GRID_LETTER
 from lib import aoc
 
 
@@ -22,6 +25,9 @@ def display_solution(solution, runtime):
 
 
 def read_grid(grid):
+    '''puzzles with grid letter output: 2016-8-2, 2018-10-1, 2019-8-2, 2021-13-2, 2022-10-2'''
+    with open(GRID_LETTER, 'r') as f:
+        grid_letters = json.load(f)
     lines = grid.split('\n')
     letter_width = 5 if len(lines) == 6 else 8
     letters = ''
@@ -45,28 +51,3 @@ def display_fail_msg():
         :thinking_face: Perhaps there's an issue with the puzzle input you provided...  
         :crossed_fingers: Please try re-entering it.
     """)
-
-
-# puzzles with grid letter output: 2016-8-2, 2018-10-1, 2019-8-2, 2021-13-2, 2022-10-2
-grid_letters = {
-    '###  \n#  # \n###  \n#  # \n#  # \n###  ': 'B',
-    ' ##  \n#  # \n#    \n#    \n#  # \n ##  ': 'C',
-    '#### \n#    \n###  \n#    \n#    \n#### ': 'E',
-    '#### \n#    \n###  \n#    \n#    \n#    ': 'F',
-    ' ##  \n#  # \n#    \n# ## \n#  # \n ### ': 'G',
-    '#  # \n#  # \n#### \n#  # \n#  # \n#  # ': 'H',
-    '  ## \n   # \n   # \n   # \n#  # \n ##  ': 'J',
-    '#    \n#    \n#    \n#    \n#    \n#### ': 'L',
-    ' ##  \n#  # \n#  # \n#  # \n#  # \n ##  ': 'O',
-    '###  \n#  # \n#  # \n###  \n#    \n#    ': 'P',
-    '###  \n#  # \n#  # \n###  \n# #  \n#  # ': 'R',
-    ' ### \n#    \n#    \n ##  \n   # \n###  ': 'S',
-    '#  # \n#  # \n#  # \n#  # \n#  # \n ##  ': 'U',
-    '#   #\n#   #\n # # \n  #  \n  #  \n  #  ': 'Y',
-    '  ##  \n #  # \n#    #\n#    #\n#    #\n######\n#    #\n#    #\n#    #\n#    #': 'A',
-    '#####   \n#    #  \n#    #  \n#    #  \n#####   \n#    #  \n#    #  \n#    #  \n#    #  \n#####   ': 'B',
-    '######  \n#       \n#       \n#       \n#####   \n#       \n#       \n#       \n#       \n#       ': 'F',
-    '#####   \n#    #  \n#    #  \n#    #  \n#####   \n#       \n#       \n#       \n#       \n#       ': 'P',
-    '#####   \n#    #  \n#    #  \n#    #  \n#####   \n#  #    \n#   #   \n#   #   \n#    #  \n#    #  ': 'R',
-    '######  \n     #  \n     #  \n    #   \n   #    \n  #     \n #      \n#       \n#       \n######  ': 'Z',
-}

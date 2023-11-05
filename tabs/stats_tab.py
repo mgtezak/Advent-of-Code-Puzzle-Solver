@@ -1,7 +1,7 @@
 import streamlit as st
 from lib import db
+from config import *
 
-PLOTS_PATH = 'assets/'
 
 def run():
     st.title("💫🎁 Stats-n-Graphs 🎁💫")
@@ -10,7 +10,7 @@ def run():
     for _ in range(2):
         st.write('')
 
-    st.image(PLOTS_PATH + 'completion_plot.png', caption=db.get_completed_stat() + "   \n Note: I haven't yet uploaded any of the ones past day 10. Will update soon!")
+    st.image(COMPLETION_PLOT, caption=db.get_completed_stat() + "   \n Note: I haven't yet uploaded any of the ones past day 10. Will update soon!")
 
     st.write('')
     st.divider()
@@ -25,8 +25,8 @@ def run():
 
     st.write(s)
     st.write('')
-    st.image(PLOTS_PATH + 'runtime_plot2.png')
-    # st.image(PLOTS_PATH + 'runtime_year_plot.png')
-    # st.image(PLOTS_PATH + 'runtime_day_plot.png')
-    st.image(PLOTS_PATH + 'runtime_part_plot.png')
+    st.image(RUNTIME_PLOT2)
+    # st.image(PLOTS + 'runtime_year_plot.png')
+    # st.image(PLOTS + 'runtime_day_plot.png')
+    st.image(RUNTIME_PART_PLOT)
     st.divider()

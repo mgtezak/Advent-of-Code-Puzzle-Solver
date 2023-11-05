@@ -3,7 +3,8 @@ import streamlit as st
 from collections import OrderedDict
 
 from tabs import solver_tab, stats_tab, about_tab
-from my_functions import utils, db
+from lib import utils, db
+from config import SIDEBAR_IMG, STYLE
 
 
 st.set_page_config(
@@ -12,7 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
-with open('assets/style.css') as style:
+with open(STYLE) as style:
     st.markdown(f'<style>{style.read()}</style>', unsafe_allow_html=True)
 
 
@@ -28,7 +29,7 @@ def run():
         '🎁 Stats-n-Graphs': stats_tab,
     })
 
-    st.sidebar.image('assets/aoc_tree.png')
+    st.sidebar.image(SIDEBAR_IMG)
 
     current_tab = st.sidebar.radio('Content:', TABS.keys(), on_change=utils.reset_puzzle_solver)
 

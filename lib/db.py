@@ -5,15 +5,13 @@ import pandas as pd
 # from lib import utils, aoc
 
 
-PUZZLE_INPUT_PATH = 'db/puzzle_input.json'
-SOLUTION_PATH = 'db/solution.csv'
-COMPLETION_PATH = 'db/completion.csv'
+from config import PUZZLE_INPUT, SOLUTION, COMPLETION
 
 
 # PUZZLE INPUT DB
 def get_puzzle_input_db():
     try:
-        with open(PUZZLE_INPUT_PATH, 'r') as f:
+        with open(PUZZLE_INPUT, 'r') as f:
             db = json.load(f)
     except:
         db = {}
@@ -34,16 +32,16 @@ def put_puzzle_input(year, day, puzzle_input):
     if not db.get(year, False):
         db[year] = {}
     db[year][day] = puzzle_input
-    with open(PUZZLE_INPUT_PATH, 'w') as f:
+    with open(PUZZLE_INPUT, 'w') as f:
         json.dump(db, f, indent=4)
 
 
 # SOLUTION DB
 def get_solution_db():
     """Get all solutions as pandas dataframe"""
-    if not os.path.exists(SOLUTION_PATH):
-        pd.DataFrame(columns=['id', 'year', 'day', 'part', 'solution', 'runtime']).to_csv(SOLUTION_PATH, index=False)
-    return pd.read_csv(SOLUTION_PATH)
+    if not os.path.exists(SOLUTION):
+        pd.DataFrame(columns=['id', 'year', 'day', 'part', 'solution', 'runtime']).to_csv(SOLUTION, index=False)
+    return pd.read_csv(SOLUTION)
 
 
 def get_solution(year, day, part):
@@ -61,13 +59,13 @@ def put_solution(year, day, part, solution, runtime):
     df = get_solution_db()
     new_entry = dict(id=f'{year}{day:02}{part}', year=year, day=day, part=part, solution=solution, runtime=runtime)
     df = pd.concat([df, pd.DataFrame([new_entry])], axis=0, ignore_index=True)
-    df.to_csv(SOLUTION_PATH, index=False)
+    df.to_csv(SOLUTION, index=False)
 
 
 def del_solution(year, day):
     df = get_solution_db()
     df = df[~((df.year==year) & (df.day==day))]
-    df.to_csv(SOLUTION_PATH, index=False)
+    df.to_csv(SOLUTION, index=False)
 
 
 def get_completed_stat():
@@ -79,9 +77,9 @@ def get_completed_stat():
 
 ### The following functions are necessary/useful for maintenance but not for normal use of the app
 def get_completion_db():
-    if not os.path.exists(COMPLETION_PATH):
+    if not os.path.exists(COMPLETION):
         initialize_completion_db()
-    return pd.read_csv(COMPLETION_PATH)
+    return pd.read_csv(COMPLETION)
 
 
 def initialize_completion_db():
@@ -90,18 +88,18 @@ def initialize_completion_db():
         for day in range(1, 26):
             data.append([year, day, 0])
     df = pd.DataFrame(data, columns=["year", "day", "completed"])
-    df.to_csv(COMPLETION_PATH, index=False)
+    df.to_csv(COMPLETION, index=False)
 
 
 def put_completed(year, day):
     db = get_completion_db()
     db[(db.year == year) & (db.day == day)] = [year, day, 1]
-    db.to_csv(COMPLETION_PATH, index=False)
+    db.to_csv(COMPLETION, index=False)
 
 
 # RESET
 def remove_dbs():
-    if os.path.exists(SOLUTION_PATH):
-        os.remove(SOLUTION_PATH)
-    if os.path.exists(PUZZLE_INPUT_PATH):
-        os.remove(PUZZLE_INPUT_PATH)
+    if os.path.exists(SOLUTION):
+        os.remove(SOLUTION)
+    if os.path.exists(PUZZLE_INPUT):
+        os.remove(PUZZLE_INPUT)
