@@ -168,7 +168,7 @@ def aoc2016_day5_part1(puzzle_input):
     i = 1
     while len(pw) < 8:
         hash = hashlib.md5((puzzle_input + str(i)).encode()).hexdigest()
-        if hash[:5] == '00000':
+        if hash.startswith('00000'):
             pw += hash[5]
         i += 1
     return pw
@@ -180,7 +180,7 @@ def aoc2016_day5_part2(puzzle_input):
     i = 1
     while len(pw) < 8:
         hash = hashlib.md5((puzzle_input + str(i)).encode()).hexdigest()
-        if (hash[:5] == '00000' and \
+        if (hash.startswith('00000') and \
             hash[5].isnumeric() and \
             int(hash[5]) in range(8) and \
             int(hash[5]) not in pw):                    
