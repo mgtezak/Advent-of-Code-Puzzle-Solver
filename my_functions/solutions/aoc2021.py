@@ -1,5 +1,6 @@
 import re
 import math
+from collections import defaultdict, Counter
 
 
 def aoc2021_day1_part1(puzzle_input):
@@ -513,31 +514,252 @@ def aoc2021_day10_part2(puzzle_input):
 
 
 def aoc2021_day11_part1(puzzle_input):
-    pass
+    grid = [[int(n) for n in row] for row in puzzle_input.split()]
+    rows, cols = len(grid), len(grid[0])
+    flashes = 0
+    for _ in range(100):
+        flashing = set()
+        for r in range(rows):
+            for c in range(cols):
+                grid[r][c] += 1
+                if grid[r][c] >= 10:
+                    flashing.add((r, c))
+        while flashing:
+            r, c = flashing.pop()
+            if grid[r][c] == 0:
+                continue
+            grid[r][c] = 0
+            flashes += 1
+            for x in range(max(0, r-1), min(rows, r+2)):
+                for y in range(max(0, c-1), min(cols, c+2)):
+                    if (x == r and y == c) or (grid[x][y] == 0):
+                        continue
+                    grid[x][y] += 1
+                    if grid[x][y] >= 10:
+                        flashing.add((x, y))
+    return flashes
+
 
 def aoc2021_day11_part2(puzzle_input):
-    pass
+    grid = [[int(n) for n in row] for row in puzzle_input.split()]
+    rows, cols = len(grid), len(grid[0])
+    n_octos = rows * cols
+    step = 0
+    while True:
+        step += 1
+        flashing = set()
+        flashes = 0
+        for r in range(rows):
+            for c in range(cols):
+                grid[r][c] += 1
+                if grid[r][c] >= 10:
+                    flashing.add((r, c))
+        while flashing:
+            r, c = flashing.pop()
+            if grid[r][c] == 0:
+                continue
+            grid[r][c] = 0
+            flashes += 1
+            for x in range(max(0, r-1), min(rows, r+2)):
+                for y in range(max(0, c-1), min(cols, c+2)):
+                    if (x == r and y == c) or (grid[x][y] == 0):
+                        continue
+                    grid[x][y] += 1
+                    if grid[x][y] >= 10:
+                        flashing.add((x, y))
+
+        if flashes == n_octos:
+            return step
 
 
-def aoc2021_day12_part1(puzzle_input):
-    pass
+########################################################################################
 
-def aoc2021_day12_part2(puzzle_input):
-    pass
+
+def aoc2021_day_12_part1(puzzle_input):
+    graph = defaultdict(list)
+    for a, b in re.findall(r'(\w+)-(\w+)', puzzle_input):
+        graph[a].append(b)
+        graph[b].append(a)
+
+    paths = []
+    def dfs(node, path):
+        if node == 'end':
+            paths.append(path)
+            return
+        for adj in graph[node]:
+            if adj in path:
+                continue
+            if adj.isupper():
+                dfs(adj, path.copy())
+            else:
+                dfs(adj, path + [adj])
+
+    dfs('start', ['start'])
+    return len(paths)
+
+
+def aoc2021_day_12_part2(puzzle_input):
+    graph = defaultdict(list)
+    for a, b in re.findall(r'(\w+)-(\w+)', puzzle_input):
+        graph[a].append(b)
+        graph[b].append(a)
+
+    paths = []
+    def dfs(node, path, exception_used):
+        if node == 'end':
+            paths.append(path)
+            return
+        for adj in graph[node]:
+            if adj == 'start':
+                continue
+            if adj.isupper():
+                dfs(adj, path.copy(), exception_used)
+            elif adj not in path:
+                dfs(adj, path + [adj], exception_used)
+            elif not exception_used: 
+                dfs(adj, path + [adj], True)
+
+    dfs('start', ['start'], False)
+    return len(paths)
+
+
+########################################################################################
 
 
 def aoc2021_day13_part1(puzzle_input):
-    pass
+    # Parse input
+    dots, instructions = puzzle_input.split('\n\n')
+    dots = [(int(x), int(y)) for x, y in re.findall(r'(\d+),(\d+)', dots)]
+
+    # Create initial transparent
+    width = max(dots)[0] + 1
+    height = max(dots, key=lambda x: x[1])[1] + 1
+    grid = [[' '] * width for _ in range(height)]
+    for x, y in dots:
+        grid[y][x] = '#'
+
+    # Folding functions
+    def fold_up(idx):
+        for x in range(width):
+            for y in range(1, height-idx):
+                if grid[idx + y][x] == '#':
+                    grid[idx - y][x] = '#'
+        return grid[:idx][:], height // 2
+
+    def fold_left(idx):
+        for x in range(1, width-idx):
+            for y in range(height):
+                if grid[y][idx + x] == '#':
+                    grid[y][idx - x] = '#'
+        return [row[:idx] for row in grid], width // 2
+
+    # Execute first folding instruction
+    match = re.search(r'(x|y)=(\d+)', instructions.split('\n')[0])
+    if match.group(1) == 'x':   # vertical folding line
+        grid, width = fold_left(int(match.group(2)))
+    else:                       # horizontal folding line
+        grid, height = fold_up(int(match.group(2)))
+
+    return sum(sum(ele == '#' for ele in row) for row in grid)
+
 
 def aoc2021_day13_part2(puzzle_input):
-    pass
+    # Parse input
+    dots, instructions = puzzle_input.split('\n\n')
+    dots = [(int(x), int(y)) for x, y in re.findall(r'(\d+),(\d+)', dots)]
+
+    # Create initial transparent
+    width = max(dots)[0] + 1
+    height = max(dots, key=lambda x: x[1])[1] + 1
+    grid = [[' '] * width for _ in range(height)]
+    for x, y in dots:
+        grid[y][x] = '#'
+
+    # Folding functions
+    def fold_up(idx):
+        for x in range(width):
+            for y in range(1, height-idx):
+                if grid[idx + y][x] == '#':
+                    grid[idx - y][x] = '#'
+        return grid[:idx][:], height // 2
+
+    def fold_left(idx):
+        for x in range(1, width-idx):
+            for y in range(height):
+                if grid[y][idx + x] == '#':
+                    grid[y][idx - x] = '#'
+        return [row[:idx] for row in grid], width // 2
+    
+    # Execute folding instructions
+    for axis, idx in re.findall(r'(x|y)=(\d+)', instructions):
+        if axis == 'x':     # vertical line
+            grid, width = fold_left(int(idx))
+        else:               # horizontal line
+            grid, height = fold_up(int(idx))
+
+    return '\n'.join(''.join(row) for row in grid)
+
+
+########################################################################################
 
 
 def aoc2021_day14_part1(puzzle_input):
-    pass
+
+    # Parse input
+    molecule, reactions = puzzle_input.split('\n\n')
+
+    # Create replacement dictionary
+    replace = {}
+    for x, y, z in re.findall('(\w)(\w) -> (\w)', reactions):
+        replace[x + y] = z + y
+
+    # Execute 10 transitions steps
+    for _ in range(10):
+        new_molecule = molecule[0]
+        for i in range(len(molecule)-1):
+            new_molecule += replace[molecule[i:i+2]]
+        molecule = new_molecule
+
+    # Return difference between most and least frequent letter
+    letter_counts = sorted(Counter(molecule).values())
+    return letter_counts[-1] - letter_counts[0]
+
 
 def aoc2021_day14_part2(puzzle_input):
-    pass
+    
+    # Parse input
+    molecule, reactions = puzzle_input.split('\n\n')
+
+    # Create replacement dictionary
+    replace = {}
+    for x, y, z in re.findall('(\w)(\w) -> (\w)', reactions):
+        replace[x + y] = [x + z, z + y]
+
+    # Count (overlapping) pairs
+    pairs = defaultdict(int)
+    for i in range(len(molecule)-1):
+        pairs[molecule[i:i+2]] += 1
+
+    # Execute 40 transition steps
+    for _ in range(40):
+        new_pairs = defaultdict(int)
+        for pair, count in pairs.items():
+            for new_pair in replace[pair]:
+                new_pairs[new_pair] += count
+        pairs = new_pairs
+
+    # Count individual letters in pairs
+    letters = defaultdict(int)
+    letters[molecule[0]] = 1
+    for pair, count in pairs.items():
+        letters[pair[1]] += count
+
+    # Return difference between most and least frequent letter
+    letter_counts = sorted(letters.values())
+    return letter_counts[-1] - letter_counts[0]
+
+
+########################################################################################
 
 
 def aoc2021_day15_part1(puzzle_input):
@@ -546,12 +768,17 @@ def aoc2021_day15_part1(puzzle_input):
 def aoc2021_day15_part2(puzzle_input):
     pass
 
+########################################################################################
+
+
 
 def aoc2021_day16_part1(puzzle_input):
     pass
 
 def aoc2021_day16_part2(puzzle_input):
     pass
+
+########################################################################################
 
 
 def aoc2021_day17_part1(puzzle_input):
@@ -560,12 +787,16 @@ def aoc2021_day17_part1(puzzle_input):
 def aoc2021_day17_part2(puzzle_input):
     pass
 
+########################################################################################
+
 
 def aoc2021_day18_part1(puzzle_input):
     pass
 
 def aoc2021_day18_part2(puzzle_input):
     pass
+
+########################################################################################
 
 
 def aoc2021_day19_part1(puzzle_input):
@@ -574,12 +805,16 @@ def aoc2021_day19_part1(puzzle_input):
 def aoc2021_day19_part2(puzzle_input):
     pass
 
+########################################################################################
+
 
 def aoc2021_day20_part1(puzzle_input):
     pass
 
 def aoc2021_day20_part2(puzzle_input):
     pass
+########################################################################################
+
 
 
 def aoc2021_day21_part1(puzzle_input):
@@ -587,6 +822,8 @@ def aoc2021_day21_part1(puzzle_input):
 
 def aoc2021_day21_part2(puzzle_input):
     pass
+########################################################################################
+
 
 
 def aoc2021_day22_part1(puzzle_input):
@@ -594,6 +831,8 @@ def aoc2021_day22_part1(puzzle_input):
 
 def aoc2021_day22_part2(puzzle_input):
     pass
+########################################################################################
+
 
 
 def aoc2021_day23_part1(puzzle_input):
@@ -602,12 +841,16 @@ def aoc2021_day23_part1(puzzle_input):
 def aoc2021_day23_part2(puzzle_input):
     pass
 
+########################################################################################
+
 
 def aoc2021_day24_part1(puzzle_input):
     pass
 
 def aoc2021_day24_part2(puzzle_input):
     pass
+
+########################################################################################
 
 
 def aoc2021_day25_part1(puzzle_input):
