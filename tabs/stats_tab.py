@@ -23,12 +23,10 @@ def run():
     
     """
 
-    # st.image(PLOTS_PATH + 'runtime_plot.png', caption=)
-
     st.write(s)
     st.write('')
-    col1, col2 = st.columns(2)
-    col1.image(PLOTS_PATH + 'runtime_year_plot.png')
-    col1.image(PLOTS_PATH + 'runtime_day_plot.png')
-    col2.image(PLOTS_PATH + 'runtime_part_plot.png')
+    st.image(PLOTS_PATH + 'runtime_plot2.png')
+    # st.image(PLOTS_PATH + 'runtime_year_plot.png')
+    # st.image(PLOTS_PATH + 'runtime_day_plot.png')
+    st.image(PLOTS_PATH + 'runtime_part_plot.png')
     st.divider()
