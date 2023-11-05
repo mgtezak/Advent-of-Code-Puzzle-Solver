@@ -575,7 +575,7 @@ def aoc2021_day11_part2(puzzle_input):
 ########################################################################################
 
 
-def aoc2021_day_12_part1(puzzle_input):
+def aoc2021_day12_part1(puzzle_input):
     graph = defaultdict(list)
     for a, b in re.findall(r'(\w+)-(\w+)', puzzle_input):
         graph[a].append(b)
@@ -598,7 +598,7 @@ def aoc2021_day_12_part1(puzzle_input):
     return len(paths)
 
 
-def aoc2021_day_12_part2(puzzle_input):
+def aoc2021_day12_part2(puzzle_input):
     graph = defaultdict(list)
     for a, b in re.findall(r'(\w+)-(\w+)', puzzle_input):
         graph[a].append(b)
