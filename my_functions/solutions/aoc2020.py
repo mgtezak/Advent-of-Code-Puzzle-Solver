@@ -419,55 +419,223 @@ def aoc2020_day10_part2(puzzle_input):
 
 
 def aoc2020_day11_part1(puzzle_input):
-    pass
+
+    puzzle_input = puzzle_input.split()
+    width, height = len(puzzle_input[0]), len(puzzle_input)
+
+    def get_adjacent(x, y):
+        for i in range(max(0, x-1), min(height, x+2)):
+            for j in range(max(0, y-1), min(width, y+2)):
+                if (i != x or j != y) and puzzle_input[i][j] == 'L':
+                    yield i, j
+
+    graph = {}
+    for x in range(height):
+        for y in range(width):
+            if puzzle_input[x][y] == 'L':
+                graph[(x, y)] = set(get_adjacent(x, y))
+
+    occupied = set(graph)
+    while True:
+        nxt_occupied = set()
+        for coords in graph:
+            adj_occupied = len(graph[coords] & occupied)
+            if (adj_occupied == 0) or (coords in occupied and adj_occupied < 4):
+                nxt_occupied.add(coords)
+
+        if occupied == nxt_occupied:
+            break
+
+        occupied = nxt_occupied
+
+    return len(occupied)
+
 
 
 def aoc2020_day11_part2(puzzle_input):
-    pass
+
+    puzzle_input = puzzle_input.split()
+    width, height = len(puzzle_input[0]), len(puzzle_input)
+
+    def get_adjacent(x, y):
+        adj = set()
+        for dx in range(-1, 2):
+            for dy in range(-1, 2):
+                if dx == dy == 0:
+                    continue
+                i, j = x + dx, y + dy
+                while i in range(0, height) and j in range(0, width):
+                    if puzzle_input[i][j] == 'L':
+                        adj.add((i, j))
+                        break
+                    i, j = i + dx, j + dy
+        return adj
+
+    graph = {}
+    for x in range(height):
+        for y in range(width):
+            if puzzle_input[x][y] == '.':
+                continue
+            graph[(x, y)] = get_adjacent(x, y)
+
+    occupied = set(graph)
+    while True:
+        nxt_occupied = set()
+        for coords in graph:
+            adj_occupied = len(graph[coords] & occupied)
+            if (adj_occupied == 0) or (coords in occupied and adj_occupied < 5):
+                nxt_occupied.add(coords)
+
+        if occupied == nxt_occupied:
+            break
+
+        occupied = nxt_occupied
+
+    return len(occupied)
 
 
 ####################################################################################################
 
 
 def aoc2020_day12_part1(puzzle_input):
-    pass
+
+    directions = {'E': 1, 'N': 1j, 'W': -1, 'S': -1j}
+    position = 0j
+    facing = 1 + 0j
+
+    for line in puzzle_input.split():
+        op, val = line[0], int(line[1:])
+        if op in 'LR':
+            facing *=  (1j if op == 'L' else -1j) ** (val // 90)
+        else:
+            position += (facing if op == 'F' else directions[op]) * val
+
+    return int(abs(position.real) + abs(position.imag))
 
 
 def aoc2020_day12_part2(puzzle_input):
-    pass
+
+    directions = {'E': 1, 'N': 1j, 'W': -1, 'S': -1j}
+    position = 0j
+    waypoint = 10 + 1j
+    
+    for line in puzzle_input.split():
+        op, val = line[0], int(line[1:])
+        if op in 'LR':
+            waypoint *=  (1j if op == 'L' else -1j) ** (val // 90)
+        elif op == 'F':
+            position += waypoint * val
+        else:
+            waypoint += directions[op] * val
+
+    return int(abs(position.real) + abs(position.imag))
 
 
 ####################################################################################################
 
 
 def aoc2020_day13_part1(puzzle_input):
-    pass
+    
+    earliest, busses = puzzle_input.split()
+    earliest = int(earliest)
+    wait = float('inf')
+
+    for bus in map(int, re.findall('(\d+)', busses)):
+        next_departure = bus - earliest % bus
+        if next_departure < wait:
+            wait = next_departure
+            nxt_bus = bus
+
+    return nxt_bus * wait
 
 
 def aoc2020_day13_part2(puzzle_input):
-    pass
+
+    busses, offset = [], []
+    for i, b in enumerate(puzzle_input.split()[1].split(',')):
+        if b == 'x':
+            continue
+        busses.append(int(b))
+        offset.append(i)
+
+    t, step = 0, busses[0]
+    for i in range(1, len(busses)):
+        while (t + offset[i]) % busses[i] != 0:
+            t += step
+        step *= busses[i]
+
+    return t
 
 
 ####################################################################################################
 
 
 def aoc2020_day14_part1(puzzle_input):
-    pass
+    mem = {}
+    for line in puzzle_input.split('\n'):
+        if line.startswith('mask'):
+            mask = line[7:]
+        else:
+            address, val = re.findall('(\d+)', line)
+            val = bin(int(val))[2:].zfill(36)
+            masked = ''
+            for i, m in zip(val, mask):
+                masked += i if m == 'X' else m
+            mem[address] = int(masked, 2)
+
+    return sum(mem.values())
 
 
 def aoc2020_day14_part2(puzzle_input):
-    pass
+    mem = {}
+    for line in puzzle_input.split('\n'):
+        if line.startswith('mask'):
+            mask = line[7:]
+        else:
+            address, val = re.findall('(\d+)', line)
+            address, val = bin(int(address))[2:].zfill(36), int(val)
+            masked = ['']
+            for i, m in zip(address, mask):
+                if m == '0':
+                    for j in range(len(masked)):
+                        masked[j] += i
+                elif m == '1':
+                    for j in range(len(masked)):
+                        masked[j] += '1'
+                else:
+                    for j in range(len(masked)):
+                        masked.append(masked[j] + '0')
+                        masked[j] += '1'
+
+            for address in masked:
+                mem[address] = val
+
+    return sum(mem.values())
 
 
 ####################################################################################################
 
 
 def aoc2020_day15_part1(puzzle_input):
-    pass
+    starting_nums = [int(num) for num in puzzle_input.split(',')]
+    last_spoken = {num: i for i, num in enumerate(starting_nums, start=1)}
+    curr = starting_nums[-1]
+    for i in range(len(starting_nums), 2020):
+        nxt = i - last_spoken.get(curr, i)
+        last_spoken[curr] = i
+        curr = nxt
+    return curr
 
 
 def aoc2020_day15_part2(puzzle_input):
-    pass
+    starting_nums = [int(num) for num in puzzle_input.split(',')]
+    last_spoken = {int(num): i for i, num in enumerate(starting_nums, start=1)}
+    curr = starting_nums[-1]
+    for i in range(len(starting_nums), 30_000_000):
+        nxt = i - last_spoken.get(curr, i)
+        curr, last_spoken[curr] = i
+        curr = nxt
+    return curr
 
 
 ####################################################################################################
