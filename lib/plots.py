@@ -2,7 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
-from my_functions import db 
+from lib import db 
 
 
 COMPLETION_PLOT_PATH = 'assets/completion_plot.png'

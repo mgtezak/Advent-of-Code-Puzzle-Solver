@@ -1,16 +1,16 @@
 from inspect import getsource
 from time import time
 
-from my_functions.db import get_puzzle_input
-from my_functions.solutions.aoc2015 import *
-from my_functions.solutions.aoc2016 import *
-from my_functions.solutions.aoc2017 import *
-from my_functions.solutions.aoc2018 import *
-from my_functions.solutions.aoc2019 import *
-from my_functions.solutions.aoc2020 import *
-from my_functions.solutions.aoc2021 import *
-from my_functions.solutions.aoc2022 import *
-from my_functions.solutions.aoc2023 import *
+from lib.db import get_puzzle_input
+from lib.solutions.aoc2015 import *
+from lib.solutions.aoc2016 import *
+from lib.solutions.aoc2017 import *
+from lib.solutions.aoc2018 import *
+from lib.solutions.aoc2019 import *
+from lib.solutions.aoc2020 import *
+from lib.solutions.aoc2021 import *
+from lib.solutions.aoc2022 import *
+from lib.solutions.aoc2023 import *
 
 
 def solve(year, day, part):

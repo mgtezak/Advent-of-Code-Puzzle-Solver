@@ -1,5 +1,5 @@
 import streamlit as st
-from my_functions import db
+from lib import db
 
 PLOTS_PATH = 'assets/'
 

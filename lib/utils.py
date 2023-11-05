@@ -1,5 +1,5 @@
 import streamlit as st
-from my_functions import aoc
+from lib import aoc
 
 
 def reset_puzzle_solver():

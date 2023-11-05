@@ -2,7 +2,7 @@ import json
 import os
 import pandas as pd
 
-# from my_functions import utils, aoc
+# from lib import utils, aoc
 
 
 PUZZLE_INPUT_PATH = 'db/puzzle_input.json'

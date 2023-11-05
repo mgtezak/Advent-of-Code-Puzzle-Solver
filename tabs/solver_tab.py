@@ -1,6 +1,6 @@
 import streamlit as st
 
-from my_functions import aoc, utils, db
+from lib import aoc, utils, db
 
 
 def run():
