@@ -1,4 +1,5 @@
 from operator import eq, ne, lt, le, gt, ge
+from collections import Counter
 
 
 def aoc2017_day1_part1(puzzle_input):
@@ -373,22 +374,75 @@ def aoc2017_day10_part2(puzzle_input):
 
 
 def aoc2017_day11_part1(puzzle_input):
-    pass
+    count = Counter(puzzle_input.split(','))
+    x = count['s']  + count['se'] - count['n']  - count['nw']
+    y = count['ne'] + count['se'] - count['sw'] - count['nw']
+    if x * y <= 0:      # different signs: cannot move diagonally
+        return abs(x) + abs(y)
+    return min(abs(x), abs(y)) + abs(x-y)
 
 
 def aoc2017_day11_part2(puzzle_input):
-    pass
+
+    def get_distance(x, y):
+        if x * y <= 0:
+            return abs(x) + abs(y)
+        return min(abs(x), abs(y)) + abs(x-y)
+        
+    x = y = max_distance = 0
+    for step in puzzle_input.split(','):
+        if step in ('n', 'nw'):
+            x -= 1
+        elif step in ('s', 'se'):
+            x += 1
+        if step in ('sw', 'nw'):
+            y -= 1
+        elif step in ('ne', 'se'):
+            y += 1
+        max_distance = max(get_distance(x, y), max_distance)
+    
+    return max_distance
 
 
 ####################################################################################################
 
 
 def aoc2017_day12_part1(puzzle_input):
-    pass
+    graph = {}
+    for line in puzzle_input.split('\n'):
+        node, paths = line.split(' <-> ')
+        graph[int(node)] = [int(p) for p in paths.split(', ')]
+
+    count = 0
+    queue = set([0])
+    visited = set()
+    while queue:
+        node = queue.pop()
+        visited.add(node)
+        queue |= set(n for n in graph[node]) - queue - visited
+        count += 1
+
+    return count
 
 
 def aoc2017_day12_part2(puzzle_input):
-    pass
+    graph = {}
+    for line in puzzle_input.split('\n'):
+        node, paths = line.split(' <-> ')
+        graph[int(node)] = [int(p) for p in paths.split(', ')]
+
+    count = 0
+    visited = set()
+    for node, paths in graph.items():
+        if node in visited:
+            continue
+        count += 1
+        queue = set([node])
+        while queue:
+            node = queue.pop()
+            visited.add(node)
+            queue |= set(n for n in graph[node]) - queue - visited
+    return count 
 
 
 ####################################################################################################

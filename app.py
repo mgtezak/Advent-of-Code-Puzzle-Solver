@@ -3,7 +3,7 @@ import streamlit as st
 from collections import OrderedDict
 
 from tabs import solver_tab, stats_tab, about_tab
-from lib import utils, db
+from lib import utils
 from config import SIDEBAR_IMG, STYLE
 
 
