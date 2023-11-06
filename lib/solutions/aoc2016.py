@@ -625,33 +625,146 @@ def aoc2016_day11_part2(puzzle_input):
 
 
 def aoc2016_day12_part1(puzzle_input):
-    pass
+    lines = [line.split() for line in puzzle_input.split('\n')]
+    registry = {'a': 0, 'b': 0, 'c': 0, 'd': 0}
+    i = 0 
+    while i < len(lines):
+        l = lines[i]
+        if l[0] == 'cpy':
+            registry[l[2]] = int(l[1]) if l[1].isnumeric() else registry[l[1]]
+        elif l[0] == 'inc':
+            registry[l[1]] += 1
+        elif l[0] == 'dec':
+            registry[l[1]] -= 1
+        elif (l[1].isalpha() and registry[l[1]]) or (l[1].isnumeric() and l[1] != '0'):
+            i += int(l[2]) - 1
+        i += 1
+    return registry['a']
 
 
 def aoc2016_day12_part2(puzzle_input):
-    pass
+    lines = [line.split() for line in puzzle_input.split('\n')]
+    registry = {'a': 0, 'b': 0, 'c': 1, 'd': 0}
+    i = 0 
+    while i < len(lines):
+        l = lines[i]
+        if l[0] == 'cpy':
+            registry[l[2]] = int(l[1]) if l[1].isnumeric() else registry[l[1]]
+        elif l[0] == 'inc':
+            registry[l[1]] += 1
+        elif l[0] == 'dec':
+            registry[l[1]] -= 1
+        elif (l[1].isalpha() and registry[l[1]]) or (l[1].isnumeric() and l[1] != '0'):
+            i += int(l[2]) - 1
+        i += 1
+    return registry['a']
 
 
 ####################################################################################################
 
 
 def aoc2016_day13_part1(puzzle_input):
-    pass
+    puzzle_input = int(puzzle_input)
+
+    def is_wall(x, y):
+        result = x*x + 3*x + 2*x*y + y + y*y + puzzle_input
+        return bool(bin(result).count('1') % 2)
+
+    visited = {(1, 1)}
+    q = deque([(1, 1, 0)])
+    while q:
+        x, y, steps = q.popleft()
+        if x == 31 and y == 39:
+            break
+        for i, j in {(x+1, y), (x-1, y), (x, y+1), (x, y-1)} - visited:
+            if i < 0 or j < 0 or is_wall(i, j):
+                continue
+            q.append((i, j, steps+1))
+            visited.add((i, j))
+
+    return steps
 
 
 def aoc2016_day13_part2(puzzle_input):
-    pass
+    puzzle_input = int(puzzle_input)
+
+    def is_wall(x, y):
+        result = x*x + 3*x + 2*x*y + y + y*y + puzzle_input
+        return bool(bin(result).count('1') % 2)
+
+    visited = {(1, 1)}
+    q = deque([(1, 1, 50)])
+    while q:
+        x, y, steps = q.popleft()
+        if not steps:
+            continue
+        for i, j in {(x+1, y), (x-1, y), (x, y+1), (x, y-1)} - visited:
+            if i < 0 or j < 0 or is_wall(i, j):
+                continue
+            q.append((i, j, steps-1))
+            visited.add((i, j))
+
+    return len(visited)
 
 
 ####################################################################################################
 
 
 def aoc2016_day14_part1(puzzle_input):
-    pass
+    keys = []
+    triplets = {char: [] for char in '0123456789abcdef'}
+    i = 0
+    while True:
+        hash = hashlib.md5(f'{puzzle_input}{i}'.encode()).hexdigest()
+
+        # Check for quintuples
+        for char in re.findall(r'([a-f0-9])\1\1\1\1', hash):
+            while triplets[char] and triplets[char][0] < i - 1000:
+                triplets[char].pop(0)
+            keys.extend(triplets[char])
+            triplets[char] = []
+            keys.sort()
+
+        # Check for triplets 
+        if match := re.search(r'([a-f0-9])\1\1', hash):
+            triplets[match.group(0)[0]].append(i)
+
+        if len(keys) >= 64 and i > keys[63] + 1000:
+            break
+
+        i += 1
+
+    return keys[63]
 
 
 def aoc2016_day14_part2(puzzle_input):
-    pass
+    keys = []
+    triplets = {char: [] for char in '0123456789abcdef'}
+    i = 0
+    while True:
+        hash = f'{puzzle_input}{i}'
+        for _ in range(2017):
+            hash = hashlib.md5(hash.encode()).hexdigest()
+        
+        # Check for quintuples
+        for char in re.findall(r'([a-f0-9])\1\1\1\1', hash):
+            while triplets[char] and triplets[char][0] < i - 1000:
+                triplets[char].pop(0)
+            keys.extend(triplets[char])
+            triplets[char] = []
+            keys.sort()
+
+        # Check for triplets 
+        if match := re.search(r'([a-f0-9])\1\1', hash):
+            triplets[match.group(0)[0]].append(i)
+
+        if len(keys) >= 64 and i > keys[63] + 1000:
+            break
+
+        i += 1
+
+    return keys[63]
+
 
 
 ####################################################################################################
