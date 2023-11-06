@@ -10,7 +10,7 @@ def reset_puzzle_solver():
 
 
 def get_valid_days(year):
-    return [d for d in range(1, 26) if f'aoc{year}_day{d}_part1' in aoc.function_dict]
+    return [d for d in reversed(range(1, 26)) if f'aoc{year}_day{d}_part1' in aoc.function_dict]
 
 
 def display_solution(solution, runtime):
