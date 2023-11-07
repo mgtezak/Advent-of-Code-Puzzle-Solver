@@ -463,11 +463,39 @@ def aoc2018_day10_part2(puzzle_input):
 
 
 def aoc2018_day11_part1(puzzle_input):
-    pass
+
+    def get_power_level(x, y):
+        return ((x + 11) * (y + 1) + int(puzzle_input)) * (x + 11) // 100 % 10 - 5
+
+    grid = np.fromfunction(get_power_level, (300, 300))
+    max_power = float('-inf')
+    for x in range(298):
+        for y in range(298):
+            power_level = grid[x:x+3, y:y+3].sum()
+            if power_level > max_power:
+                X, Y = x + 1, y + 1
+                max_power = power_level
+
+    return f'{X},{Y}'
 
 
 def aoc2018_day11_part2(puzzle_input):
-    pass
+
+    def get_power_level(x, y):
+        return ((x + 11) * (y + 1) + int(puzzle_input)) * (x + 11) // 100 % 10 - 5
+
+    grid = np.fromfunction(get_power_level, (300, 300))
+    prev_max = float('-inf')
+    for size in range(2, 50):
+        kernel = np.ones((size, size))
+        conv = scipy.signal.convolve2d(grid, kernel, mode='valid')
+        x, y = np.unravel_index(np.argmax(conv), conv.shape)
+        if (max_val := conv[x, y]) < prev_max:
+            break
+        prev_max = max_val
+        X, Y, SIZE = x + 1, y + 1, size
+
+    return f'{X},{Y},{SIZE}'
 
 
 ####################################################################################################
