@@ -1,6 +1,11 @@
+# Third party imports
 import streamlit as st
-import json
 
+# Native imports
+import json
+from typing import Union
+
+# Local imports
 from config import GRID_LETTER
 from lib import aoc
 
@@ -24,7 +29,7 @@ def display_solution(solution: int | str, runtime: int) -> None:
     st.caption(f"Runtime: {format_runtime(runtime)}")
 
 
-def read_grid(grid) -> str | False:
+def read_grid(grid) -> str | bool:
     '''puzzles with grid letter output: 2016-8-2, 2018-10-1, 2019-8-2, 2021-13-2, 2022-10-2'''
     with open(GRID_LETTER, 'r') as f:
         grid_letters = json.load(f)
