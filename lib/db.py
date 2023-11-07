@@ -1,15 +1,16 @@
-import json
-import os
+# Third party
 import pandas as pd
 
-# from lib import utils, aoc
+# Native
+import json
+import os
 
-
+# Local
 from config import PUZZLE_INPUT, SOLUTION, COMPLETION
 
 
 # PUZZLE INPUT DB
-def get_puzzle_input_db():
+def get_puzzle_input_db() -> dict:
     try:
         with open(PUZZLE_INPUT, 'r') as f:
             db = json.load(f)
@@ -18,7 +19,7 @@ def get_puzzle_input_db():
     return db
     
 
-def get_puzzle_input(year, day):
+def get_puzzle_input(year: int, day: int) -> str | False:
     year, day = str(year), str(day)
     db = get_puzzle_input_db()
     if not db.get(year, False):
@@ -26,7 +27,7 @@ def get_puzzle_input(year, day):
     return db[year].get(day, False)
 
 
-def put_puzzle_input(year, day, puzzle_input):
+def put_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
     year, day = str(year), str(day)
     db = get_puzzle_input_db()
     if not db.get(year, False):
@@ -37,14 +38,14 @@ def put_puzzle_input(year, day, puzzle_input):
 
 
 # SOLUTION DB
-def get_solution_db():
+def get_solution_db() -> pd.DataFrame:
     """Get all solutions as pandas dataframe"""
     if not os.path.exists(SOLUTION):
         pd.DataFrame(columns=['id', 'year', 'day', 'part', 'solution', 'runtime']).to_csv(SOLUTION, index=False)
     return pd.read_csv(SOLUTION)
 
 
-def get_solution(year, day, part):
+def get_solution(year: int, day: int, part: int) -> (int, int):
     df = get_solution_db()
     row = df[df.id == int(f'{year}{day:02}{part}')]
     if len(row) == 0:
@@ -54,7 +55,7 @@ def get_solution(year, day, part):
     return solution, runtime 
 
 
-def put_solution(year, day, part, solution, runtime):
+def put_solution(year: int, day: int, part: int, solution: int | str, runtime: int) -> None:
     """Stores away a single solution. Will overwrite if necessary."""
     df = get_solution_db()
     new_entry = dict(id=f'{year}{day:02}{part}', year=year, day=day, part=part, solution=solution, runtime=runtime)
@@ -62,13 +63,13 @@ def put_solution(year, day, part, solution, runtime):
     df.to_csv(SOLUTION, index=False)
 
 
-def del_solution(year, day):
+def del_solution(year: int, day: int) -> None:
     df = get_solution_db()
     df = df[~((df.year==year) & (df.day==day))]
     df.to_csv(SOLUTION, index=False)
 
 
-def get_completed_stat():
+def get_completed_stat() -> str:
     df = get_completion_db()
     completed = df.completed.sum()
     total = df.shape[0]
@@ -76,13 +77,13 @@ def get_completed_stat():
 
 
 ### The following functions are necessary/useful for maintenance but not for normal use of the app
-def get_completion_db():
+def get_completion_db() -> pd.DataFrame:
     if not os.path.exists(COMPLETION):
         initialize_completion_db()
     return pd.read_csv(COMPLETION)
 
 
-def initialize_completion_db():
+def initialize_completion_db() -> None:
     data = []
     for year in range(2015, 2023):
         for day in range(1, 26):
@@ -91,14 +92,14 @@ def initialize_completion_db():
     df.to_csv(COMPLETION, index=False)
 
 
-def put_completed(year, day):
+def put_completed(year: int, day: int) -> None:
     db = get_completion_db()
     db[(db.year == year) & (db.day == day)] = [year, day, 1]
     db.to_csv(COMPLETION, index=False)
 
 
 # RESET
-def remove_dbs():
+def remove_dbs() -> None:
     if os.path.exists(SOLUTION):
         os.remove(SOLUTION)
     if os.path.exists(PUZZLE_INPUT):

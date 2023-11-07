@@ -13,7 +13,7 @@ from lib.solutions.aoc2022 import *
 from lib.solutions.aoc2023 import *
 
 
-def solve(year, day, part):
+def solve(year: int, day: int, part: int) -> (int|str, int):
     start = time()
     f = function_dict[f"aoc{year}_day{day}_part{part}"]
     puzzle_input = get_puzzle_input(year, day)
@@ -22,7 +22,7 @@ def solve(year, day, part):
     return solution, runtime
 
 
-def get_source_code(year, day, part):
+def get_source_code(year: int, day: int, part: int) -> str:
     f = function_dict[f"aoc{year}_day{day}_part{part}"]
     return getsource(f)
 

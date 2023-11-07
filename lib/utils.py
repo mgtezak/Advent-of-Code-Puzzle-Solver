@@ -5,15 +5,15 @@ from config import GRID_LETTER
 from lib import aoc
 
 
-def reset_puzzle_solver():
+def reset_puzzle_solver() -> None:
     st.session_state['solution'] = False
 
 
-def get_valid_days(year):
+def get_valid_days(year: int) -> list[int]:
     return [d for d in reversed(range(1, 26)) if f'aoc{year}_day{d}_part1' in aoc.function_dict]
 
 
-def display_solution(solution, runtime):
+def display_solution(solution: int | str, runtime: int) -> None:
     if type(solution) is str and '\n' in solution:
         st.text('Visual output:\n' + solution)
         letters = read_grid(solution)
@@ -24,7 +24,7 @@ def display_solution(solution, runtime):
     st.caption(f"Runtime: {format_runtime(runtime)}")
 
 
-def read_grid(grid):
+def read_grid(grid) -> str | False:
     '''puzzles with grid letter output: 2016-8-2, 2018-10-1, 2019-8-2, 2021-13-2, 2022-10-2'''
     with open(GRID_LETTER, 'r') as f:
         grid_letters = json.load(f)
@@ -39,13 +39,13 @@ def read_grid(grid):
     return letters
 
 
-def format_runtime(runtime):
+def format_runtime(runtime: int) -> str:
     if runtime >= 0.01:
         return f'{runtime:.2f} seconds'
     return f'{int(runtime*1000)} milliseconds'
 
 
-def display_fail_msg():
+def display_fail_msg() -> None:
     st.error("""
         :scream: Oops, something went wrong!  
         :thinking_face: Perhaps there's an issue with the puzzle input you provided...  
