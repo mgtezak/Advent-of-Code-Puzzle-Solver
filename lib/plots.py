@@ -1,7 +1,9 @@
+# Third party imports
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Local imports
 from lib import db 
 from config import *
 
