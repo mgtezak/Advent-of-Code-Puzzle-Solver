@@ -3,7 +3,6 @@ import streamlit as st
 
 # Native imports
 import json
-from typing import Union
 
 # Local imports
 from config import GRID_LETTER

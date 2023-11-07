@@ -4,7 +4,6 @@ import pandas as pd
 # Native
 import json
 import os
-from typing import Union
 
 # Local
 from config import PUZZLE_INPUT, SOLUTION, COMPLETION
@@ -20,7 +19,7 @@ def get_puzzle_input_db() -> dict:
     return db
     
 
-def get_puzzle_input(year: int, day: int) -> Union[str, bool]:
+def get_puzzle_input(year: int, day: int) -> str | bool:
     year, day = str(year), str(day)
     db = get_puzzle_input_db()
     if not db.get(year, False):

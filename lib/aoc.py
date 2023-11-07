@@ -1,6 +1,8 @@
+# Native imports
 from inspect import getsource
 from time import time
 
+# Local imports
 from lib.db import get_puzzle_input
 from lib.solutions.aoc2015 import *
 from lib.solutions.aoc2016 import *
