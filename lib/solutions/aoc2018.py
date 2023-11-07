@@ -1,3 +1,6 @@
+import numpy as np
+import scipy
+
 from datetime import datetime
 from collections import Counter, deque, defaultdict
 from string import ascii_letters, ascii_uppercase
