@@ -449,11 +449,29 @@ def aoc2017_day12_part2(puzzle_input):
 
 
 def aoc2017_day13_part1(puzzle_input):
-    pass
+    layers = [(int(l), int(r)) for l, r in re.findall('(\d+): (\d+)', puzzle_input)]
+    
+    total = 0
+    for l, r in layers:
+        if l % ((r - 1) * 2) == 0:
+            total += l * r
+
+    return total
 
 
 def aoc2017_day13_part2(puzzle_input):
-    pass
+    layers = [(int(l), int(r)) for l, r in re.findall('(\d+): (\d+)', puzzle_input)]
+    
+    delay = 0
+    while True:
+        for l, r in layers:
+            if (l + delay) % ((r - 1) * 2) == 0:
+                delay += 1
+                break
+        else:
+            break
+
+    return delay
 
 
 ####################################################################################################
