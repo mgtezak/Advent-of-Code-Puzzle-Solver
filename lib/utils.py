@@ -52,7 +52,7 @@ def get_completed_stat() -> str:
 
 
 
-def display_solution(solution: int | str, runtime: int) -> None:
+def display_solution(solution: int | float | str, runtime: int) -> None:
     """
     Displays the solution and runtime. If the solution comes as a letter grid, 
     an attempt is made to decipher it. If successful both the actual solution 
@@ -65,7 +65,7 @@ def display_solution(solution: int | str, runtime: int) -> None:
         if letters:
             st.subheader(letters)
     else:
-        st.subheader(solution)
+        st.subheader(int(solution))
 
     st.caption(f"Runtime: {format_runtime(runtime)}")
 

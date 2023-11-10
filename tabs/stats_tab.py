@@ -1,5 +1,5 @@
 import streamlit as st
-from lib import db, utils
+from lib import utils
 from config import *
 
 
