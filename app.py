@@ -21,7 +21,7 @@ def run():
 
     if not st.session_state:
         st.snow()
-        db.remove_dbs()
+        utils.reboot_app()
 
     TABS = OrderedDict({
         '🎅🏻 About this Project': about_tab,
