@@ -1,5 +1,5 @@
 import streamlit as st
-from lib import db
+from lib import db, utils
 from config import *
 
 
@@ -10,7 +10,7 @@ def run():
     for _ in range(2):
         st.write('')
 
-    st.image(PROGRESS_PLOT, caption=db.get_completed_stat())
+    st.image(PROGRESS_PLOT, caption=utils.get_completed_stat())
 
     st.write('')
     st.divider()
