@@ -6,7 +6,7 @@ import json
 import os
 
 # Local
-from config import PUZZLE_INPUT, SOLUTION, GRID_LETTER
+from config import PUZZLE_INPUT, SOLUTION, GRID_LETTER, TITLE
 
 
 # PUZZLE INPUT DB
@@ -50,8 +50,7 @@ def get_solution(year: int, day: int, part: int) -> (int, int):
     row = df[df.id == int(f'{year}{day:02}{part}')]
     if len(row) == 0:
         return False
-    solution = row.iloc[0, 4]
-    runtime = row.iloc[0, 5]
+    solution, runtime = row.iloc[0, [4, 5]].values
     return solution, runtime 
 
 
@@ -87,3 +86,16 @@ def put_grid_letter(grid, letter) -> None:
 
 
 # TITLE DB
+def get_title_db() -> pd.DataFrame:
+    """Get all titles in pandas dataframe"""
+    if not os.path.exists(TITLE):
+        pd.DataFrame(columns=['year', 'day', 'title']).to_csv(TITLE, index=False)
+    return pd.read_csv(TITLE)
+
+
+def get_title(year, day) -> str:
+    df = get_title_db()
+    row = df.loc[(df.year==year) & (df.day==day), 'title']
+    if len(row) == 0:
+        return ''
+    return row.iloc[0]
