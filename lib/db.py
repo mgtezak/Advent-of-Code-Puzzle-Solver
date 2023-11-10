@@ -6,7 +6,7 @@ import json
 import os
 
 # Local
-from config import PUZZLE_INPUT, SOLUTION, COMPLETION
+from config import PUZZLE_INPUT, SOLUTION, GRID_LETTER
 
 
 # PUZZLE INPUT DB
@@ -69,38 +69,21 @@ def del_solution(year: int, day: int) -> None:
     df.to_csv(SOLUTION, index=False)
 
 
-def get_completed_stat() -> str:
-    df = get_completion_db()
-    completed = df.completed.sum()
-    total = df.shape[0]
-    return f"So far I've completed {completed} of the available total of {total} daily challenges."
+# GRID LETTER DB
+def get_grid_letter_db() -> dict[str: str]:
+    try:
+        with open(GRID_LETTER, 'r') as f:
+            db = json.load(f)
+    except:
+        db = {}
+    return db
 
 
-### The following functions are necessary/useful for maintenance but not for normal use of the app
-def get_completion_db() -> pd.DataFrame:
-    if not os.path.exists(COMPLETION):
-        initialize_completion_db()
-    return pd.read_csv(COMPLETION)
+def put_grid_letter(grid, letter) -> None:
+    db = get_grid_letter_db()
+    db[grid] = letter.upper()
+    with open(GRID_LETTER, 'w') as f:
+        json.dump(db, f, indent=4)
 
 
-def initialize_completion_db() -> None:
-    data = []
-    for year in range(2015, 2023):
-        for day in range(1, 26):
-            data.append([year, day, 0])
-    df = pd.DataFrame(data, columns=["year", "day", "completed"])
-    df.to_csv(COMPLETION, index=False)
-
-
-def put_completed(year: int, day: int) -> None:
-    db = get_completion_db()
-    db[(db.year == year) & (db.day == day)] = [year, day, 1]
-    db.to_csv(COMPLETION, index=False)
-
-
-# RESET
-def remove_dbs() -> None:
-    if os.path.exists(SOLUTION):
-        os.remove(SOLUTION)
-    if os.path.exists(PUZZLE_INPUT):
-        os.remove(PUZZLE_INPUT)
+# TITLE DB

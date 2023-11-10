@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Local imports
-from lib import db 
+from lib import db, utils 
 from config import *
 
 
 
-def plot_completion():
+def plot_progress():
 
     # Set colors
     text_color = '#FFD700'
@@ -32,12 +32,12 @@ def plot_completion():
     label_font = {'family': 'serif', 'color': text_color, 'size': 12}
 
     # Create the scatter plot
-    df = db.get_completion_db()
+    df = utils.get_progress_db()
     sns.scatterplot(data=df[df.completed == 1], x='day', y='year', marker='o', color=primary_color, edgecolor=primary_color, s=140, ax=ax, zorder=2, alpha=0.9)
 
     # Customize the plot area
     ax.set_facecolor('#04013b')
-    ax.set_title('Advent of Code Challenge Completion', fontdict=title_font)
+    ax.set_title('Advent of Code Challenge Progress', fontdict=title_font)
     ax.set_xlabel('Day', fontdict=label_font)
     ax.set_ylabel('Year', fontdict=label_font)
     ax.invert_yaxis()
@@ -53,7 +53,7 @@ def plot_completion():
     ax.set_yticks(np.arange(2015, 2023, 1))
 
     # Save the plot
-    plt.savefig(COMPLETION_PLOT, bbox_inches='tight', dpi=300)
+    plt.savefig(PROGRESS_PLOT, bbox_inches='tight', dpi=300)
 
 
 
