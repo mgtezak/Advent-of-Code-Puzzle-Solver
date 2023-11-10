@@ -13,7 +13,6 @@ def run():
     
     puzzle_title = db.get_title(year, day)
     st.header(puzzle_title)
-    st.markdown(f'<h2 style="font-family: Courier;">{puzzle_title}</h2>', unsafe_allow_html=True)
 
     generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
 
