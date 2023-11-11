@@ -1,6 +1,9 @@
+# Third party imports
 import streamlit as st
-from lib import utils
-from config import *
+
+# Local imports
+from lib import utils 
+from config import PROGRESS_PLOT, RUNTIME_PLOT
 
 
 def run():

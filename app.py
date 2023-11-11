@@ -1,9 +1,12 @@
 # External imports
 import streamlit as st
+
+# Native imports
 from collections import OrderedDict
 
-from tabs import solver_tab, stats_tab, about_tab
-from lib import utils, db
+# Local imports
+import pages
+from lib import utils
 from config import SIDEBAR_IMG, STYLE
 
 
@@ -13,8 +16,8 @@ st.set_page_config(
     layout="wide"
 )
 
-with open(STYLE) as style:
-    st.markdown(f'<style>{style.read()}</style>', unsafe_allow_html=True)
+with open(STYLE, 'r') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 
 def run():
@@ -24,9 +27,9 @@ def run():
         utils.reboot_app()
 
     TABS = OrderedDict({
-        '🎅🏻 About this Project': about_tab,
-        '🎄 Puzzle Solver': solver_tab,
-        '🎁 Stats-n-Graphs': stats_tab,
+        '🎅🏻 About this Project': pages.about_this_project,
+        '🎄 Puzzle Solver': pages.puzzle_solver,
+        '🎁 Stats-n-Graphs': pages.stats_n_graphs,
     })
 
     st.sidebar.image(SIDEBAR_IMG)
