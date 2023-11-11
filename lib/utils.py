@@ -52,20 +52,18 @@ def get_completed_stat() -> str:
 
 
 
-def display_solution(solution: int | float | str, runtime: int) -> None:
+def display_solution(solution: str, runtime: float) -> None:
     """
     Displays the solution and runtime. If the solution comes as a letter grid, 
     an attempt is made to decipher it. If successful both the actual solution 
     and the grid are displayed. If not, just the grid.
     """
 
-    if type(solution) is str and '\n' in solution:
+    if '\n' in solution:
         st.text('Visual output:\n' + solution)
         letters = read_grid(solution)
         if letters:
             st.subheader(letters)
-    elif type(solution) is float:
-        st.subheader(int(solution))
     else:
         st.subheader(solution)
 
@@ -97,7 +95,7 @@ def read_grid(grid) -> str | bool:
 
 
 
-def format_runtime(runtime: int) -> str:
+def format_runtime(runtime: float) -> str:
     """Returns formatted runtime either as seconds or milliseconds."""
 
     if runtime >= 0.01:
@@ -123,6 +121,7 @@ def get_progress_db() -> pd.DataFrame:
 
     if not os.path.exists(PROGRESS):
         create_progress_db()
+
     return pd.read_csv(PROGRESS)
 
 
@@ -135,6 +134,7 @@ def create_progress_db() -> None:
         completed = set(get_valid_days(year))
         for day in range(1, 26):
             data.append([year, day, 1 if day in completed else 0])
+            
     df = pd.DataFrame(data, columns=["year", "day", "completed"])
     df.to_csv(PROGRESS, index=False)
 

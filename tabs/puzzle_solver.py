@@ -28,7 +28,7 @@ def run():
 
             # default: no puzzle input yet provided or retrieved
             if not (input_provided or input_retrieved):    
-                if db.get_puzzle_input(year, day) and not st.session_state.get('bad_input', False):
+                if db.get_puzzle_input(year, day):
                     col1, col2 = st.columns([3, 8])
                     col1.info('Previous puzzle input detected.')
                     st.button('Use previous puzzle input', key='use_prev_input')
@@ -76,7 +76,7 @@ def run():
 
                     except:
                         utils.display_fail_msg()
-                        st.session_state['bad_input'] = True
+                        db.del_puzzle_input(year, day)
 
                     if st.session_state.get('show_solution_1', False):
                         st.rerun()
@@ -97,7 +97,7 @@ def run():
 
                     except:
                         utils.display_fail_msg()
-                        st.session_state['bad_input'] = True
+                        db.del_puzzle_input(year, day)
 
                     if st.session_state.get('show_solution_2', False):
                         st.rerun()

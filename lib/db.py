@@ -52,18 +52,28 @@ def put_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
 
 
 
+def del_puzzle_input(year: int, day: int) -> None:
+    """Overwrites puzzle input entry with empty string."""
+
+    return put_puzzle_input(year, day, '')
+
+
+
 # SOLUTION DB
 def get_solution_db() -> pd.DataFrame:
     """Returns all solutions as pandas dataframe."""
 
+    columns = ['id', 'year', 'day', 'part', 'solution', 'runtime']
+    dtypes = [int, int, int, int, object, float]
+
     if not os.path.exists(SOLUTION):
-        pd.DataFrame(columns=['id', 'year', 'day', 'part', 'solution', 'runtime']).to_csv(SOLUTION, index=False)
+        pd.DataFrame(columns=columns).to_csv(SOLUTION, index=False)
     
-    return pd.read_csv(SOLUTION)
+    return pd.read_csv(SOLUTION, dtype=dict(zip(columns, dtypes)))
 
 
 
-def get_solution(year: int, day: int, part: int) -> tuple[str, str] | None:
+def get_solution(year: int, day: int, part: int) -> tuple[str, float] | None:
     """Fetches a single solution & runtime string tuple from database ."""
 
     df = get_solution_db()
@@ -77,12 +87,15 @@ def get_solution(year: int, day: int, part: int) -> tuple[str, str] | None:
 
 
 
-def put_solution(year: int, day: int, part: int, solution: int | str, runtime: int) -> None:
+def put_solution(year: int, day: int, part: int, solution: str, runtime: float) -> None:
     """Stores away a single solution. Will overwrite if necessary."""
 
+    new_entry = pd.DataFrame([dict(id=f'{year}{day:02}{part}', year=year, day=day, part=part, solution=str(solution), runtime=runtime)])
     df = get_solution_db()
-    new_entry = dict(id=f'{year}{day:02}{part}', year=year, day=day, part=part, solution=solution, runtime=runtime)
-    df = pd.concat([df, pd.DataFrame([new_entry])], axis=0, ignore_index=True)
+    if len(df) == 0:
+        df = new_entry
+    else:
+        df = pd.concat([df, new_entry], axis=0, ignore_index=True)
     df.to_csv(SOLUTION, index=False)
 
 
