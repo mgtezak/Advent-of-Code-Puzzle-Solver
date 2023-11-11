@@ -12,7 +12,7 @@ def run():
     year = cols[0].selectbox('Year:', list(reversed(range(2015, 2023))), key='year', on_change=utils.reset_puzzle_solver)
     day = cols[1].selectbox('Day:', utils.get_valid_days(year), key='day', on_change=utils.reset_puzzle_solver)
     
-    puzzle_title = utils.get_title(year, day)
+    puzzle_title = db.get_title(year, day)
     st.header(puzzle_title)
 
     generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
