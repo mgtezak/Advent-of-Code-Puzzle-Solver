@@ -5,7 +5,7 @@ import streamlit as st
 from collections import OrderedDict
 
 # Local imports
-import pages
+import tabs
 from lib import utils
 from config import SIDEBAR_IMG, STYLE
 
@@ -27,9 +27,9 @@ def run():
         utils.reboot_app()
 
     TABS = OrderedDict({
-        '🎅🏻 About this Project': pages.about_this_project,
-        '🎄 Puzzle Solver': pages.puzzle_solver,
-        '🎁 Stats-n-Graphs': pages.stats_n_graphs,
+        '🎅🏻 About this Project': tabs.about_this_project,
+        '🎄 Puzzle Solver': tabs.puzzle_solver,
+        '🎁 Stats-n-Graphs': tabs.stats_n_graphs,
     })
 
     st.sidebar.image(SIDEBAR_IMG)
