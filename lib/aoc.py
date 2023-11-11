@@ -20,8 +20,7 @@ def solve(year: int, day: int, part: int) -> tuple[str, float]:
     start = time()
     f = function_dict[f"aoc{year}_day{day}_part{part}"]
     puzzle_input = get_puzzle_input(year, day)
-    solution = str(f(puzzle_input))
-    print(solution)
+    solution = f(puzzle_input)
     runtime = time() - start
     return solution, runtime
 
