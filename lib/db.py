@@ -63,7 +63,7 @@ def get_solution_db() -> pd.DataFrame:
 
 
 
-def get_solution(year: int, day: int, part: int) -> (str, str) | None:
+def get_solution(year: int, day: int, part: int) -> tuple[str, str] | None:
     """Fetches a single solution & runtime string tuple from database ."""
 
     df = get_solution_db()
