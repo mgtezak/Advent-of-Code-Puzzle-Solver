@@ -64,8 +64,10 @@ def display_solution(solution: int | float | str, runtime: int) -> None:
         letters = read_grid(solution)
         if letters:
             st.subheader(letters)
-    else:
+    elif type(solution) is float:
         st.subheader(int(solution))
+    else:
+        st.subheader(solution)
 
     st.caption(f"Runtime: {format_runtime(runtime)}")
 

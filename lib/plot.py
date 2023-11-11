@@ -1,6 +1,7 @@
 # Third party imports
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 import numpy as np
 
 # Local imports
@@ -69,243 +70,35 @@ def plot_runtime():
     title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
     label_font = {'family': 'serif', 'color': text_color, 'size': 12}
 
-    # Get data and figure
+    # Get data
     df = db.get_solution_db()
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5), width_ratios=[2, 2.5, 0.5], sharey=True)
 
-    # Create each plot
-    for x, ax in zip(['year', 'day', 'part'], [ax1, ax2, ax3]):
-        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', legend=False, zorder=2)
-        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', legend=False, zorder=3)
-        ax.set_title(f'Runtime vs {x.capitalize()}', fontdict=title_font)
+    # Create a figure, GridSpec layout and axes
+    fig = plt.figure(figsize=(15, 10), facecolor=background_color)
+    gs = gridspec.GridSpec(2, 3)    # 2 rows, 3 columns
+    ax1 = fig.add_subplot(gs[0, :])                 # Spans all 3 columns in the first row
+    ax2 = fig.add_subplot(gs[1, :2])                # Spans first 2 columns in the second row
+    ax3 = fig.add_subplot(gs[1, 2], sharey=ax2)     # Spans last column in the second row
+
+    # Create plots
+    for x, ax in zip(('day', 'year', 'part'), (ax1, ax2, ax3)):
+        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean' if x=='day' else None, zorder=2)
+        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median' if x=='day' else None, zorder=3)
+        ax.set_title(f'Runtime vs Day', fontdict=title_font)
         ax.set_xlabel(x.capitalize(), fontdict=label_font)
+        ax.set_ylabel('Runtime in seconds' if ax in (ax1, ax2) else '', fontdict=label_font)
         ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-        ax.set_facecolor('#04013b')
         ax.tick_params(axis='both', colors=text_color, length=0)
+        ax.set_facecolor(background_color)
         for spine in ax.spines.values():
             spine.set_visible(False)
 
-    fig.patch.set_facecolor(background_color)
-    ax1.set_ylabel('Runtime in seconds', fontdict=label_font)
-    plt.tight_layout()
-    plt.subplots_adjust(bottom=0.15, wspace=0.1)
+    # Add legend   
     handles, labels = ax1.get_legend_handles_labels()
-    legend = fig.legend(handles, labels, loc='lower center', ncol=3, facecolor=background_color)
+    legend = ax1.legend(handles, labels, facecolor=background_color)
     for text in legend.get_texts():
         text.set_color(text_color)
         text.set_font('serif')
 
     # Save the plot      
     plt.savefig(RUNTIME_PLOT, bbox_inches='tight', dpi=300)
-
-
-
-def plot_runtime2():
-
-    # Set colors
-    text_color = '#FFD700'
-    primary_color = '#FF0000'
-    background_color = '#04013b'
-    grid_color = 'white'
-
-    # Customize the title and axes font 
-    title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
-    label_font = {'family': 'serif', 'color': text_color, 'size': 12}
-
-    # Get data and figure
-    df = db.get_solution_db()
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5), sharey=True)
-
-    # Create each plot
-    for x, ax in zip(['year', 'day'], [ax1, ax2]):
-        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', legend=False, zorder=2)
-        sns.barplot(x=x, y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', legend=False, zorder=3)
-        ax.set_title(f'Runtime vs {x.capitalize()}', fontdict=title_font)
-        ax.set_xlabel(x.capitalize(), fontdict=label_font)
-        ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-        ax.set_facecolor(background_color)
-        ax.tick_params(axis='both', colors=text_color, length=0)
-        for spine in ax.spines.values():
-            spine.set_visible(False)
-
-    fig.patch.set_facecolor(background_color)
-    ax1.set_ylabel('Runtime in seconds', fontdict=label_font)
-    plt.tight_layout()
-    plt.subplots_adjust(bottom=0.15, wspace=0.1)
-    handles, labels = ax1.get_legend_handles_labels()
-    legend = fig.legend(handles, labels, loc='lower center', ncols=2, facecolor=background_color)
-    for text in legend.get_texts():
-        text.set_color(text_color)
-        text.set_font('serif')
-
-    # Save the plot      
-    plt.savefig(RUNTIME_PLOT2, bbox_inches='tight', dpi=300)
-
-
-
-def plot_runtime_year():
-
-    # Set colors
-    text_color = '#FFD700'
-    primary_color = '#FF0000'
-    background_color = '#04013b'
-    grid_color = 'white'
-
-    # Customize the title and axes font 
-    title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
-    label_font = {'family': 'serif', 'color': text_color, 'size': 12}
-
-    # Get data
-    df = db.get_solution_db()
-    _, (ax, ax_empty) = plt.subplots(1, 2, figsize=(15, 5), width_ratios=[2.5, 2.5], facecolor=background_color)
-
-    # Create plot
-    sns.barplot(x='year', y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', zorder=2)
-    sns.barplot(x='year', y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', zorder=3)
-    ax.set_title(f'Runtime vs Year', fontdict=title_font)
-    ax.set_xlabel('Year', fontdict=label_font)
-    ax.set_ylabel('Runtime in seconds', fontdict=label_font)
-    ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-    ax.tick_params(axis='both', colors=text_color, length=0)
-    ax_empty.tick_params(axis='both', colors=background_color, length=0)
-    ax.set_facecolor(background_color)
-    ax_empty.set_facecolor(background_color)
-    for ax_ in (ax, ax_empty):
-        for spine in ax_.spines.values():
-            spine.set_visible(False)
-            
-    handles, labels = ax.get_legend_handles_labels()
-    legend = ax.legend(handles, labels, facecolor=background_color)
-    for text in legend.get_texts():
-        text.set_color(text_color)
-        text.set_font('serif')
-
-    # Save the plot      
-    plt.savefig(RUNTIME_YEAR_PLOT, bbox_inches='tight', dpi=300)
-
-
-
-def plot_runtime_day():
-
-    # Set colors
-    text_color = '#FFD700'
-    primary_color = '#FF0000'
-    background_color = '#04013b'
-    grid_color = 'white'
-
-    # Customize the title and axes font 
-    title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
-    label_font = {'family': 'serif', 'color': text_color, 'size': 12}
-
-    # Get data
-    df = db.get_solution_db()
-    _, (ax, ax_empty) = plt.subplots(1, 2, figsize=(15, 5), width_ratios=[2.5, 2.5], facecolor=background_color)
-
-    # Create plot
-    sns.barplot(x='day', y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', zorder=2)
-    sns.barplot(x='day', y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', zorder=3)
-    ax.set_title(f'Runtime vs Day', fontdict=title_font)
-    ax.set_xlabel('Day', fontdict=label_font)
-    ax.set_ylabel('Runtime in seconds', fontdict=label_font)
-    ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-    ax.tick_params(axis='both', colors=text_color, length=0)
-    ax_empty.tick_params(axis='both', colors=background_color, length=0)
-    ax.set_facecolor(background_color)
-    ax_empty.set_facecolor(background_color)
-    for ax_ in (ax, ax_empty):
-        for spine in ax_.spines.values():
-            spine.set_visible(False)
-            
-    handles, labels = ax.get_legend_handles_labels()
-    legend = ax.legend(handles, labels, facecolor=background_color)
-    for text in legend.get_texts():
-        text.set_color(text_color)
-        text.set_font('serif')
-
-    # Save the plot      
-    plt.savefig(RUNTIME_DAY_PLOT, bbox_inches='tight', dpi=300)
-
-
-
-def plot_runtime_part():
-
-    # Set colors
-    text_color = '#FFD700'
-    primary_color = '#FF0000'
-    background_color = '#04013b'
-    grid_color = 'white'
-
-    # Customize the title and axes font 
-    title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
-    label_font = {'family': 'serif', 'color': text_color, 'size': 12}
-
-    # Get data
-    df = db.get_solution_db()
-    _, (ax, ax_empty) = plt.subplots(1, 2, figsize=(15, 5), width_ratios=[2, 3], facecolor=background_color)
-
-    # Create plot
-    sns.barplot(x='part', y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', zorder=2)
-    sns.barplot(x='part', y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', zorder=3)
-    ax.set_title(f'Runtime vs Part', fontdict=title_font)
-    ax.set_xlabel('Part', fontdict=label_font)
-    ax.set_ylabel('Runtime in seconds', fontdict=label_font)
-    ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-    ax.tick_params(axis='both', colors=text_color, length=0)
-    ax_empty.tick_params(axis='both', colors=background_color, length=0)
-    ax.set_facecolor(background_color)
-    ax_empty.set_facecolor(background_color)
-    for ax_ in (ax, ax_empty):
-        for spine in ax_.spines.values():
-            spine.set_visible(False)
-            
-    handles, labels = ax.get_legend_handles_labels()
-    legend = ax.legend(handles, labels, facecolor=background_color)
-    for text in legend.get_texts():
-        text.set_color(text_color)
-        text.set_font('serif')
-
-    # Save the plot      
-    plt.savefig(RUNTIME_PART_PLOT, bbox_inches='tight', dpi=300)
-
-
-
-def plot_runtime_part2():
-
-    # Set colors
-    text_color = '#FFD700'
-    primary_color = '#FF0000'
-    background_color = '#04013b'
-    grid_color = 'white'
-
-    # Customize the title and axes font 
-    title_font = {'family': 'serif', 'color': text_color, 'size': 18, 'weight': 'bold'}
-    label_font = {'family': 'serif', 'color': text_color, 'size': 12}
-
-    # Get data
-    df = db.get_solution_db()
-    fig, (ax, ax_empty) = plt.subplots(1, 2, figsize=(15, 5), width_ratios=[2, 5], facecolor=background_color)
-
-    # Create plot
-    sns.barplot(x='part', y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean', zorder=2)
-    sns.barplot(x='part', y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median', zorder=3)
-    ax.set_title(f'Runtime vs Part', fontdict=title_font)
-    ax.set_xlabel('Part', fontdict=label_font)
-    ax.set_ylabel('Runtime in seconds', fontdict=label_font)
-    ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
-    ax.tick_params(axis='both', colors=text_color, length=0)
-    ax_empty.tick_params(axis='both', colors=background_color, length=0)
-    ax.set_facecolor(background_color)
-    ax_empty.set_facecolor(background_color)
-    for ax_ in (ax, ax_empty):
-        for spine in ax_.spines.values():
-            spine.set_visible(False)
-            
-    handles, labels = ax.get_legend_handles_labels()
-    legend = ax.legend(handles, labels, facecolor=background_color)
-    for text in legend.get_texts():
-        text.set_color(text_color)
-        text.set_font('serif')  
-
-
-    # Save the plot      
-    plt.savefig(RUNTIME_PART_PLOT2, bbox_inches='tight', dpi=300)

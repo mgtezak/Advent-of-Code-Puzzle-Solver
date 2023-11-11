@@ -22,8 +22,5 @@ def run():
         difference between the mean and the median. 
     """)
     st.write('')
-    st.image(RUNTIME_PLOT2)
-    # st.image(PLOTS + 'runtime_year_plot.png')
-    # st.image(PLOTS + 'runtime_day_plot.png')
-    st.image(RUNTIME_PART_PLOT)
+    st.image(RUNTIME_PLOT)
     st.divider()
