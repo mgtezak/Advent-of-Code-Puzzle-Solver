@@ -84,7 +84,7 @@ def plot_runtime():
     for x, ax in zip(('day', 'year', 'part'), (ax1, ax2, ax3)):
         sns.barplot(x=x, y='runtime', data=df, ax=ax, color=primary_color, estimator='mean', errorbar=None, label='Mean' if x=='day' else None, zorder=2)
         sns.barplot(x=x, y='runtime', data=df, ax=ax, color=text_color, estimator='median', errorbar=None, label='Median' if x=='day' else None, zorder=3)
-        ax.set_title(f'Runtime vs Day', fontdict=title_font)
+        ax.set_title(f'Runtime vs {x.capitalize()}', fontdict=title_font)
         ax.set_xlabel(x.capitalize(), fontdict=label_font)
         ax.set_ylabel('Runtime in seconds' if ax in (ax1, ax2) else '', fontdict=label_font)
         ax.grid(True, linestyle='--', linewidth=0.5, color=grid_color, alpha=0.3)
