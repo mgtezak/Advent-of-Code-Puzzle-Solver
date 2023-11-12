@@ -137,6 +137,3 @@ def create_progress_db() -> None:
             
     df = pd.DataFrame(data, columns=["year", "day", "completed"])
     df.to_csv(PROGRESS, index=False)
-
-
-
