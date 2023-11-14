@@ -15,7 +15,5 @@ If you get stuck there's a huge community on [reddit](https://www.reddit.com/r/a
 youtube and various other platforms, of people sharing their approaches to each problem.
 I learned a ton about programming in python by trying to solve these problems and then going online and comparing my solution to those of others.
 With this website I'd like to contribute to this community, by sharing my own code and creating a fun interface to play around with.
-
-That being said, I put this project together in a very short time and it is still a work in progress that I plan to build upon 
-in the future. For instance, I've only solved about half of the puzzles so far, and I haven't even uploaded all of my solutions yet.
-I hope you enjoy this prototype nonetheless! If you're interested in how I built this app, check out this repo.
+If you're interested in how I built it, check out its 
+[public GitHub repo](https://github.com/mgtezak/Advent-of-Code-Puzzle-Solver/).

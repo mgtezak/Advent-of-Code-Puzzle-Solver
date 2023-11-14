@@ -111,9 +111,9 @@ def run():
         col1, col2, _ = st.columns(3)
 
         if col1.button('Part 1'):
-            st.text(aoc.get_source_code(year, day, 1))
+            st.code(aoc.get_source_code(year, day, 1))
             
         if col2.button('Part 2'):            
-            st.text(aoc.get_source_code(year, day, 2))
+            st.code(aoc.get_source_code(year, day, 2))
     
     st.divider()
