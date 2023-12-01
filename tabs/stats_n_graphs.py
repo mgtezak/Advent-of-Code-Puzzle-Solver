@@ -20,7 +20,7 @@ def run():
     st.write('')
     st.write("""
         As is clearly visible in the following barplots, most of the solution functions uploaded so far, 
-        execute in just a few microseconds. 
+        execute in just a few milliseconds. 
         However there are a few outliers with a much longer runtime resulting in a large 
         difference between the mean and the median. 
     """)

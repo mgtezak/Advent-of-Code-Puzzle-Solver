@@ -48,7 +48,7 @@ def get_completed_stat() -> str:
     completed = df.completed.sum()
     total = df.shape[0]
 
-    return f"So far I've completed {completed} of the available total of {total} daily challenges."
+    return f"So far I've completed {completed} of the available total of {total} two-part daily challenges."
 
 
 
