@@ -5,15 +5,6 @@ from time import time
 # Local imports
 from lib.db import get_puzzle_input
 from lib.solutions import *
-# from lib.solutions.aoc2015 import *
-# from lib.solutions.aoc2016 import *
-# from lib.solutions.aoc2017 import *
-# from lib.solutions.aoc2018 import *
-# from lib.solutions.aoc2019 import *
-# from lib.solutions.aoc2020 import *
-# from lib.solutions.aoc2021 import *
-# from lib.solutions.aoc2022 import *
-# from lib.solutions.aoc2023 import *
 
 
 def solve(year: int, day: int, part: int) -> tuple[str, float]:
