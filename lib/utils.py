@@ -6,7 +6,7 @@ import pandas as pd
 import os
 
 # Local imports
-from config import PROGRESS, SOLUTION, PUZZLE_INPUT
+from config import PROGRESS, SOLUTION, PUZZLE_INPUT, MAX_YEAR
 from lib import aoc, db
 
 
@@ -48,7 +48,7 @@ def get_completed_stat() -> str:
     completed = df.completed.sum()
     total = df.shape[0]
 
-    return f"So far I've completed {completed} of the available total of {total} two-part daily challenges."
+    return f"So far I've completed {completed} ({int(completed/total*100)}%) of the available total of {total} two-part daily challenges."
 
 
 
@@ -130,7 +130,7 @@ def create_progress_db() -> None:
     """Creates the database containing information about which puzzles have been solved so far."""
 
     data = []
-    for year in range(2015, 2023):
+    for year in range(2015, MAX_YEAR+1):
         completed = set(get_valid_days(year))
         for day in range(1, 26):
             data.append([year, day, 1 if day in completed else 0])

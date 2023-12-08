@@ -3,13 +3,14 @@ import streamlit as st
 
 # Local imports
 from lib import db, aoc, utils
+from config import MAX_YEAR
 
 def run():
     st.title(f'✨🎄 Advent of Code Puzzle Solver 🎄✨')
     st.divider()
 
     cols = st.columns(5)
-    year = cols[0].selectbox('Year:', list(reversed(range(2015, 2023))), key='year', on_change=utils.reset_puzzle_solver)
+    year = cols[0].selectbox('Year:', list(reversed(range(2015, MAX_YEAR+1))), key='year', on_change=utils.reset_puzzle_solver)
     day = cols[1].selectbox('Day:', utils.get_valid_days(year), key='day', on_change=utils.reset_puzzle_solver)
     
     puzzle_title = db.get_title(year, day)

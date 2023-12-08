@@ -1,3 +1,11 @@
+from datetime import datetime
+
+### Global Variables:
+
+curr = datetime.today()
+MAX_YEAR = curr.year if curr.month == 12 else curr.year - 1
+
+
 ### All file paths in one place
 
 # Assets

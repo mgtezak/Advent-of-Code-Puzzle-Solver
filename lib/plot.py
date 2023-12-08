@@ -51,7 +51,7 @@ def plot_progress():
     ax.tick_params(axis='both', colors=text_color, length=0)
     ax.set_xticks(np.arange(1, 26, 1))
     ax.set_xlim(0.6, 25.4)
-    ax.set_yticks(np.arange(2015, 2023, 1))
+    ax.set_yticks(np.arange(2015, MAX_YEAR+1, 1))
 
     # Save the plot
     plt.savefig(PROGRESS_PLOT, bbox_inches='tight', dpi=300)
