@@ -1,6 +1,6 @@
 # Third party
 import pandas as pd
-from bs4 import BeautifulSoup as bs
+# from bs4 import BeautifulSoup as bs
 
 # Native
 import json
@@ -157,31 +157,31 @@ def get_title(year, day) -> str:
     
     return row.iloc[0]
 
-def populate_title_db():
-    data = []
-    for year in range(2015, MAX_YEAR+1):
-        for day in range(1, 26):
-            url = f"https://adventofcode.com/{year}/day/{day}"
-            page = urllib.request.urlopen(url)
-            soup = bs(page, "html.parser")
-            data.append([year, day, soup.h2.text])
-    df = pd.DataFrame(data, columns=['year', 'day', 'title'])
-    df.to_csv(TITLE, index=False)
+# def populate_title_db():
+#     data = []
+#     for year in range(2015, MAX_YEAR+1):
+#         for day in range(1, 26):
+#             url = f"https://adventofcode.com/{year}/day/{day}"
+#             page = urllib.request.urlopen(url)
+#             soup = bs(page, "html.parser")
+#             data.append([year, day, soup.h2.text])
+#     df = pd.DataFrame(data, columns=['year', 'day', 'title'])
+#     df.to_csv(TITLE, index=False)
 
 
-def add_recent_titles():
-    new_titles = []
-    curr = datetime.today()
-    for day in range(1, curr.day):
-        url = f"https://adventofcode.com/{curr.year}/day/{day}"
-        page = urllib.request.urlopen(url)
-        soup = bs(page, "html.parser")
-        new_titles.append([curr.year, day, soup.h2.text])
+# def add_recent_titles():
+#     new_titles = []
+#     curr = datetime.today()
+#     for day in range(1, curr.day):
+#         url = f"https://adventofcode.com/{curr.year}/day/{day}"
+#         page = urllib.request.urlopen(url)
+#         soup = bs(page, "html.parser")
+#         new_titles.append([curr.year, day, soup.h2.text])
 
-    old_df = get_title_db()
-    new_df = pd.DataFrame(new_titles, columns=['year', 'day', 'title'])
-    df = pd.concat([old_df, new_df])
-    df.to_csv(TITLE, index=False)
+#     old_df = get_title_db()
+#     new_df = pd.DataFrame(new_titles, columns=['year', 'day', 'title'])
+#     df = pd.concat([old_df, new_df])
+#     df.to_csv(TITLE, index=False)
 
 
 # VIDEO DB
