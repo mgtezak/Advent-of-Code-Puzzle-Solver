@@ -16,7 +16,12 @@ def run():
     puzzle_title = db.get_title(year, day)
     st.header(puzzle_title)
 
-    generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
+    video_link = db.get_vid_link(year, day)
+
+    if video_link != 'no link':
+        generate_tab, display_code_tab, video_tab = st.tabs(['Solve the Puzzle', 'Display the Code', 'Video Explanation'])
+    else:
+        generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
 
     with generate_tab:
         st.write('')
@@ -116,5 +121,10 @@ def run():
             
         if col2.button('Part 2'):            
             st.code(aoc.get_source_code(year, day, 2))
+
+    if video_link != 'no link':
+        with video_tab:
+            st.write('')
+            st.markdown(video_link, unsafe_allow_html=True)
     
     st.divider()
