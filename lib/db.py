@@ -9,7 +9,7 @@ from datetime import datetime
 import urllib
 
 # Local
-from config import MAX_YEAR, PUZZLE_INPUT, SOLUTION, GRID_LETTER, TITLE, VIDEO
+from config import MAX_YEAR, MAX_DAY, PUZZLE_INPUT, SOLUTION, GRID_LETTER, TITLE, VIDEO
 
 
 
@@ -161,6 +161,8 @@ def get_title(year, day) -> str:
 #     data = []
 #     for year in range(2015, MAX_YEAR+1):
 #         for day in range(1, 26):
+#             if year == MAX_YEAR and day > MAX_DAY:
+#                 break
 #             url = f"https://adventofcode.com/{year}/day/{day}"
 #             page = urllib.request.urlopen(url)
 #             soup = bs(page, "html.parser")
@@ -171,12 +173,13 @@ def get_title(year, day) -> str:
 
 # def add_recent_titles():
 #     new_titles = []
-#     curr = datetime.today()
-#     for day in range(1, curr.day):
-#         url = f"https://adventofcode.com/{curr.year}/day/{day}"
+#     for day in range(1, 26):
+#         if day > MAX_DAY:
+#             break
+#         url = f"https://adventofcode.com/{MAX_YEAR}/day/{day}"
 #         page = urllib.request.urlopen(url)
 #         soup = bs(page, "html.parser")
-#         new_titles.append([curr.year, day, soup.h2.text])
+#         new_titles.append([MAX_YEAR, day, soup.h2.text])
 
 #     old_df = get_title_db()
 #     new_df = pd.DataFrame(new_titles, columns=['year', 'day', 'title'])
