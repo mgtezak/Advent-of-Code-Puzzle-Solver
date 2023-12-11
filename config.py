@@ -1,17 +1,19 @@
-import time
+from datetime import datetime
+import pytz
 
-### Global Variables:
+### Global Date Variables:
 
-curr = time.localtime(time.time())
-if curr.tm_mon == 12:
-    MAX_YEAR = curr.tm_year
-    if curr.tm_hour > 6:
-        MAX_DAY = curr.tm_mday  
-    else:   # not yet 6:00 o'clock
-        MAX_DAY = curr.tm_mday - 1
-else:   # not yet december
-    MAX_YEAR = curr.tm_year - 1
-    MAX_DAY = 25
+def get_curr_max_date():
+    # AoC local time (EST/UTC-5) 
+    curr = datetime.now(pytz.timezone('EST'))
+    year, month, day = curr.year, curr.month, curr.day
+    is_december = (month == 12)
+    
+    MAX_YEAR = year if is_december else year - 1
+    MAX_DAY = min(day, 25) if is_december else 25
+    return MAX_YEAR, MAX_DAY
+
+MAX_YEAR, MAX_DAY = get_curr_max_date()
 
 
 ### All file paths in one place
