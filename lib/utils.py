@@ -6,7 +6,7 @@ import pandas as pd
 import os
 
 # Local imports
-from config import PROGRESS, SOLUTION, PUZZLE_INPUT, MAX_YEAR
+from config import PROGRESS, SOLUTION, PUZZLE_INPUT, MAX_YEAR, MAX_DAY
 from lib import aoc, db
 
 
@@ -14,7 +14,7 @@ def reboot_app() -> None:
     """
     Gets called upon restarting the app with an empty session state. 
     All currently stored puzzle inputs and solutions will be deleted.
-    The completion db will be updated.
+    The progress db will be updated.
     """
 
     if os.path.exists(SOLUTION):
@@ -134,6 +134,8 @@ def create_progress_db() -> None:
         completed = set(get_valid_days(year))
         for day in range(1, 26):
             data.append([year, day, 1 if day in completed else 0])
-            
+            if year == MAX_YEAR and day == MAX_DAY:
+                break
+
     df = pd.DataFrame(data, columns=["year", "day", "completed"])
     df.to_csv(PROGRESS, index=False)
