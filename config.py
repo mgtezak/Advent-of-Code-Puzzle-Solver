@@ -21,7 +21,7 @@ MAX_YEAR, MAX_DAY = get_curr_max_date()
 # Assets
 SIDEBAR_IMG = 'assets/aoc_tree.png'
 STYLE = 'assets/style.css'
-PROGRESS_PLOT = 'assets/plots/completion_plot.png'
+PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
 
 # DB

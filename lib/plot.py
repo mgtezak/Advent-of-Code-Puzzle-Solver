@@ -38,7 +38,7 @@ def plot_progress():
 
     # Customize the plot area
     ax.set_facecolor('#04013b')
-    ax.set_title('Advent of Code Challenge Progress', fontdict=title_font)
+    ax.set_title('My Advent of Code Progress', fontdict=title_font)
     ax.set_xlabel('Day', fontdict=label_font)
     ax.set_ylabel('Year', fontdict=label_font)
     ax.invert_yaxis()
