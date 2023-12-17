@@ -2,7 +2,8 @@ import re
 import math
 from functools import cmp_to_key, cache
 from itertools import cycle, combinations
-from collections import Counter
+from collections import Counter, defaultdict
+
 import numpy as np
 
 
@@ -796,22 +797,143 @@ def aoc2023_day14_part2(puzzle_input):
 
 
 def aoc2023_day15_part1(puzzle_input):
-    pass
+    total = 0
+    for step in puzzle_input.split(','):
+        current_val = 0
+        for char in step:
+            current_val += ord(char)
+            current_val *= 17
+            current_val %= 256
+        total += current_val
+
+    return total
 
 
 def aoc2023_day15_part2(puzzle_input):
-    pass
+
+    labels = defaultdict(list)
+    lenses = defaultdict(list)
+    regex = r'(\w+)(=|-)(\d+)?'
+    for label, op, focal_len in re.findall(regex, puzzle_input):
+        hash = 0
+        for char in label:
+            hash = (hash + ord(char)) * 17 % 256
+
+        if label in labels[hash]:
+            i = labels[hash].index(label)
+            if op == '-':
+                labels[hash].pop(i)
+                lenses[hash].pop(i)
+            else:
+                lenses[hash][i] = int(focal_len)
+        elif op == '=':
+            labels[hash].append(label)
+            lenses[hash].append(int(focal_len))
+
+    total = 0
+    for box, lenses in lenses.items():
+        for i, focal_len in enumerate(lenses, start=1):
+            total += (box+1) * i * focal_len
+        
+    return total
 
 
 ####################################################################################################
 
 
 def aoc2023_day16_part1(puzzle_input):
-    pass
+
+    grid = [list(r) for r in puzzle_input.split('\n')]
+    m, n = len(grid), len(grid[0])
+    visited = set()
+    energized = set()
+    queue = set([(0, 0, 'right')])   
+    while queue:
+        x, y, direction = queue.pop()
+        energized.add((x, y))
+        tile = grid[x][y]
+
+        if y < n-1 and (x, y+1, 'right') not in visited and (
+                (direction == 'right' and tile in '.-') or 
+                (direction == 'up' and tile in '/-') or
+                (direction == 'down' and tile in '\\-')):
+            queue.add((x, y+1, 'right'))
+            visited.add((x, y+1, 'right'))
+
+        if x > 0 and (x-1, y, 'up') not in visited and (
+                (direction == 'up' and tile in '.|') or 
+                (direction == 'right' and tile in '/|') or
+                (direction == 'left' and tile in '\\|')):
+            queue.add((x-1, y, 'up'))
+            visited.add((x-1, y, 'up'))
+
+        if y > 0 and (x, y-1, 'left') not in visited and (
+                (direction == 'left' and tile in '.-') or 
+                (direction == 'up' and tile in '\\-') or
+                (direction == 'down' and tile in '/-')):
+            queue.add((x, y-1, 'left'))
+            visited.add((x, y-1, 'left'))
+
+        if x < m-1 and (x+1, y, 'down') not in visited and (
+                (direction == 'down' and tile in '.|') or 
+                (direction == 'right' and tile in '\\|') or
+                (direction == 'left' and tile in '/|')):
+            queue.add((x+1, y, 'down'))     
+            visited.add((x+1, y, 'down'))
+
+    return len(energized)
 
 
 def aoc2023_day16_part2(puzzle_input):
-    pass
+
+    grid = [list(r) for r in puzzle_input.split('\n')]
+    m, n = len(grid), len(grid[0])
+    initial = ({(x, 0, 'right') for x in range(m)} |
+               {(x, n-1, 'left') for x in range(m)} |
+               {(m-1, y, 'up') for y in range(n)} |
+               {(0, y, 'down') for y in range(n)})
+    
+    best = 0
+    for i in initial:
+        visited = set()
+        energized = set()
+        queue = set([i])   
+        while queue:
+            x, y, direction = queue.pop()
+            energized.add((x, y))
+            tile = grid[x][y]
+
+            if y < n-1 and (x, y+1, 'right') not in visited and (
+                    (direction == 'right' and tile in '.-') or 
+                    (direction == 'up' and tile in '/-') or
+                    (direction == 'down' and tile in '\\-')):
+                queue.add((x, y+1, 'right'))
+                visited.add((x, y+1, 'right'))
+
+            if x > 0 and (x-1, y, 'up') not in visited and (
+                    (direction == 'up' and tile in '.|') or 
+                    (direction == 'right' and tile in '/|') or
+                    (direction == 'left' and tile in '\\|')):
+                queue.add((x-1, y, 'up'))
+                visited.add((x-1, y, 'up'))
+
+            if y > 0 and (x, y-1, 'left') not in visited and (
+                    (direction == 'left' and tile in '.-') or 
+                    (direction == 'up' and tile in '\\-') or
+                    (direction == 'down' and tile in '/-')):
+                queue.add((x, y-1, 'left'))
+                visited.add((x, y-1, 'left'))
+
+            if x < m-1 and (x+1, y, 'down') not in visited and (
+                    (direction == 'down' and tile in '.|') or 
+                    (direction == 'right' and tile in '\\|') or
+                    (direction == 'left' and tile in '/|')):
+                queue.add((x+1, y, 'down'))     
+                visited.add((x+1, y, 'down'))
+
+        best = max(best, len(energized))
+
+    return best
 
 
 ####################################################################################################
