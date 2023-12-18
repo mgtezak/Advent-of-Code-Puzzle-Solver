@@ -1,5 +1,6 @@
 from operator import eq, ne, lt, le, gt, ge
 from collections import Counter
+import re
 
 
 def aoc2017_day1_part1(puzzle_input):
