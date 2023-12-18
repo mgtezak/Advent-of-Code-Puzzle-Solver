@@ -87,7 +87,7 @@ def run():
                     if st.session_state.get('show_solution_1', False):
                         st.rerun()
 
-            if col2.button('Part 2', key='solve2') or st.session_state.get('show_solution_2', False):
+            if day < 25 and col2.button('Part 2', key='solve2') or st.session_state.get('show_solution_2', False):
                 solution = db.get_solution(year, day, 2)
                 if solution:
                     st.write('The solution for part 2 is:')
@@ -118,8 +118,8 @@ def run():
 
         if col1.button('Part 1'):
             st.code(aoc.get_source_code(year, day, 1))
-            
-        if col2.button('Part 2'):            
+        
+        if day < 25 and col2.button('Part 2'):            
             st.code(aoc.get_source_code(year, day, 2))
 
     if video_link != 'no link':

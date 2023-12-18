@@ -31,3 +31,6 @@ SOLUTION = 'db/solution.csv'
 PROGRESS = 'db/progress.csv'
 TITLE = 'db/title.csv'
 VIDEO = 'db/video.csv'
+
+# Solving functions
+SOLUTION_DIR = 'lib/solutions/'

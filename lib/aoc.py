@@ -1,10 +1,17 @@
 # Native imports
 from inspect import getsource
 from time import time
+from importlib import import_module
 
 # Local imports
 from lib.db import get_puzzle_input
 from lib.solutions import *
+
+
+def get_function(year: int, day: int, part: int):
+    module_name = f"solutions.aoc{year}.day{day:02}.part{part}"
+    module = import_module(module_name)
+    return getattr(module, f'part{part}')
 
 
 def solve(year: int, day: int, part: int) -> tuple[str, float]:
