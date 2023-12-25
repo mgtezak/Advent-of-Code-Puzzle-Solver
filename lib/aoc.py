@@ -476,6 +476,5 @@ function_dict = {
     'aoc2023_day23_part2': aoc2023_day23_part2,
     # 'aoc2023_day24_part1': aoc2023_day24_part1,
     # 'aoc2023_day24_part2': aoc2023_day24_part2,
-    # 'aoc2023_day25_part1': aoc2023_day25_part1,
-    # 'aoc2023_day25_part2': aoc2023_day25_part2
+    'aoc2023_day25_part1': aoc2023_day25_part1,
 }
