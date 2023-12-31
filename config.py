@@ -1,7 +1,8 @@
 from datetime import datetime
 import pytz
 
-### Global Date Variables:
+
+### Global date variables
 
 def get_curr_max_date():
     # AoC local time (EST/UTC-5) 
@@ -10,7 +11,7 @@ def get_curr_max_date():
     is_december = (month == 12)
     
     MAX_YEAR = year if is_december else year - 1
-    MAX_DAY = min(day, 25) if is_december else 25
+    MAX_DAY = day if is_december and day < 25 else 25
     return MAX_YEAR, MAX_DAY
 
 MAX_YEAR, MAX_DAY = get_curr_max_date()
@@ -34,3 +35,13 @@ VIDEO = 'db/video.csv'
 
 # Solving functions
 SOLUTION_DIR = 'lib/solutions/'
+
+
+### Plot configuration
+
+# Colors
+TEXT_COLOR = '#FFD700'
+PRIMARY_COLOR = '#FF0000'
+BACKGROUND_COLOR = '#04013b'
+GRID_COLOR = 'white'
+

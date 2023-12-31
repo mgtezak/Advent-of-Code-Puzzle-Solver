@@ -1577,4 +1577,4 @@ def aoc2023_day25_part1(puzzle_input):
         if cuts == 3:
             break
 
-    return math.prod(partitions)
+    return math.prod(map(len, partitions))
