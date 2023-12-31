@@ -88,7 +88,7 @@ def read_grid(grid) -> str | bool:
     letters = ''
     for col in range(0, len(lines[0]), letter_width):
         letter = '\n'.join([''.join(lines[row][col:col+letter_width]) for row in range(len(lines))])
-        letters += grid_letters.get(letter, '*')
+        letters += grid_letters.get(letter, '_')
     if '*' in letters:
         letters += ' (could not fully decipher)'
     return letters

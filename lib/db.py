@@ -5,11 +5,9 @@ import pandas as pd
 # Native
 import json
 import os
-from datetime import datetime
-import urllib
 
 # Local
-from config import MAX_YEAR, MAX_DAY, PUZZLE_INPUT, SOLUTION, GRID_LETTER, TITLE, VIDEO
+from config import MAX_YEAR, PUZZLE_INPUT, SOLUTION, GRID_LETTER, TITLE, VIDEO
 
 
 
@@ -134,6 +132,15 @@ def put_grid_letter(grid, letter) -> None:
     with open(GRID_LETTER, 'w') as f:
         json.dump(db, f, indent=4)
 
+
+def put_grid(grid, letters):
+    grid_letters = db.get_grid_letter_db()
+    lines = grid.split('\n')
+    letter_width = 5 if len(lines) == 6 else 8
+    for i, col in enumerate(range(0, len(lines[0]), letter_width)):
+        letter = '\n'.join([''.join(lines[row][col:col+letter_width]) for row in range(len(lines))])
+        if letter not in grid_letters:
+            put_grid_letter(letter, letters[i])
 
 
 # TITLE DB
