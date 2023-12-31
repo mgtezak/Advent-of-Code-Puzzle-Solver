@@ -570,9 +570,18 @@ def aoc2022_day13_part1(puzzle_input):
 
         else: ### if one is int the other is list: put the int in a list and compare lists
             return compare_item([left], right) if type(left) == int else compare_item(left, [right])
-        
-    packets = [[literal_eval(line) for line in s.split('\n')] for s in puzzle_input.split('\n\n')]
-    return sum(i for i, (pair) in enumerate(packets, start=1) if compare_item(*pair) == 1)
+    
+    def safe_eval(line):
+        assert set(line).issubset(set('0123456789[],')), "This line contains invalid characters"
+        return literal_eval(line)
+    
+    total = 0
+    for i, lines in enumerate(puzzle_input.split('\n\n'), start=1):
+        lines = [safe_eval(line) for line in lines.split('\n')]
+        if compare_item(*lines) == 1:
+            total += i
+
+    return total
 
 
 def aoc2022_day13_part2(puzzle_input):
@@ -601,8 +610,12 @@ def aoc2022_day13_part2(puzzle_input):
 
         else: ### if one is int the other is list: put the int in a list and compare lists
             return compare_item([left], right) if type(left) == int else compare_item(left, [right])
-        
-    packets = [[literal_eval(line) for line in s.split('\n')] for s in puzzle_input.split('\n\n')]
+    
+    def safe_eval(line):
+        assert set(line).issubset(set('0123456789[],')), "This line contains invalid characters"
+        return literal_eval(line)
+
+    packets = [[safe_eval(line) for line in s.split('\n')] for s in puzzle_input.split('\n\n')]
     all_packets = [l for packet in packets for l in packet] + [[[2]], [[6]]]
     sorted_packets = ['index 0'] + sorted(all_packets, key=cmp_to_key(compare_item), reverse=True)
     return sorted_packets.index([[2]]) * sorted_packets.index([[6]])
