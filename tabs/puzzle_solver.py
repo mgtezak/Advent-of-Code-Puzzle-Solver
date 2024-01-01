@@ -2,13 +2,13 @@
 import streamlit as st
 
 # Local imports
-from lib import aoc
-from lib.video import get_vid_link
-from lib.solution import get_solution, put_solution, del_solution, display_solution
-from lib.title import get_title
-from lib.puzzle_input import get_puzzle_input, put_puzzle_input, del_puzzle_input
 from lib.utils import reset_puzzle_solver, get_valid_days, display_fail_msg
+from lib.puzzle_input import get_temp_puzzle_input, put_temp_puzzle_input, del_temp_puzzle_input
+from lib.solution import get_temp_solution, put_temp_solution, del_temp_solution, display_solution, get_source_code, solve
+from lib.puzzle import get_title, get_vid_link
 from config import MAX_YEAR
+
+
 
 def run():
     st.title(f'✨🎄 Advent of Code Puzzle Solver 🎄✨')
@@ -23,10 +23,10 @@ def run():
 
     video_link = get_vid_link(year, day)
 
-    if video_link != 'no link':
-        generate_tab, display_code_tab, video_tab = st.tabs(['Solve the Puzzle', 'Display the Code', 'Video Explanation'])
-    else:
+    if video_link is None:
         generate_tab, display_code_tab = st.tabs(['Solve the Puzzle', 'Display the Code'])
+    else:
+        generate_tab, display_code_tab, video_tab = st.tabs(['Solve the Puzzle', 'Display the Code', 'Video Explanation'])
 
     with generate_tab:
         st.write('')
@@ -39,7 +39,7 @@ def run():
 
             # default: no puzzle input yet provided or retrieved
             if not (input_provided or input_retrieved):    
-                if get_puzzle_input(year, day):
+                if get_temp_puzzle_input(year, day):
                     col1, col2 = st.columns([3, 8])
                     col1.info('Previous puzzle input detected.')
                     st.button('Use previous puzzle input', key='use_prev_input')
@@ -61,8 +61,8 @@ def run():
                     st.button('Try again!')
 
                 else:
-                    put_puzzle_input(year, day, puzzle_input)
-                    del_solution(year, day)
+                    put_temp_puzzle_input(year, day, puzzle_input)
+                    del_temp_solution(year, day)
                     st.session_state['solution'] = True
                     st.rerun()
 
@@ -72,7 +72,7 @@ def run():
             col1, col2, col3 = st.columns(3)
 
             if col1.button('Part 1', key='solve1') or st.session_state.get('show_solution_1', False):
-                solution = get_solution(year, day, 1)
+                solution = get_temp_solution(year, day, 1)
                 if solution:
                     st.write('The solution for part 1 is:')
                     display_solution(*solution)
@@ -81,19 +81,19 @@ def run():
                 else:
                     try:
                         with st.spinner('Calculating solution...'):
-                            solution, runtime = aoc.solve(year, day, 1)
-                        put_solution(year, day, 1, solution, runtime)
+                            solution, runtime = solve(year, day, 1)
+                        put_temp_solution(year, day, 1, solution, runtime)
                         st.session_state['show_solution_1'] = True
 
                     except:
                         display_fail_msg()
-                        del_puzzle_input(year, day)
+                        del_temp_puzzle_input(year, day)
 
                     if st.session_state.get('show_solution_1', False):
                         st.rerun()
 
             if day < 25 and col2.button('Part 2', key='solve2') or st.session_state.get('show_solution_2', False):
-                solution = get_solution(year, day, 2)
+                solution = get_temp_solution(year, day, 2)
                 if solution:
                     st.write('The solution for part 2 is:')
                     display_solution(*solution)
@@ -102,13 +102,13 @@ def run():
                 else:
                     try:
                         with st.spinner('Calculating solution...'):
-                            solution, runtime = aoc.solve(year, day, 2)
-                        put_solution(year, day, 2, solution, runtime)
+                            solution, runtime = solve(year, day, 2)
+                        put_temp_solution(year, day, 2, solution, runtime)
                         st.session_state['show_solution_2'] = True
 
                     except:
                         display_fail_msg()
-                        del_puzzle_input(year, day)
+                        del_temp_puzzle_input(year, day)
 
                     if st.session_state.get('show_solution_2', False):
                         st.rerun()
@@ -122,12 +122,12 @@ def run():
         col1, col2, _ = st.columns(3)
 
         if col1.button('Part 1'):
-            st.code(aoc.get_source_code(year, day, 1))
+            st.code(get_source_code(year, day, 1))
         
         if day < 25 and col2.button('Part 2'):            
-            st.code(aoc.get_source_code(year, day, 2))
+            st.code(get_source_code(year, day, 2))
 
-    if video_link != 'no link':
+    if video_link:
         with video_tab:
             st.write('')
             st.markdown(video_link, unsafe_allow_html=True)

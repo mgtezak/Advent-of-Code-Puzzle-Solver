@@ -3,13 +3,27 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import numpy as np
+import pandas as pd
 
 # Local imports
-from .utils import get_progress_db
-from .solution import get_solution_db
+from .puzzle import get_puzzle_info_db
 from config import MAX_YEAR
 from config import TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, GRID_COLOR
 from config import PROGRESS_PLOT, RUNTIME_PLOT
+
+
+def get_plot_df():
+    df = get_puzzle_info_db()
+    df.index = df.index.astype(str)
+    df['year'] = df.index.str.slice(0, 4).astype(int)
+    df['day'] = df.index.str.slice(4, 6).astype(int)
+    df_part1 = df[['year', 'day', 'solution_1', 'runtime_1']].copy()
+    df_part2 = df[['year', 'day', 'solution_2', 'runtime_2']].copy()
+    df_part1.rename(columns={'solution_1': 'solution', 'runtime_1': 'runtime'}, inplace=True)
+    df_part2.rename(columns={'solution_2': 'solution', 'runtime_2': 'runtime'}, inplace=True)
+    df_part1['part'] = 1
+    df_part2['part'] = 2
+    return pd.concat([df_part1, df_part2]).dropna().reset_index(drop=True)
 
 
 def plot_progress():
@@ -20,7 +34,6 @@ def plot_progress():
     # Customize the entire figure
     fig.patch.set_facecolor(BACKGROUND_COLOR)
 
-
     # Add dotted white grid lines
     ax.grid(True, linestyle='--', linewidth=0.5, color=GRID_COLOR, alpha=0.3)
 
@@ -29,8 +42,8 @@ def plot_progress():
     label_font = {'family': 'serif', 'color': TEXT_COLOR, 'size': 12}
 
     # Create the scatter plot
-    df = get_progress_db()
-    sns.scatterplot(data=df[df.completed == 1], x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9)
+    df = get_plot_df()
+    sns.scatterplot(data=df, x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9)
 
     # Customize the plot area
     ax.set_facecolor('#04013b')
@@ -61,7 +74,7 @@ def plot_runtime():
     label_font = {'family': 'serif', 'color': TEXT_COLOR, 'size': 12}
 
     # Get data
-    df = get_solution_db()
+    df = get_plot_df()
 
     # Create a figure, GridSpec layout and axes
     fig = plt.figure(figsize=(15, 10), facecolor=BACKGROUND_COLOR)

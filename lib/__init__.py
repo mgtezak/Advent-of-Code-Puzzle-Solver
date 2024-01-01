@@ -1,9 +1,8 @@
 from . import (
-    puzzle_input,
-    solution,
-    title,
-    utils,
-    video,
-    plot,
     grid_letter,
+    plot,
+    puzzle_input,
+    puzzle,
+    solution,
+    utils,
 )

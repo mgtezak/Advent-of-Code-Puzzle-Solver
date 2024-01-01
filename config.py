@@ -25,16 +25,13 @@ STYLE = 'assets/style.css'
 PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
 
-# DB
-GRID_LETTER_DB = 'db/grid_letter.json'
-PUZZLE_INPUT_DB = 'db/puzzle_input.json'
-SOLUTION_DB = 'db/solution.csv'
-PROGRESS_DB = 'db/progress.csv'
-TITLE_DB = 'db/title.csv'
-VIDEO_DB = 'db/video.csv'
 
-# Solving functions
-SOLUTION_DIR = 'lib/solutions/'
+# Database
+PUZZLE_INFO_DB = 'db/puzzle_info.csv'
+GRID_LETTER_DB = 'db/grid_letter.json'
+TEMP_PUZZLE_INPUT_DB = 'db/temp_puzzle_input.json'  # gitignore – rebooted with every new session
+TEMP_SOLUTION_DB = 'db/temp_solution.csv'           # gitignore – rebooted with every new session
+MY_PUZZLE_INPUT_DB = 'db/my_puzzle_input.json'      # gitignore
 
 
 ### Plot configuration
@@ -44,4 +41,3 @@ TEXT_COLOR = '#FFD700'
 PRIMARY_COLOR = '#FF0000'
 BACKGROUND_COLOR = '#04013b'
 GRID_COLOR = 'white'
-

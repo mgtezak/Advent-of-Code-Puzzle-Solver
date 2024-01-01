@@ -4,15 +4,37 @@ import streamlit as st
 
 # Native
 import os
+import importlib 
+import time
 
 # Local
-from config import SOLUTION_DB
+from config import TEMP_SOLUTION_DB
 from .grid_letter import read_grid
+from .puzzle_input import get_temp_puzzle_input
+
+
+
+def solve(year: int, day: int, part: int) -> tuple[str, float]:
+    """Retrieves puzzle input and solving function for given year, day & part 
+    and returns solution and runtime.
+    """
+
+    module_name = f"Advent_of_Code.aoc{year}.day{day:02}.part{part}"
+    module = importlib.import_module(module_name)
+    solve_func = getattr(module, f'part{part}')
+
+    puzzle_input = get_temp_puzzle_input(year, day)
+
+    start = time.time()
+    solution = str(solve_func(puzzle_input))
+    runtime = time.time() - start
+
+    return solution, runtime
+
 
 
 def display_solution(solution: str, runtime: float) -> None:
-    """
-    Displays the solution and runtime. If the solution comes as a letter grid, 
+    """Displays the solution and runtime. If the solution comes as a letter grid, 
     an attempt is made to decipher it. If successful both the actual solution 
     and the grid are displayed. If not, just the grid.
     """
@@ -28,6 +50,7 @@ def display_solution(solution: str, runtime: float) -> None:
     st.caption(f"Runtime: {format_runtime(runtime)}")
 
 
+
 def format_runtime(runtime: float) -> str:
     """Returns formatted runtime either as seconds or milliseconds."""
 
@@ -36,49 +59,66 @@ def format_runtime(runtime: float) -> str:
     return f'{int(runtime*1000)} milliseconds'
 
 
-def get_solution_db() -> pd.DataFrame:
+
+def get_source_code(year: int, day: int, part: int) -> str:
+    """Retrieves the solution script for given year, day & part"""
+
+    path = f'Advent_of_Code/aoc{year}/day{day:02}/part{part}.py'
+    if not os.path.exists(path):
+        return 'Oops, cannot find script!'
+    
+    with open(path, 'r') as f:
+        script = f.read()
+
+    return script
+
+
+
+def get_temp_solution_db() -> pd.DataFrame:
     """Returns all solutions as pandas dataframe."""
 
-    columns = ['id', 'year', 'day', 'part', 'solution', 'runtime']
-    dtypes = [int, int, int, int, object, float]
+    columns = ['solution', 'runtime']
+    dtypes = [object, float]
 
-    if not os.path.exists(SOLUTION_DB):
-        pd.DataFrame(columns=columns).to_csv(SOLUTION_DB, index=False)
+    if not os.path.exists(TEMP_SOLUTION_DB):
+        return pd.DataFrame(columns=columns)
     
-    return pd.read_csv(SOLUTION_DB, dtype=dict(zip(columns, dtypes)))
+    return pd.read_csv(TEMP_SOLUTION_DB, index_col=0, dtype=dict(zip(columns, dtypes)))
 
 
 
-def get_solution(year: int, day: int, part: int) -> tuple[str, float] | None:
-    """Fetches a single solution & runtime string tuple from database ."""
+def get_temp_solution(year: int, day: int, part: int) -> tuple[str, float] | None:
+    """Fetches a single solution & runtime string tuple from database."""
 
-    df = get_solution_db()
+    puzzle_id = 1000*year + 10*day + part
+    df = get_temp_solution_db()
 
-    row = df[df.id == int(f'{year}{day:02}{part}')]
-    if len(row) == 0:
+    if puzzle_id not in df.index:
         return None
-    
-    solution, runtime = row.iloc[0, [4, 5]].values
-    return solution, runtime 
+
+    solution, runtime = df.loc[puzzle_id] 
+    return solution, runtime
 
 
 
-def put_solution(year: int, day: int, part: int, solution: str, runtime: float) -> None:
+def put_temp_solution(year: int, day: int, part: int, solution: str, runtime: float) -> None:
     """Stores away a single solution. Will overwrite if necessary."""
 
-    new_entry = pd.DataFrame([dict(id=f'{year}{day:02}{part}', year=year, day=day, part=part, solution=str(solution), runtime=runtime)])
-    df = get_solution_db()
-    if len(df) == 0:
-        df = new_entry
-    else:
-        df = pd.concat([df, new_entry], axis=0, ignore_index=True)
-    df.to_csv(SOLUTION_DB, index=False)
+    puzzle_id = 1000*year + 10*day + part
+    df = get_temp_solution_db()
+    df.loc[puzzle_id] = [solution, runtime]
+    df.to_csv(TEMP_SOLUTION_DB)
 
 
 
-def del_solution(year: int, day: int) -> None:
-    """Removes a single solution entry from the database."""
+def del_temp_solution(year: int, day: int) -> None:
+    """Removes solutions for given year and day."""
 
-    df = get_solution_db()
-    df = df[~((df.year==year) & (df.day==day))]
-    df.to_csv(SOLUTION_DB, index=False)
+    puzzle_ids = [1000*year + 10*day + part for part in (1, 2)]
+    df = get_temp_solution_db()
+
+    for puzzle_id in puzzle_ids:
+        if puzzle_id in df.index:
+            df.drop(puzzle_id, inplace=True)
+
+    df.to_csv(TEMP_SOLUTION_DB)

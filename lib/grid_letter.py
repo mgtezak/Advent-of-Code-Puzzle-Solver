@@ -31,8 +31,8 @@ def extract_letters_from_grid(grid: str) -> str:
 
 
 
-def read_grid(grid) -> str | bool:
-    """Takes a grid of letters made up of '#', space and newline characters and attempts to decipher it,
+def read_grid(grid) -> str:
+    """Takes a grid of letters made up of '#', space & newline characters and attempts to decipher it,
     first by seperating the individual letters from each other and then by checking, whether they exist 
     in the (hopefully complete) grid letter database.
     
@@ -76,6 +76,3 @@ def put_grid_letters(grid: str, letters: str) -> None:
 
     with open(GRID_LETTER_DB, 'w') as f:
         json.dump(db, f, indent=4)
-
-
-
