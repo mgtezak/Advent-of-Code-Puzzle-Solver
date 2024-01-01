@@ -26,12 +26,12 @@ PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
 
 # DB
-GRID_LETTER = 'db/grid_letter.json'
-PUZZLE_INPUT = 'db/puzzle_input.json'
-SOLUTION = 'db/solution.csv'
-PROGRESS = 'db/progress.csv'
-TITLE = 'db/title.csv'
-VIDEO = 'db/video.csv'
+GRID_LETTER_DB = 'db/grid_letter.json'
+PUZZLE_INPUT_DB = 'db/puzzle_input.json'
+SOLUTION_DB = 'db/solution.csv'
+PROGRESS_DB = 'db/progress.csv'
+TITLE_DB = 'db/title.csv'
+VIDEO_DB = 'db/video.csv'
 
 # Solving functions
 SOLUTION_DIR = 'lib/solutions/'

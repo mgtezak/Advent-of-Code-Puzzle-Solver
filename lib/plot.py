@@ -5,7 +5,8 @@ import matplotlib.gridspec as gridspec
 import numpy as np
 
 # Local imports
-from lib import db, utils 
+from .utils import get_progress_db
+from .solution import get_solution_db
 from config import MAX_YEAR
 from config import TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, GRID_COLOR
 from config import PROGRESS_PLOT, RUNTIME_PLOT
@@ -28,7 +29,7 @@ def plot_progress():
     label_font = {'family': 'serif', 'color': TEXT_COLOR, 'size': 12}
 
     # Create the scatter plot
-    df = utils.get_progress_db()
+    df = get_progress_db()
     sns.scatterplot(data=df[df.completed == 1], x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9)
 
     # Customize the plot area
@@ -60,7 +61,7 @@ def plot_runtime():
     label_font = {'family': 'serif', 'color': TEXT_COLOR, 'size': 12}
 
     # Get data
-    df = db.get_solution_db()
+    df = get_solution_db()
 
     # Create a figure, GridSpec layout and axes
     fig = plt.figure(figsize=(15, 10), facecolor=BACKGROUND_COLOR)

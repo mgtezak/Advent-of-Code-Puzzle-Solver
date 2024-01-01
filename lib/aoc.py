@@ -4,8 +4,8 @@ from time import time
 from importlib import import_module
 
 # Local imports
-from lib.db import get_puzzle_input
-from lib.solutions import *
+from .puzzle_input import get_puzzle_input
+from .solutions import *
 
 
 def get_function(year: int, day: int, part: int):

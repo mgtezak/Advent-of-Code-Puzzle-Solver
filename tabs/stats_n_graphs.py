@@ -2,7 +2,7 @@
 import streamlit as st
 
 # Local imports
-from lib import utils 
+from lib.utils import get_completed_stat
 from config import PROGRESS_PLOT, RUNTIME_PLOT
 
 
@@ -13,7 +13,7 @@ def run():
     for _ in range(2):
         st.write('')
 
-    st.image(PROGRESS_PLOT, caption=utils.get_completed_stat())
+    st.image(PROGRESS_PLOT, caption=get_completed_stat())
 
     st.write('')
     st.divider()
