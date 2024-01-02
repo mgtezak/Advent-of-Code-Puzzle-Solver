@@ -5,29 +5,33 @@ import json
 from config import GRID_LETTER_DB
 
 
+LARGE_GRID = '''
+  ##   #####   ####  ###### ######  ####  #    #    ### #    # #      #    # #####  #####  #    # ######
+ #  #  #    # #    # #      #      #    # #    #     #  #   #  #      ##   # #    # #    # #    #      #
+#    # #    # #      #      #      #      #    #     #  #  #   #      ##   # #    # #    #  #  #       #
+#    # #    # #      #      #      #      #    #     #  # #    #      # #  # #    # #    #  #  #      # 
+#    # #####  #      #####  #####  #      ######     #  ##     #      # #  # #####  #####    ##      #  
+###### #    # #      #      #      #  ### #    #     #  ##     #      #  # # #      #  #     ##     #   
+#    # #    # #      #      #      #    # #    #     #  # #    #      #  # # #      #   #   #  #   #    
+#    # #    # #      #      #      #    # #    # #   #  #  #   #      #   ## #      #   #   #  #  #     
+#    # #    # #    # #      #      #   ## #    # #   #  #   #  #      #   ## #      #    # #    # #     
+#    # #####   ####  ###### #       ### # #    #  ###   #    # ###### #    # #      #    # #    # ######
+'''[1:-1]
 
-def extract_letters_from_grid(grid: str) -> str:
-    """Generator that extracts individual letters from letter grid"""
+LARGE_LETTERS = 'ABCEFGHJKLNPRXZ'
 
-    if set(grid) != set('# \n'):
-        raise ValueError("Expecting grid to be composed of #, space and newline characters")
 
-    grid = grid.split('\n')
-    m, n = len(grid), len(grid[0])
 
-    if any(len(grid[i]) != n for i in range(m)):
-        raise ValueError("Expecting rows to have uniform lengths")
-    
-    divisors_cols = [col for col in range(n) if all(grid[row][col] == ' ' for row in range(m))]
+SMALL_GRID = '''
+ ##  ###   ##  #### ####  ##  #  # ###   ## #  # #     ##  ###  ###   ### #  # #   # ####
+#  # #  # #  # #    #    #  # #  #  #     # # #  #    #  # #  # #  # #    #  # #   #    #
+#  # ###  #    ###  ###  #    ####  #     # ##   #    #  # #  # #  # #    #  #  # #    # 
+#### #  # #    #    #    # ## #  #  #     # # #  #    #  # ###  ###   ##  #  #   #    #  
+#  # #  # #  # #    #    #  # #  #  #  #  # # #  #    #  # #    # #     # #  #   #   #   
+#  # ###   ##  #### #     ### #  # ###  ##  #  # ####  ##  #    #  # ###   ##    #   ####
+'''[1:-1]
 
-    if divisors_cols:
-        start = 0
-        for end in divisors_cols:
-            letter = '\n'.join(grid[row][start:end] for row in range(m))
-            start = end + 1
-            yield letter        
-    else:
-        yield '\n'.join(grid)
+SMALL_LETTERS = 'ABCEFGHIJKLOPRSUYZ'
 
 
 
@@ -67,7 +71,32 @@ def get_grid_letter_db() -> dict[str: str]:
 
 
 
-def put_grid_letters(grid: str, letters: str) -> None:
+def extract_letters_from_grid(grid: str) -> str:
+    """Generator that extracts individual letters from letter grid"""
+
+    if set(grid) != set('# \n'):
+        raise ValueError("Expecting grid to be composed of #, space and newline characters")
+
+    grid = grid.split('\n')
+    m, n = len(grid), len(grid[0])
+
+    if any(len(grid[i]) != n for i in range(m)):
+        raise ValueError("Expecting rows to have uniform lengths")
+    
+    divisors_cols = [col for col in range(n) if all(grid[row][col] == ' ' for row in range(m))]
+
+    if divisors_cols:
+        start = 0
+        for end in divisors_cols + [n]:
+            letter = '\n'.join(grid[row][start:end] for row in range(m))
+            start = end + 1
+            yield letter        
+    else:
+        yield '\n'.join(grid)
+
+
+
+def add_grid_letters(grid: str, letters: str) -> None:
     """Inserts one or more grid letter entries into database"""
 
     db = get_grid_letter_db()
@@ -76,3 +105,9 @@ def put_grid_letters(grid: str, letters: str) -> None:
 
     with open(GRID_LETTER_DB, 'w') as f:
         json.dump(db, f, indent=4)
+
+
+
+def initialize_grid_letter_db():
+    add_grid_letters(LARGE_GRID, LARGE_LETTERS)
+    add_grid_letters(SMALL_GRID, SMALL_LETTERS)
