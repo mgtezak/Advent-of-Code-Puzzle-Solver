@@ -18,74 +18,67 @@ from config import GRID_LETTER_DB
 
 
 
-# LARGE_GRID = '''
-#   ##   #####   ####  ###### ######  ####  #    #    ### #    # #      #    # #####  #####  #    # ######
-#  #  #  #    # #    # #      #      #    # #    #     #  #   #  #      ##   # #    # #    # #    #      #
-# #    # #    # #      #      #      #      #    #     #  #  #   #      ##   # #    # #    #  #  #       #
-# #    # #    # #      #      #      #      #    #     #  # #    #      # #  # #    # #    #  #  #      # 
-# #    # #####  #      #####  #####  #      ######     #  ##     #      # #  # #####  #####    ##      #  
-# ###### #    # #      #      #      #  ### #    #     #  ##     #      #  # # #      #  #     ##     #   
-# #    # #    # #      #      #      #    # #    #     #  # #    #      #  # # #      #   #   #  #   #    
-# #    # #    # #      #      #      #    # #    # #   #  #  #   #      #   ## #      #   #   #  #  #     
-# #    # #    # #    # #      #      #   ## #    # #   #  #   #  #      #   ## #      #    # #    # #     
-# #    # #####   ####  ###### #       ### # #    #  ###   #    # ###### #    # #      #    # #    # ######
-# '''[1:-1]
+LARGE_GRID = '''
+  ##   #####   ####  ###### ######  ####  #    #    ### #    # #      #    # #####  #####  #    # ######
+ #  #  #    # #    # #      #      #    # #    #     #  #   #  #      ##   # #    # #    # #    #      #
+#    # #    # #      #      #      #      #    #     #  #  #   #      ##   # #    # #    #  #  #       #
+#    # #    # #      #      #      #      #    #     #  # #    #      # #  # #    # #    #  #  #      # 
+#    # #####  #      #####  #####  #      ######     #  ##     #      # #  # #####  #####    ##      #  
+###### #    # #      #      #      #  ### #    #     #  ##     #      #  # # #      #  #     ##     #   
+#    # #    # #      #      #      #    # #    #     #  # #    #      #  # # #      #   #   #  #   #    
+#    # #    # #      #      #      #    # #    # #   #  #  #   #      #   ## #      #   #   #  #  #     
+#    # #    # #    # #      #      #   ## #    # #   #  #   #  #      #   ## #      #    # #    # #     
+#    # #####   ####  ###### #       ### # #    #  ###   #    # ###### #    # #      #    # #    # ######
+'''[1:-1]
 
-# LARGE_LETTERS = 'ABCEFGHJKLNPRXZ'
+LARGE_LETTERS = 'ABCEFGHJKLNPRXZ'
+
+SMALL_GRID = '''
+ ##  ###   ##  #### ####  ##  #  # ###   ## #  # #     ##  ###  ###   ### #  # #   # ####
+#  # #  # #  # #    #    #  # #  #  #     # # #  #    #  # #  # #  # #    #  # #   #    #
+#  # ###  #    ###  ###  #    ####  #     # ##   #    #  # #  # #  # #    #  #  # #    # 
+#### #  # #    #    #    # ## #  #  #     # # #  #    #  # ###  ###   ##  #  #   #    #  
+#  # #  # #  # #    #    #  # #  #  #  #  # # #  #    #  # #    # #     # #  #   #   #   
+#  # ###   ##  #### #     ### #  # ###  ##  #  # ####  ##  #    #  # ###   ##    #   ####
+'''[1:-1]
+
+SMALL_LETTERS = 'ABCEFGHIJKLOPRSUYZ'
+
+GRID_LETTER_MAPS = {LARGE_GRID: LARGE_LETTERS, SMALL_GRID: SMALL_LETTERS}
 
 
-
-# SMALL_GRID = '''
-#  ##  ###   ##  #### ####  ##  #  # ###   ## #  # #     ##  ###  ###   ### #  # #   # ####
-# #  # #  # #  # #    #    #  # #  #  #     # # #  #    #  # #  # #  # #    #  # #   #    #
-# #  # ###  #    ###  ###  #    ####  #     # ##   #    #  # #  # #  # #    #  #  # #    # 
-# #### #  # #    #    #    # ## #  #  #     # # #  #    #  # ###  ###   ##  #  #   #    #  
-# #  # #  # #  # #    #    #  # #  #  #  #  # # #  #    #  # #    # #     # #  #   #   #   
-# #  # ###   ##  #### #     ### #  # ###  ##  #  # ####  ##  #    #  # ###   ##    #   ####
-# '''[1:-1]
-
-# SMALL_LETTERS = 'ABCEFGHIJKLOPRSUYZ'
-
-
-
-# def read_grid(grid) -> str:
-#     """Takes a grid of letters made up of '#', space & newline characters and attempts to decipher it,
-#     first by seperating the individual letters from each other and then by checking, whether they exist 
-#     in the (hopefully complete) grid letter database.
-#     """
-
-#     grid_letters = get_grid_letter_db()
-
-#     message = ''
-#     for letter in extract_letters_from_grid(grid):
-#         message += grid_letters.get(letter, '_')
-
-#     if '_' in message:
-#         message += ' (could not fully decipher)'
-
-#     return message
 
 def read_grid(grid):
-    grid = grid.split('\n')     
-    m, n = len(grid), len(grid[0])
-    trie_root = get_grid_letter_db()
-    current_node = trie_root
-    message = ''
-    for col in range(n+1):
-        col_slice = ''.join(grid[row][col] for row in range(m)) if col < n else ' '
-        if set(col_slice) == set(' '):
-            continue
-        current_node = current_node[col_slice]
-        if 'end' in current_node:
-            message += current_node['end']
-            current_node = trie_root
+    """Takes a grid of letters made up of '#', space & newline characters.
+    Iterates through grid column-wise. Each column represents a node in the trie (or keys in the grid letter dictionary).
+    Traverses the trie until the end of a letter it reached.
+    Adds up and returns the resulting message.
+    """
+    try:
+        grid = grid.split('\n')     
+        m, n = len(grid), len(grid[0])
+
+        trie_root = get_grid_letter_db()
+        current_node = trie_root
+        message = ''
+        for col in range(n+1):
+            col_slice = ''.join(grid[row][col] for row in range(m)) if col < n else ' '
+            if set(col_slice) == set(' '):
+                continue
+            current_node = current_node[col_slice]
+            if 'letter' in current_node:
+                message += current_node['letter']
+                current_node = trie_root
+
+    except:
+        message = 'Unfortunately could not decipher the message.'
             
     return message
 
 
 
 def get_grid_letter_db() -> dict[str: str]:
-    """Returns the grid letter translation dictionary."""
+    """Returns the grid letter database as dictionary."""
 
     try:
         with open(GRID_LETTER_DB, 'r') as f:
@@ -96,52 +89,27 @@ def get_grid_letter_db() -> dict[str: str]:
     return db
 
 
+def initialize_grid_letter_db(grid_letter_maps: dict[str, str] = GRID_LETTER_MAPS) -> None:
+    """Takes as input a dictionary with grids as key and the actual letters they represent as values.
+    Builds a trie type data structure (https://en.wikipedia.org/wiki/Trie) where each column of the grid
+    represents a node in the trie. The trie dictionary is stored in a json file.
+    """
 
-# def extract_letters_from_grid(grid: str) -> str:
-#     """Generator that seperates and extracts individual letters from letter grid"""
+    trie_root = {}
+    current_node = trie_root
+    for grid, letters in grid_letter_maps.items():
+        letter = iter(letters)
+        grid = grid.split('\n')
+        m, n = len(grid), len(grid[0])
+        for col in range(n+1):
+            col_slice = ''.join(grid[row][col] for row in range(m)) if col < n else ' '
+            if set(col_slice) == set(' '):
+                current_node['letter'] = next(letter)
+                current_node = trie_root
+            else:
+                if col_slice not in current_node:
+                    current_node[col_slice] = {}
+                current_node = current_node[col_slice]
 
-#     if set(grid) != set('# \n'):
-#         raise ValueError("Expecting grid to be composed of #, space and newline characters")
-
-#     grid = grid.split('\n')
-#     m, n = len(grid), len(grid[0])
-
-#     if any(len(grid[i]) != n for i in range(m)):
-#         raise ValueError("Expecting rows to have uniform lengths")
-    
-#     divisors_cols = [col for col in range(n) if all(grid[row][col] == ' ' for row in range(m))]
-#     if m == 6: # small letters
-#         for i in range(len(divisors_cols)-1):
-#             if divisors_cols[i+1] - divisors_cols[i] 
-    
-    
-#     if divisors_cols:
-#         start = 0
-#         for end in divisors_cols + [n]:
-#             letter = '\n'.join(grid[row][start:end] for row in range(m))
-#             start = end + 1
-#             yield letter        
-#     else:
-#         yield '\n'.join(grid)
-
-
-
-# def add_grid_letters(grid: str, letters: str) -> None:
-#     """Takes as arguments a two-dimensional grid and letters that it supposedly represents.
-#     Inserts each grid letter into the translation dictionary and updates the json database.
-#     """
-
-#     db = get_grid_letter_db()
-#     for key, value in zip(extract_letters_from_grid(grid), letters):
-#         db[key] = value.upper()
-
-#     with open(GRID_LETTER_DB, 'w') as f:
-#         json.dump(db, f, indent=4)
-
-
-
-# def initialize_grid_letter_db():
-#     """Inserts the large and small alphabets into grid letter translation dictionary."""
-
-#     add_grid_letters(LARGE_GRID, LARGE_LETTERS)
-#     add_grid_letters(SMALL_GRID, SMALL_LETTERS)
+    with open(GRID_LETTER_DB, 'w') as f:
+        json.dump(trie_root, f)

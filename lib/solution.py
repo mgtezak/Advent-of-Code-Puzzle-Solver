@@ -40,7 +40,7 @@ def display_solution(solution: str, runtime: float) -> None:
     """
 
     if '\n' in solution:
-        st.text('Visual output:\n' + solution)
+        st.text('Visual output:\n\n' + solution)
         letters = read_grid(solution)
         if letters:
             st.subheader(letters)
