@@ -19,7 +19,7 @@ def solve(year: int, day: int, part: int) -> tuple[str, float]:
     and returns solution and runtime.
     """
 
-    module_name = f"Advent_of_Code.aoc{year}.day{day:02}.part{part}"
+    module_name = f"advent_of_code.y{year}.d{day:02}.p{part}"
     module = importlib.import_module(module_name)
     solve_func = getattr(module, f'part{part}')
 
@@ -56,6 +56,7 @@ def format_runtime(runtime: float) -> str:
 
     if runtime >= 0.01:
         return f'{runtime:.2f} seconds'
+    
     return f'{int(runtime*1000)} milliseconds'
 
 
@@ -63,7 +64,7 @@ def format_runtime(runtime: float) -> str:
 def get_source_code(year: int, day: int, part: int) -> str:
     """Retrieves the solution script for given year, day & part"""
 
-    path = f'Advent_of_Code/aoc{year}/day{day:02}/part{part}.py'
+    path = f'advent_of_code/y{year}/d{day:02}/p{part}.py'
     if not os.path.exists(path):
         return 'Oops, cannot find script!'
     

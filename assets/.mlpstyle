@@ -1,0 +1,31 @@
+# https://matplotlib.org/stable/users/explain/customizing.html
+
+axes.facecolor : "#04013b"      # background_color
+axes.grid : True
+axes.labelcolor : "#FFD700"     # text_color
+axes.spines.bottom : False
+axes.spines.left : False
+axes.spines.right : False
+axes.spines.top : False
+axes.titlesize : 18             # title_size
+axes.titleweight : "bold"
+figure.dpi : 300
+figure.facecolor : "#04013b"    # background_color
+figure.titlesize : 18           # title_size
+figure.titleweight : "bold"
+font.family : "serif"
+grid.alpha : 0.3
+grid.color : "white"            # secondary_background_color
+grid.linestyle : "--"
+grid.linewidth : 0.5
+legend.edgecolor : "white"      # secondary_background_color
+legend.framealpha : 0.3
+patch.edgecolor : "none"
+savefig.bbox : "tight"
+savefig.dpi : 300
+scatter.edgecolors : "#FF0000"  # primary_color # NOT WORKING. PERHAPS WITHOUT SNS – plt.scatter INSTEAD?
+text.color : "#FFD700"          # text_color
+xtick.bottom : False
+xtick.color : "#FFD700"         # text_color
+ytick.color : "#FFD700"         # text_color
+ytick.left : False

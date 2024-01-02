@@ -41,7 +41,7 @@ def get_title(year: int, day: int) -> str:
 
 
 
-def put_my_solution(year: int, day: int) -> None:
+def put_new_solution(year: int, day: int) -> None:
     """To add a new solution, first add its solution functions, then call this function 
     and it will automatically calculate solutions and runtimes and add them to the database.
     """
@@ -52,7 +52,7 @@ def put_my_solution(year: int, day: int) -> None:
     puzzle_id = year * 100 + day
     df = get_puzzle_info_db()
     df.loc[puzzle_id, 'solution_1':'runtime_2'] = results
-
+    
 
 
 def get_vid_link(year: int, day: int) -> str | None:

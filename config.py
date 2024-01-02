@@ -22,9 +22,9 @@ MAX_YEAR, MAX_DAY = get_curr_max_date()
 # Assets
 SIDEBAR_IMG = 'assets/aoc_tree.png'
 STYLE = 'assets/style.css'
+MLP_STYLE_PATH = 'assets/.mlpstyle'
 PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
-
 
 # Database
 PUZZLE_INFO_DB = 'db/puzzle_info.csv'
