@@ -36,11 +36,6 @@ def get_title(year: int, day: int) -> str:
 
 
 
-# def get_my_solution(year: int, day: int, part: int) -> str:
-#     return get_puzzle_info(year, day)[part]
-
-
-
 def put_new_solution(year: int, day: int) -> None:
     """To add a new solution, first add its solution functions, then call this function 
     and it will automatically calculate solutions and runtimes and add them to the database.
