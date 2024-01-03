@@ -5,9 +5,9 @@ import streamlit as st
 from collections import OrderedDict
 
 # Local imports
-from tabs import about_this_project, puzzle_solver, stats_n_graphs
-from lib import utils
 from config import SIDEBAR_IMG, STYLE
+from utils.toolbox import reboot_app, reset_puzzle_solver
+from tabs import about_tab, personal_stats, main_tab
 
 
 st.set_page_config(
@@ -24,17 +24,17 @@ def run():
 
     if not st.session_state:
         st.snow()
-        utils.reboot_app()
+        reboot_app()
 
-    TABS = OrderedDict({
-        '🎅🏻 About this Project': about_this_project,
-        '🎄 Puzzle Solver': puzzle_solver,
-        '🎁 Stats-n-Graphs': stats_n_graphs,
+    tabs = OrderedDict({
+        '🎄 Puzzle Solutions': main_tab,
+        '🎁 Stats-n-Graphs': personal_stats,
+        '🎅🏻 About': about_tab,
     })
 
     st.sidebar.image(SIDEBAR_IMG)
 
-    current_tab = st.sidebar.radio('Content:', TABS.keys(), on_change=utils.reset_puzzle_solver)
+    current_tab = st.sidebar.radio('Content:', tabs.keys(), on_change=reset_puzzle_solver)
 
     for _ in range(5):
         st.sidebar.write('')
@@ -46,7 +46,7 @@ def run():
         <a href="https://mgtezak-data-science.streamlit.app" style="color: #FFD700; font-weight: Normal;"> ~ My Data Science Projects</a>
     ''', unsafe_allow_html=True)
 
-    TABS[current_tab].run()
+    tabs[current_tab].run()
 
 
 if __name__ == '__main__':

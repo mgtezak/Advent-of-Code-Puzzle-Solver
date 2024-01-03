@@ -1,8 +1,9 @@
 # Native
 import json
+import os
 
 # Local
-from config import TEMP_PUZZLE_INPUT_DB, MY_PUZZLE_INPUT_DB
+from config import TEMP_PUZZLE_INPUT
 
 
 
@@ -10,7 +11,7 @@ def get_temp_puzzle_input_db() -> dict:
     """Returns all puzzle inputs as dictionary."""
 
     try:
-        with open(TEMP_PUZZLE_INPUT_DB, 'r') as f:
+        with open(TEMP_PUZZLE_INPUT, 'r') as f:
             db = json.load(f)
     except:
         db = {}
@@ -42,7 +43,7 @@ def put_temp_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
         db[year] = {}
 
     db[year][day] = puzzle_input
-    with open(TEMP_PUZZLE_INPUT_DB, 'w') as f:
+    with open(TEMP_PUZZLE_INPUT, 'w') as f:
         json.dump(db, f, indent=4)
 
 
@@ -50,30 +51,39 @@ def put_temp_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
 def del_temp_puzzle_input(year: int, day: int) -> None:
     """Overwrites puzzle input entry with empty string."""
 
+    db = get_temp_puzzle_input_db()
+    if db.get(year, False) and  db[year].get(day, False):
+        del db[year][day]
+
     return put_temp_puzzle_input(year, day, '')
 
 
 
-def get_my_puzzle_input_db() -> dict:
-    """Returns all puzzle inputs as dictionary."""
-
-    try:
-        with open(MY_PUZZLE_INPUT_DB, 'r') as f:
-            db = json.load(f)
-    except:
-        db = {}
-        
-    return db
-
-
-
-def get_my_puzzle_input(year: int, day: int) -> str | None:
+def get_my_puzzle_input(year: int, day: int) -> str:
     """Fetches a single puzzle input as string."""
 
-    year, day = str(year), str(day)
-    db = get_my_puzzle_input_db()
-
-    if not db.get(year, False):
-        return None
+    path = f'advent_of_code/y{year}/d{day:02}/my_input.txt'
+    with open(path, 'r') as f:
+        return f.read()
     
-    return db[year].get(day, False)
+
+
+def get_example_inputs(year, day):
+    """"""
+
+    path = f'advent_of_code/y{year}/d{day:02}/example_input.json'
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+        
+    return False
+
+
+def is_example_input(year: int, day: int, puzzle_input: str|None = None) -> bool:
+    """"""
+    
+    if puzzle_input is None:
+        puzzle_input = get_temp_puzzle_input(year, day)
+
+    example_inputs = get_example_inputs(year, day).values()
+    return puzzle_input in list(zip(*example_inputs))[0]

@@ -1,13 +1,14 @@
 from itertools import combinations
-import sympy as sp
+from utils.handle_puzzle_input import is_example_input
 
-def part1(puzzle_input, test_input=False):
+
+def part1(puzzle_input):
     hailstones = []
     for line in puzzle_input.split('\n'):
         nums = line.replace('@', ',').split(',')
         hailstones.append(tuple(map(int, nums)))
 
-    if test_input:
+    if is_example_input(2023, 24, puzzle_input):
         lo, hi = 7, 27
     else:
         lo, hi = 2e14, 4e14

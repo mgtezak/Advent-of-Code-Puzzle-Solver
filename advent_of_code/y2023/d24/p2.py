@@ -1,5 +1,5 @@
-from itertools import combinations
 import sympy as sp
+
 
 def part2(puzzle_input):
     first_three_hailstones = []

@@ -2,7 +2,7 @@
 import streamlit as st
 
 # Local imports
-from lib.utils import get_completed_stat
+from utils.toolbox import get_completed_stat
 from config import PROGRESS_PLOT, RUNTIME_PLOT
 
 

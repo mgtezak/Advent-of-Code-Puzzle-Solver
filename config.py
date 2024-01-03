@@ -1,44 +1,32 @@
-from datetime import datetime
-import pytz
+from base import get_curr_max_date
 
-
-### Global date variables
-
-def get_curr_max_date():
-    # AoC local time (EST/UTC-5) 
-    curr = datetime.now(pytz.timezone('EST'))
-    year, month, day = curr.year, curr.month, curr.day
-    is_december = (month == 12)
-    
-    MAX_YEAR = year if is_december else year - 1
-    MAX_DAY = day if is_december and day < 25 else 25
-    return MAX_YEAR, MAX_DAY
-
+### Date variables
 MAX_YEAR, MAX_DAY = get_curr_max_date()
 
 
-### All file paths in one place
-
-# Assets
+# Assets paths
 SIDEBAR_IMG = 'assets/aoc_tree.png'
 STYLE = 'assets/style.css'
 MLP_STYLE_PATH = 'assets/.mlpstyle'
 PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
+GRID_LETTER_DICT = 'assets/grid_letter.json'
 
-# Database
-PUZZLE_INFO_DB = 'db/puzzle_info.csv'
-GRID_LETTER_DB = 'db/grid_letter.json'
-TEMP_PUZZLE_INPUT_DB = 'db/temp_puzzle_input.json'  # gitignore – rebooted with every new session
-TEMP_SOLUTION_DB = 'db/temp_solution.csv'           # gitignore – rebooted with every new session
-MY_PUZZLE_INPUT_DB = 'db/my_puzzle_input.json'      # gitignore
 
-# External
+# Main database path
+PUZZLE_DATA = 'puzzle_data.csv'
+
+
+# Temporary storage paths – rebooted with every new session
+TEMP_PUZZLE_INPUT = 'temp_storage/puzzle_input.json'
+TEMP_SOLUTION = 'temp_storage/solution.csv'      
+
+
+# External paths
 AOC_DIR = '/Users/mgtezak/Desktop/my_code/Advent_of_Code/'
 
-### Plot configuration
 
-# Colors
+# Color hex codes
 TEXT_COLOR = '#FFD700'
 PRIMARY_COLOR = '#FF0000'
 BACKGROUND_COLOR = '#04013b'

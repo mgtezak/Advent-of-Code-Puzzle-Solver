@@ -1,6 +1,7 @@
 from collections import deque
 import numpy as np
 
+
 def part2(puzzle_input):
     grid = [list(row) for row in puzzle_input.split('\n')]
     m, n = len(grid), len(grid[0])

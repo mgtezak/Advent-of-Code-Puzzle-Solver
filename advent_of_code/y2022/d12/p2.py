@@ -38,7 +38,7 @@ def part2(puzzle_input):
                     visited[(x, y)] = (steps + 1, grid[y][x])
                     queue.append((x, y))
             
-        return float('inf')
+        return steps if queue else float('inf')
 
     possible_starts = [(x, y) for y, row in enumerate(grid) for x, elevation in enumerate(row) if elevation == 0]
     return min(get_shortest_distance(*coords) for coords in possible_starts)

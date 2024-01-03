@@ -1,17 +1,23 @@
 # Third party
 import pandas as pd
-import numpy as np
 import streamlit as st
 
 # Native
 import os
 import importlib 
 import time
+from typing import Callable
 
 # Local
-from config import TEMP_SOLUTION_DB
-from .grid_letter import read_grid
-from .puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
+from config import TEMP_SOLUTION
+from .read_letter_grid import read_grid
+from .handle_puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
+
+
+def get_solving_func(year: int, day: int, part: int) -> Callable:
+    module_name = f"advent_of_code.y{year}.d{day:02}.p{part}"
+    module = importlib.import_module(module_name)
+    return getattr(module, f'part{part}')
 
 
 
@@ -20,9 +26,7 @@ def solve(year: int, day: int, part: int, my_input: bool = False) -> tuple[str, 
     and returns solution and runtime.
     """
 
-    module_name = f"advent_of_code.y{year}.d{day:02}.p{part}"
-    module = importlib.import_module(module_name)
-    solve_func = getattr(module, f'part{part}')
+    solving_func = get_solving_func(year, day, part)
 
     if my_input:
         puzzle_input = get_my_puzzle_input(year, day)
@@ -30,7 +34,7 @@ def solve(year: int, day: int, part: int, my_input: bool = False) -> tuple[str, 
         puzzle_input = get_temp_puzzle_input(year, day)
 
     start = time.time()
-    solution = str(solve_func(puzzle_input))
+    solution = str(solving_func(puzzle_input))
     runtime = time.time() - start
 
     return solution, runtime
@@ -85,10 +89,10 @@ def get_temp_solution_db() -> pd.DataFrame:
     columns = ['solution', 'runtime']
     dtypes = [object, float]
 
-    if not os.path.exists(TEMP_SOLUTION_DB):
+    if not os.path.exists(TEMP_SOLUTION):
         return pd.DataFrame(columns=columns)
     
-    return pd.read_csv(TEMP_SOLUTION_DB, index_col=0, dtype=dict(zip(columns, dtypes)))
+    return pd.read_csv(TEMP_SOLUTION, index_col=0, dtype=dict(zip(columns, dtypes)))
 
 
 
@@ -112,7 +116,7 @@ def put_temp_solution(year: int, day: int, part: int, solution: str, runtime: fl
     puzzle_id = 1000*year + 10*day + part
     df = get_temp_solution_db()
     df.loc[puzzle_id] = [solution, runtime]
-    df.to_csv(TEMP_SOLUTION_DB)
+    df.to_csv(TEMP_SOLUTION)
 
 
 
@@ -126,4 +130,4 @@ def del_temp_solution(year: int, day: int) -> None:
         if puzzle_id in df.index:
             df.drop(puzzle_id, inplace=True)
 
-    df.to_csv(TEMP_SOLUTION_DB)
+    df.to_csv(TEMP_SOLUTION)    

@@ -6,10 +6,8 @@ import numpy as np
 import pandas as pd
 
 # Local imports
-from .puzzle import get_puzzle_info_db
-from config import  MLP_STYLE_PATH
-from config import TEXT_COLOR, PRIMARY_COLOR
-from config import PROGRESS_PLOT, RUNTIME_PLOT
+from config import MLP_STYLE_PATH, TEXT_COLOR, PRIMARY_COLOR, PROGRESS_PLOT, RUNTIME_PLOT
+from utils.handle_puzzle_data import get_puzzle_db
 
 
 plt.style.use(MLP_STYLE_PATH)
@@ -19,7 +17,7 @@ def get_plot_df():
     """Prepare data for plotting by stacking solutions 1&2 and runtime 1&2,
     resulting in one row for each puzzle part.
     """
-    df = get_puzzle_info_db()
+    df = get_puzzle_db()
     df.index = df.index.astype(str)
     df['year'] = df.index.str.slice(0, 4).astype(int)
     df['day'] = df.index.str.slice(4, 6).astype(int)
