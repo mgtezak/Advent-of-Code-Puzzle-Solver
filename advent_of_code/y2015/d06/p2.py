@@ -1,3 +1,6 @@
+import re
+import numpy as np
+
 def part2(puzzle_input):
     regex = r"(toggle|turn on|turn off) (\d+),(\d+) through (\d+),(\d+)"
     operations = re.findall(regex, puzzle_input)

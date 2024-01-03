@@ -36,17 +36,18 @@ def get_title(year: int, day: int) -> str:
 
 
 
-def put_new_solution(year: int, day: int) -> None:
+def put_my_results(year: int, day: int) -> None:
     """To add a new solution, first add its solution functions, then call this function 
     and it will automatically calculate solutions and runtimes and add them to the database.
     """
-    solution_1, runtime_1 = solve(year, day, 1)
-    solution_2, runtime_2 = solve(year, day, 2) if day < 25 else None, np.nan
+    solution_1, runtime_1 = solve(year, day, 1, True)
+    solution_2, runtime_2 = solve(year, day, 2, True) if day < 25 else None, np.nan
     results = [solution_1, solution_2, runtime_1, runtime_2]
 
     puzzle_id = year * 100 + day
     df = get_puzzle_info_db()
     df.loc[puzzle_id, 'solution_1':'runtime_2'] = results
+    df.to_csv(PUZZLE_INFO_DB)
     
 
 

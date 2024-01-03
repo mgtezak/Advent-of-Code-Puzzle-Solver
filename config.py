@@ -33,6 +33,8 @@ TEMP_PUZZLE_INPUT_DB = 'db/temp_puzzle_input.json'  # gitignore – rebooted wit
 TEMP_SOLUTION_DB = 'db/temp_solution.csv'           # gitignore – rebooted with every new session
 MY_PUZZLE_INPUT_DB = 'db/my_puzzle_input.json'      # gitignore
 
+# External
+AOC_DIR = '/Users/mgtezak/Desktop/my_code/Advent_of_Code/'
 
 ### Plot configuration
 

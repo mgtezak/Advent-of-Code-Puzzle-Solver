@@ -1,6 +1,6 @@
 def part2(puzzle_input):
 
-    def get_coords(moves: str, x: int=0, y: int=0):
+    def get_coords(moves, x=0, y=0):
         directions = {'v': (0, -1), '^': (0, 1), '<': (-1, 0), '>': (1, 0)}
         visited = {(x, y)}
         for move in moves:

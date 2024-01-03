@@ -1,5 +1,6 @@
 # Third party
 import pandas as pd
+import numpy as np
 import streamlit as st
 
 # Native
@@ -10,11 +11,11 @@ import time
 # Local
 from config import TEMP_SOLUTION_DB
 from .grid_letter import read_grid
-from .puzzle_input import get_temp_puzzle_input
+from .puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
 
 
 
-def solve(year: int, day: int, part: int) -> tuple[str, float]:
+def solve(year: int, day: int, part: int, my_input: bool = False) -> tuple[str, float]:
     """Retrieves puzzle input and solving function for given year, day & part 
     and returns solution and runtime.
     """
@@ -23,7 +24,10 @@ def solve(year: int, day: int, part: int) -> tuple[str, float]:
     module = importlib.import_module(module_name)
     solve_func = getattr(module, f'part{part}')
 
-    puzzle_input = get_temp_puzzle_input(year, day)
+    if my_input:
+        puzzle_input = get_my_puzzle_input(year, day)
+    else:
+        puzzle_input = get_temp_puzzle_input(year, day)
 
     start = time.time()
     solution = str(solve_func(puzzle_input))

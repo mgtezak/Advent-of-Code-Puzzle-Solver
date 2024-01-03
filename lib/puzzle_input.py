@@ -2,7 +2,8 @@
 import json
 
 # Local
-from config import TEMP_PUZZLE_INPUT_DB
+from config import TEMP_PUZZLE_INPUT_DB, MY_PUZZLE_INPUT_DB
+
 
 
 def get_temp_puzzle_input_db() -> dict:
@@ -50,3 +51,29 @@ def del_temp_puzzle_input(year: int, day: int) -> None:
     """Overwrites puzzle input entry with empty string."""
 
     return put_temp_puzzle_input(year, day, '')
+
+
+
+def get_my_puzzle_input_db() -> dict:
+    """Returns all puzzle inputs as dictionary."""
+
+    try:
+        with open(MY_PUZZLE_INPUT_DB, 'r') as f:
+            db = json.load(f)
+    except:
+        db = {}
+        
+    return db
+
+
+
+def get_my_puzzle_input(year: int, day: int) -> str | None:
+    """Fetches a single puzzle input as string."""
+
+    year, day = str(year), str(day)
+    db = get_my_puzzle_input_db()
+
+    if not db.get(year, False):
+        return None
+    
+    return db[year].get(day, False)

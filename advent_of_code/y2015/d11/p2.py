@@ -15,7 +15,7 @@ def part2(puzzle_input):
         for i in range(7, -1, -1):
             next_index = (altered_alphabet.index(pw[i]) + 1) % 23
             pw[i] = altered_alphabet[next_index]
-            if pw[i] == 'a':
+            if pw[i] != 'a':
                 break
         return ''.join(pw)
 
