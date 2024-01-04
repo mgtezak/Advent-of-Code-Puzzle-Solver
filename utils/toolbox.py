@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 # Local imports
-from config import TEMP_PUZZLE_INPUT, TEMP_SOLUTION, PUZZLE_DATA
+from config import PUZZLE_DATA, TEMP
 from .handle_puzzle_data import get_puzzle_db
 from .handle_puzzle_input import is_example_input
 from .handle_solutions import solve
@@ -31,14 +31,12 @@ def reboot_app() -> None:
     """Gets called upon restarting the app with an empty session state. 
     All temporarily stored puzzle inputs and solutions will be deleted.
     """
-
-    if os.path.exists(TEMP_SOLUTION):
-        os.remove(TEMP_SOLUTION)
-
-    if os.path.exists(TEMP_PUZZLE_INPUT):
-        os.remove(TEMP_PUZZLE_INPUT)
-
-
+    if os.path.exists(TEMP):
+        for file in os.listdir(TEMP):
+            os.remove(TEMP + file)
+    else:        
+        os.mkdir(TEMP)
+    
 
 def reset_puzzle_solver() -> None:
     """Resets the page, so that new puzzle input can be provided."""
