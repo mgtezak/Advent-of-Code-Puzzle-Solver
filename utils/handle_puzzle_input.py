@@ -8,15 +8,12 @@ from config import TEMP_PUZZLE_INPUT
 
 
 def get_temp_puzzle_input_db() -> dict:
-    """Returns all puzzle inputs as dictionary."""
+    """Returns temporary puzzle inputs as dictionary."""
 
-    try:
+    if os.path.exists(TEMP_PUZZLE_INPUT):
         with open(TEMP_PUZZLE_INPUT, 'r') as f:
             return json.load(f)
-    except:
-        with open(TEMP_PUZZLE_INPUT, 'w') as f:
-            json.dump({}, f) 
-        return {}  
+    return {}  
 
     
 

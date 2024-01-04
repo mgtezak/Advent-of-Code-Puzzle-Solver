@@ -3,12 +3,11 @@ import streamlit as st
 
 # Native imports
 from collections import OrderedDict
-from tabs import personal_stats_tab
 
 # Local imports
 from config import SIDEBAR_IMG, STYLE
 from utils.toolbox import reboot_app, reset_puzzle_solver
-from tabs import about_tab, main_tab
+from tabs import main_puzzle_tab, personal_stats_tab, about_tab
 
 
 st.set_page_config(
@@ -28,7 +27,7 @@ def run():
         reboot_app()
 
     tabs = OrderedDict({
-        '🎄 Puzzle Solutions': main_tab,
+        '🎄 Puzzle Solutions': main_puzzle_tab,
         '🎁 Stats-n-Graphs': personal_stats_tab,
         '🎅🏻 About': about_tab,
     })

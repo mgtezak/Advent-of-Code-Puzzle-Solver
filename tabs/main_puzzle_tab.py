@@ -38,10 +38,10 @@ def run():
     if video_link is None:
         del tabs['Video Explanation']
 
-    for tab, (module, *args) in zip(st.tabs(tabs), tabs.values()):
+    for tab, (script, *args) in zip(st.tabs(tabs), tabs.values()):
 
         with tab:
             st.write('')
-            module.run(*args)
+            script.run(*args)
 
     st.divider()
