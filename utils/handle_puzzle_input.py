@@ -86,4 +86,7 @@ def is_example_input(year: int, day: int, puzzle_input: str|None = None) -> bool
         puzzle_input = get_temp_puzzle_input(year, day)
 
     example_inputs = get_example_inputs(year, day).values()
-    return puzzle_input in list(zip(*example_inputs))[0]
+    if example_inputs:
+        return puzzle_input in list(zip(*example_inputs))[0]
+    else:
+        return False
