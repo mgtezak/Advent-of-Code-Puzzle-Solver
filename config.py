@@ -7,7 +7,7 @@ MAX_YEAR, MAX_DAY = get_curr_max_date()
 
 # Assets paths
 SIDEBAR_IMG = 'assets/aoc_tree.png'
-STYLE = 'assets/style.css'
+STYLE = Path('assets/style.css')
 MLP_STYLE_PATH = 'assets/.mlpstyle'
 PROGRESS_PLOT = 'assets/plots/progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/runtime_plot.png'
@@ -19,9 +19,7 @@ PUZZLE_DATA = 'puzzle_data.csv'
 
 
 # Temporary storage paths – rebooted with every new session
-TEMP = 'temp_storage'
-TEMP_PUZZLE_INPUT = 'temp_storage/puzzle_input.json'
-TEMP_SOLUTION = 'temp_storage/solution.csv'      
+TEMP_STORAGE = Path('temp_storage')
 
 
 # External paths

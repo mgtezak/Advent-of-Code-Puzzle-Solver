@@ -9,15 +9,20 @@ import time
 from typing import Callable
 
 # Local
-from config import TEMP
+from config import TEMP_STORAGE
 from base import get_session_id
 from .read_letter_grid import read_grid
 from .handle_puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
+from .handle_puzzle_data import get_puzzle_dir_path
 
 
 
 def get_puzzle_id(year, day, part):
     return year*1000 + day*10 + part
+
+
+def get_temp_sol_path():
+    return TEMP_STORAGE / f'{get_session_id()}.csv'
 
 
 def get_solving_func(year: int, day: int, part: int) -> Callable:
@@ -77,14 +82,11 @@ def format_runtime(runtime: float) -> str:
 def get_source_code(year: int, day: int, part: int) -> str:
     """Retrieves the solution script for given year, day & part"""
 
-    path = f'advent_of_code/y{year}/d{day:02}/p{part}.py'
-    if not os.path.exists(path):
-        return 'Oops, cannot find script!'
-    
-    with open(path, 'r') as f:
-        script = f.read()
+    path = get_puzzle_dir_path(year, day) / f'p{part}.py'
+    if not path.exists():
+        return path.read_text()
+    return 'Oops, cannot find script!'
 
-    return script
 
 
 
@@ -94,9 +96,9 @@ def get_temp_solution_db() -> pd.DataFrame:
     columns = ['solution', 'runtime']
     dtypes = [object, float]
 
-    path = f'{TEMP}/{get_session_id()}.csv'
-    if not os.path.exists(path):
-        print(path)
+    path = get_temp_sol_path()
+    if not path.exists():
+        print(str(path))
         return pd.DataFrame(columns=columns)
     
     return pd.read_csv(path, index_col=0, dtype=dict(zip(columns, dtypes)))
@@ -104,7 +106,7 @@ def get_temp_solution_db() -> pd.DataFrame:
 
 
 def upload_temp_solution_db(df):
-    path = f'{TEMP}/{get_session_id()}.csv'
+    path = get_temp_sol_path()
     df.to_csv(path)
 
 
@@ -112,9 +114,8 @@ def upload_temp_solution_db(df):
 def get_temp_solution(year: int, day: int, part: int) -> tuple[str, float] | None:
     """Fetches a single solution & runtime string tuple from database."""
 
-    puzzle_id = 1000*year + 10*day + part
+    puzzle_id = get_puzzle_id(year, day, part)
     df = get_temp_solution_db()
-    # print(df)
     if puzzle_id not in df.index:
         return None
 
@@ -126,8 +127,7 @@ def get_temp_solution(year: int, day: int, part: int) -> tuple[str, float] | Non
 def put_temp_solution(year: int, day: int, part: int, solution: str, runtime: float) -> None:
     """Stores away a single solution. Will overwrite if necessary."""
 
-    puzzle_id = 1000*year + 10*day + part
-    
+    puzzle_id = get_puzzle_id(year, day, part)
     df = get_temp_solution_db()
     df.loc[puzzle_id] = [solution, runtime]
     upload_temp_solution_db(df)
@@ -136,11 +136,6 @@ def put_temp_solution(year: int, day: int, part: int, solution: str, runtime: fl
 def del_temp_solution(year: int, day: int) -> None:
     """Removes solutions for given year and day."""
 
-    puzzle_ids = [1000*year + 10*day + part for part in (1, 2)]
     df = get_temp_solution_db()
-
-    for puzzle_id in puzzle_ids:
-        if puzzle_id in df.index:
-            df.drop(puzzle_id, inplace=True)
-
+    df = df[df.index // 10 != year*100 + day]
     upload_temp_solution_db(df)  

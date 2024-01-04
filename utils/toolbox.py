@@ -3,10 +3,11 @@ import streamlit as st
 import numpy as np
 
 # Native imports
+from datetime import datetime, timedelta
 import os
 
 # Local imports
-from config import PUZZLE_DATA, TEMP, MAX_YEAR
+from config import PUZZLE_DATA, TEMP_STORAGE, MAX_YEAR
 from .handle_puzzle_data import get_puzzle_db
 from .handle_puzzle_input import is_example_input
 from .handle_solutions import solve
@@ -28,12 +29,18 @@ def display_example_inputs(inputs):
 
 
 def reboot_app() -> None:
-    """Gets called upon restarting the app with an empty session state. 
-    All temporarily stored puzzle inputs and solutions will be deleted.
-    """
-    if not os.path.exists(TEMP):     
-        os.mkdir(TEMP)
+    """Temporary storage gets cleared of all files that haven't been modified for over an hour."""
+
+    TEMP_STORAGE.mkdir(exist_ok=True)
+    now = datetime.now()
+
+    for file in TEMP_STORAGE.iterdir():
+        latest_update = datetime.fromtimestamp(file.stat().st_mtime)
+
+        if now - latest_update > timedelta(hours=15):
+            file.unlink()
     
+
 
 def reset_puzzle_solver() -> None:
     """Resets the page, so that new puzzle input can be provided."""
@@ -89,7 +96,7 @@ def solution_exists(year, day):
 
 
 
-def get_parts(year, day):
+def get_valid_parts(year, day):
     if not solution_exists(year, day):
         return []
     if day == 25:
@@ -110,3 +117,6 @@ def put_my_results(year: int, day: int) -> None:
     df = get_puzzle_db()
     df.loc[puzzle_id, 'solution_1':'runtime_2'] = results
     df.to_csv(PUZZLE_DATA)
+
+
+

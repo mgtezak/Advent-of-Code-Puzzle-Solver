@@ -3,9 +3,14 @@ import pandas as pd
 
 # Native
 import os
+from pathlib import Path
 
 # Local
 from config import PUZZLE_DATA
+
+
+def get_puzzle_dir_path(year, day):
+    return Path(f'advent_of_code/y{year}/d{day:02}')
 
 
 def get_puzzle_db() -> pd.DataFrame:
@@ -71,9 +76,7 @@ def del_vid_link(year: int, day: int) -> None:
 def get_puzzle_description(year: int, day: int) -> str | None:
     """"""
 
-    path = f'advent_of_code/y{year}/d{day:02}/description.txt'
-    if not os.path.exists(path):
-        return None
-    
-    with open(path, 'r') as f:
-        return f.read()
+    path = get_puzzle_dir_path(year, day) / 'description.txt'
+    if path.exists():
+        return path.read_text()
+    return None

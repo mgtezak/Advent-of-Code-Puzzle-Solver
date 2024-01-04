@@ -1,20 +1,16 @@
 # Native
 import json
-import os
+from pathlib import Path
 
 # Local
-from config import TEMP
+from config import TEMP_STORAGE
 from base import get_session_id
+from .handle_puzzle_data import get_puzzle_dir_path
 
 
 
-def get_temp_pi_path():
-    return f'{TEMP}/{get_session_id()}.json'
-
-
-
-def get_my_pi_path(year, day):
-    return f'advent_of_code/y{year}/d{day:02}/example_input.json'
+def get_temp_inp_path():
+    return TEMP_STORAGE / f'{get_session_id()}.json'
 
 
 
@@ -26,11 +22,10 @@ def get_puzzle_id(year, day):
 def get_temp_puzzle_input_db() -> dict:
     """Returns temporary puzzle inputs as dictionary."""
 
-    path = get_temp_pi_path()
+    path = get_temp_inp_path()
     
-    if os.path.exists(path):
-        with open(path, 'r') as f:
-            return json.load(f)
+    if path.exists():
+        return json.loads(path.read_text())
     return {}  
 
     
@@ -48,11 +43,11 @@ def put_temp_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
     """Inserts a single puzzle input into database."""
 
     puzzle_id = get_puzzle_id(year, day)
-    path = get_temp_pi_path()
+    path = get_temp_inp_path()
 
     db = get_temp_puzzle_input_db()
     db[puzzle_id] = puzzle_input
-    with open(path, 'w') as f:
+    with path.open('w') as f:
         json.dump(db, f, indent=4)
 
 
@@ -70,20 +65,17 @@ def del_temp_puzzle_input(year: int, day: int) -> None:
 def get_my_puzzle_input(year: int, day: int) -> str:
     """Fetches a single puzzle input as string."""
 
-    path = f'advent_of_code/y{year}/d{day:02}/my_input.txt'
-    with open(path, 'r') as f:
-        return f.read()
+    path = get_puzzle_dir_path(year, day) / 'my_input.txt'
+    return path.read_text()
     
 
 
 def get_example_inputs(year, day):
     """"""
 
-    path = get_my_pi_path(year, day)
-    if os.path.exists(path):
-        with open(path, 'r') as f:
-            return json.load(f)
-        
+    path = get_puzzle_dir_path(year, day) / 'example_input.json'
+    if path.exists():
+        return json.loads(path.read_text())
     return {}
 
 

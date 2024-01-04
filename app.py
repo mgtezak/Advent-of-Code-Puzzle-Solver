@@ -16,14 +16,13 @@ st.set_page_config(
     layout="wide"
 )
 
-with open(STYLE, 'r') as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+st.markdown(f'<style>{STYLE.read_text()}</style>', unsafe_allow_html=True)
 
 
 def run():
 
     if not st.session_state:
-        st.snow()
         reboot_app()
 
     tabs = OrderedDict({

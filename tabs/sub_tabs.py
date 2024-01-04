@@ -5,17 +5,6 @@ from utils.handle_solutions import get_temp_solution, put_temp_solution, del_tem
 from utils.toolbox import display_fail_msg, display_example_inputs
 from utils.handle_solutions import get_source_code
 
-import pytz
-from datetime import datetime
-
-def show_curr_time():   
-    now = datetime.now()
-    st.write(now)
-    st.write(now.hour)
-    now_est = datetime.now(pytz.timezone('EST'))
-    st.write(now_est)
-    st.write(now_est.hour)
-
 
 
 def description_tab(description):
@@ -34,16 +23,13 @@ def source_code_tab(year, day):
 
 
 
-
 def video_tab(video_link):
     st.write()
     st.markdown(video_link, unsafe_allow_html=True)
-    show_curr_time()
 
 
 
 def interactive_tab(year, day):
-    # print(st.session_state)
 
     # GET PUZZLE INPUT
     if not st.session_state.get('solution', False):

@@ -5,7 +5,6 @@ import shutil
 # Local imports
 from utils.handle_puzzle_input import get_example_inputs
 from utils.handle_solutions import get_solving_func
-from utils.toolbox import get_parts
 
 
 def check_part_compatibility(year: int, day: int, example_input: str) -> int:
@@ -13,8 +12,14 @@ def check_part_compatibility(year: int, day: int, example_input: str) -> int:
     with part 2 and 3 if it's compatible with both parts, or only part 1 exists (day 25).
     """
     
-    compatibility = 0 if day < 25 else 2
-    for part in get_parts(year, day):
+    if day < 25:
+        compatibility = 0
+        parts = (1, 2)
+    else:
+        compatibility = 2
+        parts = (1,)
+
+    for part in parts:
         solving_func = get_solving_func(year, day, part)
         try:
             solution = solving_func(example_input)

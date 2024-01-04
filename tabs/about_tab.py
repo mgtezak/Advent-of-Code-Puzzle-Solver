@@ -2,6 +2,7 @@
 import streamlit as st
 
 def run():
+    st.snow()
     st.title('🌟🎅🏻 About this Project 🎅🏻🌟')
     st.divider()
     st.write('')
