@@ -3,7 +3,7 @@ import streamlit as st
 
 # Native imports
 from collections import OrderedDict
-from Projects.aoc_solutions.tabs import personal_stats_tab
+from tabs import personal_stats_tab
 
 # Local imports
 from config import SIDEBAR_IMG, STYLE
