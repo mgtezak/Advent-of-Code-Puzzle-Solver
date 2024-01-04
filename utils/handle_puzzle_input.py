@@ -3,15 +3,33 @@ import json
 import os
 
 # Local
-from config import TEMP_PUZZLE_INPUT
+from config import TEMP
+from base import get_session_id
+
+
+
+def get_temp_pi_path():
+    return f'{TEMP}/{get_session_id()}.json'
+
+
+
+def get_my_pi_path(year, day):
+    return f'advent_of_code/y{year}/d{day:02}/example_input.json'
+
+
+
+def get_puzzle_id(year, day):
+    return str(year*100 + day)
 
 
 
 def get_temp_puzzle_input_db() -> dict:
     """Returns temporary puzzle inputs as dictionary."""
 
-    if os.path.exists(TEMP_PUZZLE_INPUT):
-        with open(TEMP_PUZZLE_INPUT, 'r') as f:
+    path = get_temp_pi_path()
+    
+    if os.path.exists(path):
+        with open(path, 'r') as f:
             return json.load(f)
     return {}  
 
@@ -20,27 +38,21 @@ def get_temp_puzzle_input_db() -> dict:
 def get_temp_puzzle_input(year: int, day: int) -> str | None:
     """Fetches a single puzzle input as string."""
 
-    year, day = str(year), str(day)
+    puzzle_id = str(year*100 + day)
     db = get_temp_puzzle_input_db()
-
-    if not db.get(year, False):
-        return None
-    
-    return db[year].get(day, False)
+    return db.get(puzzle_id, False)
 
 
 
 def put_temp_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
     """Inserts a single puzzle input into database."""
 
-    year, day = str(year), str(day)
+    puzzle_id = get_puzzle_id(year, day)
+    path = get_temp_pi_path()
 
     db = get_temp_puzzle_input_db()
-    if not db.get(year, False):
-        db[year] = {}
-
-    db[year][day] = puzzle_input
-    with open(TEMP_PUZZLE_INPUT, 'w') as f:
+    db[puzzle_id] = puzzle_input
+    with open(path, 'w') as f:
         json.dump(db, f, indent=4)
 
 
@@ -48,11 +60,10 @@ def put_temp_puzzle_input(year: int, day: int, puzzle_input: str) -> None:
 def del_temp_puzzle_input(year: int, day: int) -> None:
     """Overwrites puzzle input entry with empty string."""
 
+    puzzle_id = get_puzzle_id(year, day)
     db = get_temp_puzzle_input_db()
-    if db.get(year, False) and  db[year].get(day, False):
-        del db[year][day]
-
-    return put_temp_puzzle_input(year, day, '')
+    if db.get(puzzle_id, False):
+        del db[puzzle_id]
 
 
 
@@ -68,7 +79,7 @@ def get_my_puzzle_input(year: int, day: int) -> str:
 def get_example_inputs(year, day):
     """"""
 
-    path = f'advent_of_code/y{year}/d{day:02}/example_input.json'
+    path = get_my_pi_path(year, day)
     if os.path.exists(path):
         with open(path, 'r') as f:
             return json.load(f)

@@ -58,7 +58,7 @@ def update_compatibility(year: int, day: int, idx: int, new_value: int) -> None:
 
 
 
-def copy_solution_scripts(year, day):
+def copy_solution_scripts(year: int, day: int) -> None:
     year_path = f'advent_of_code/y{year}'
     day_path = year_path + f'/d{day:02}'
     os.makedirs(day_path)
@@ -68,3 +68,14 @@ def copy_solution_scripts(year, day):
         source_file = f''
         destination_file = day_path + f'/p{part}.py'
         shutil.copy(source_file, destination_file)
+
+
+def upload_description(year: int, day: int, description: str, overwrite: bool = False) -> None:
+    """Upload a puzzle description, to be viewed on the main page."""
+
+    path = f'advent_of_code/y{year}/d{day:02}/description.txt'
+    if os.path.exists(path) and overwrite == False:
+        raise FileExistsError("Set overwrite to true.")
+    
+    with open(path, 'w') as f:
+        f.write(description)

@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 # Local imports
-from config import PUZZLE_DATA, TEMP
+from config import PUZZLE_DATA, TEMP, MAX_YEAR
 from .handle_puzzle_data import get_puzzle_db
 from .handle_puzzle_input import is_example_input
 from .handle_solutions import solve
@@ -31,10 +31,7 @@ def reboot_app() -> None:
     """Gets called upon restarting the app with an empty session state. 
     All temporarily stored puzzle inputs and solutions will be deleted.
     """
-    if os.path.exists(TEMP):
-        for file in os.listdir(TEMP):
-            os.remove(TEMP + file)
-    else:        
+    if not os.path.exists(TEMP):     
         os.mkdir(TEMP)
     
 
@@ -50,6 +47,10 @@ def get_valid_days(year: int) -> list[int]:
 
     return [day for day in range(1, 26) if solution_exists(year, day)]
 
+def get_valid_years() -> list[int]:
+    """Returns list of currently available years in reverse order."""
+
+    return list(range(MAX_YEAR, 2014, -1))
 
 
 def get_completed_stat() -> str:

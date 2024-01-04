@@ -1,11 +1,49 @@
 import streamlit as st
 
-from utils.handle_puzzle_input import get_temp_puzzle_input, put_temp_puzzle_input, get_example_inputs, is_example_input
+from utils.handle_puzzle_input import get_temp_puzzle_input, put_temp_puzzle_input, get_example_inputs
 from utils.handle_solutions import get_temp_solution, put_temp_solution, del_temp_solution, display_solution, solve
 from utils.toolbox import display_fail_msg, display_example_inputs
+from utils.handle_solutions import get_source_code
+
+import pytz
+from datetime import datetime
+
+def show_curr_time():   
+    now = datetime.now()
+    st.write(now)
+    st.write(now.hour)
+    now_est = datetime.now(pytz.timezone('EST'))
+    st.write(now_est)
+    st.write(now_est.hour)
 
 
-def run(year, day):
+
+def description_tab(description):
+    st.write(description)
+
+
+
+def source_code_tab(year, day):
+    col1, col2, _ = st.columns(3)
+
+    if col1.button('Part 1'):
+        st.code(get_source_code(year, day, 1))
+
+    if day < 25 and col2.button('Part 2'):            
+        st.code(get_source_code(year, day, 2))
+
+
+
+
+def video_tab(video_link):
+    st.write()
+    st.markdown(video_link, unsafe_allow_html=True)
+    show_curr_time()
+
+
+
+def interactive_tab(year, day):
+    # print(st.session_state)
 
     # GET PUZZLE INPUT
     if not st.session_state.get('solution', False):

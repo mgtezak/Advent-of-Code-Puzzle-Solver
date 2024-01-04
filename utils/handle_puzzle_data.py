@@ -1,6 +1,9 @@
 # Third party
 import pandas as pd
 
+# Native
+import os
+
 # Local
 from config import PUZZLE_DATA
 
@@ -65,5 +68,12 @@ def del_vid_link(year: int, day: int) -> None:
 
 
 
-def get_puzzle_description(year: int, day: int) -> None:
-    pass
+def get_puzzle_description(year: int, day: int) -> str | None:
+    """"""
+
+    path = f'advent_of_code/y{year}/d{day:02}/description.txt'
+    if not os.path.exists(path):
+        return None
+    
+    with open(path, 'r') as f:
+        return f.read()

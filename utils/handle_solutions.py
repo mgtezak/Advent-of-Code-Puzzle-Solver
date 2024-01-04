@@ -9,9 +9,15 @@ import time
 from typing import Callable
 
 # Local
-from config import TEMP_SOLUTION
+from config import TEMP
+from base import get_session_id
 from .read_letter_grid import read_grid
 from .handle_puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
+
+
+
+def get_puzzle_id(year, day, part):
+    return year*1000 + day*10 + part
 
 
 def get_solving_func(year: int, day: int, part: int) -> Callable:
@@ -25,7 +31,6 @@ def solve(year: int, day: int, part: int, my_input: bool = False) -> tuple[str, 
     """Retrieves puzzle input and solving function for given year, day & part 
     and returns solution and runtime.
     """
-
     solving_func = get_solving_func(year, day, part)
 
     if my_input:
@@ -89,10 +94,18 @@ def get_temp_solution_db() -> pd.DataFrame:
     columns = ['solution', 'runtime']
     dtypes = [object, float]
 
-    if not os.path.exists(TEMP_SOLUTION):
+    path = f'{TEMP}/{get_session_id()}.csv'
+    if not os.path.exists(path):
+        print(path)
         return pd.DataFrame(columns=columns)
     
-    return pd.read_csv(TEMP_SOLUTION, index_col=0, dtype=dict(zip(columns, dtypes)))
+    return pd.read_csv(path, index_col=0, dtype=dict(zip(columns, dtypes)))
+
+
+
+def upload_temp_solution_db(df):
+    path = f'{TEMP}/{get_session_id()}.csv'
+    df.to_csv(path)
 
 
 
@@ -101,7 +114,7 @@ def get_temp_solution(year: int, day: int, part: int) -> tuple[str, float] | Non
 
     puzzle_id = 1000*year + 10*day + part
     df = get_temp_solution_db()
-
+    # print(df)
     if puzzle_id not in df.index:
         return None
 
@@ -114,10 +127,10 @@ def put_temp_solution(year: int, day: int, part: int, solution: str, runtime: fl
     """Stores away a single solution. Will overwrite if necessary."""
 
     puzzle_id = 1000*year + 10*day + part
+    
     df = get_temp_solution_db()
     df.loc[puzzle_id] = [solution, runtime]
-    df.to_csv(TEMP_SOLUTION)
-
+    upload_temp_solution_db(df)
 
 
 def del_temp_solution(year: int, day: int) -> None:
@@ -130,4 +143,4 @@ def del_temp_solution(year: int, day: int) -> None:
         if puzzle_id in df.index:
             df.drop(puzzle_id, inplace=True)
 
-    df.to_csv(TEMP_SOLUTION)    
+    upload_temp_solution_db(df)  

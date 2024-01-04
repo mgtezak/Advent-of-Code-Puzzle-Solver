@@ -1,4 +1,5 @@
 from base import get_curr_max_date
+from pathlib import Path
 
 ### Date variables
 MAX_YEAR, MAX_DAY = get_curr_max_date()
@@ -18,7 +19,7 @@ PUZZLE_DATA = 'puzzle_data.csv'
 
 
 # Temporary storage paths – rebooted with every new session
-TEMP = 'temp_storage/'
+TEMP = 'temp_storage'
 TEMP_PUZZLE_INPUT = 'temp_storage/puzzle_input.json'
 TEMP_SOLUTION = 'temp_storage/solution.csv'      
 

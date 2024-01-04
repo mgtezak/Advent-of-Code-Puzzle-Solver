@@ -1,0 +1,33 @@
+As usual, we start off easy with this year's Advent of Code! Part 1 task:
+- Pick out the first and last digit of every line (can potentially be the same one)
+- Concatenate them to form a two-digit number
+- Return the sum of these two-digit numbers
+
+
+
+
+There are many ways to achieve this. We could make use of python's `str.isdigit` method, 
+but I prefer to use the `re` or *regular expressions* module.
+It's great for matching all kinds of patterns inside of strings.
+Here's my approach:
+- Initiate the return variable `total`
+- Iterate through lines and use `re.findall` with `\d` to extract all digits
+- Take the first and last digit, concatenate them (this can be done using `+`, since they are still strings, it won't add them up)
+- Turn the concatenated number string into an integer (`int`) and add it to `total`
+- Return `total`
+
+
+___
+
+
+
+Part 2 task:
+- The same as part 1, but now words such as *one*, *two* etc. also count
+
+
+
+My approach:
+- Create a data structure to map words to their corresponding numbers (usually done with a `dict` but I simply used a `list`)
+- Create a new regular expression pattern that captures not only digits `\d` but also words (when trying to match different things use the OR operator `|` for the regex)
+- Careful, some words overlap: in *oneight* 1 and 8 share the letter *e*. In order to capture both numbers we need a "lookahead" assertion `?=` to avoid the algorithm matching the 1 but missing the 8
+- Otherwise the same basic structure as in part 1
