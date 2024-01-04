@@ -90,7 +90,7 @@ def run(year, day):
 
                 except:
                     display_fail_msg(year, day)
-
+                    
                 if st.session_state.get('show_solution_2', False):
                     st.rerun()
 

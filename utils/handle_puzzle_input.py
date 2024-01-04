@@ -76,7 +76,7 @@ def get_example_inputs(year, day):
         with open(path, 'r') as f:
             return json.load(f)
         
-    return False
+    return []
 
 
 def is_example_input(year: int, day: int, puzzle_input: str|None = None) -> bool:
