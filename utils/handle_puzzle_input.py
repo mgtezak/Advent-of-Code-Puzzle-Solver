@@ -20,7 +20,6 @@ def get_temp_puzzle_input_db() -> dict:
 
     
 
-
 def get_temp_puzzle_input(year: int, day: int) -> str | None:
     """Fetches a single puzzle input as string."""
 
