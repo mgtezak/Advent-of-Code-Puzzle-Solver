@@ -12,11 +12,12 @@ def get_temp_puzzle_input_db() -> dict:
 
     try:
         with open(TEMP_PUZZLE_INPUT, 'r') as f:
-            db = json.load(f)
+            return json.load(f)
     except:
-        db = {}
-        
-    return db
+        with open(TEMP_PUZZLE_INPUT, 'w') as f:
+            json.dump({}, f) 
+        return {}  
+
     
 
 
