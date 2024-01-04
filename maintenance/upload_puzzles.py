@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 # Local imports
 from utils.handle_puzzle_input import get_example_inputs
@@ -43,3 +44,27 @@ def add_example_inputs(year: int, day: int, input_list: list[str], overwrite: bo
 
     with open(path, 'w') as f:
         json.dump(input_dict, f, indent=2)
+
+
+
+def update_compatibility(year: int, day: int, idx: int, new_value: int) -> None:
+    """Useful in cases where the example input is compatible with both parts, when it should 
+    actually only work with one of them.
+    """
+    idx = str(idx)
+    input_dict = get_example_inputs(year, day)
+    input_dict[idx] = (input_dict[idx][0], new_value)
+    print(f'Puzzle input:\n{input_dict[idx][0]}\n\nUpdated compatibility: {new_value}')
+
+
+
+def copy_solution_scripts(year, day):
+    year_path = f'advent_of_code/y{year}'
+    day_path = year_path + f'/d{day:02}'
+    os.makedirs(day_path)
+    
+    parts = (1, 2) if day < 25 else (1,)
+    for part in parts:
+        source_file = f''
+        destination_file = day_path + f'/p{part}.py'
+        shutil.copy(source_file, destination_file)
