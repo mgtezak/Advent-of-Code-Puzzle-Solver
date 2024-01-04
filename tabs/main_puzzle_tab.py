@@ -7,7 +7,7 @@ from collections import OrderedDict
 # Local imports
 from utils.toolbox import reset_puzzle_solver, get_valid_days, get_valid_years
 from utils.handle_puzzle_data import get_title, get_vid_link, get_puzzle_description
-from .sub_tabs import description_tab, interactive_tab, source_code_tab, video_tab
+from .sub_tabs import interactive_tab, source_code_tab, video_tab
 
 
 
@@ -27,14 +27,14 @@ def run():
     st.caption(f'[*(link to the puzzle)*](https://adventofcode.com/{year}/day/{day})')
 
     sub_tabs = OrderedDict([
-        ('Description & Approach', (description_tab, description)), 
+        # ('Description & Approach', (description_tab, description)), 
         ('Get Your Solution', (interactive_tab, year, day)), 
         ('View Solution Code', (source_code_tab, year, day)), 
-        ('Video Explanation', (video_tab, video_link))
+        ('Video Explanation', (video_tab, video_link, description))
     ])
     
-    if description is None:     # Not all puzzles have a description or video
-        del sub_tabs['Description & Approach']
+    # if description is None:     # Not all puzzles have a description or video
+    #     del sub_tabs['Description & Approach']
     if video_link is None:
         del sub_tabs['Video Explanation']
 

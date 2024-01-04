@@ -1,4 +1,13 @@
+from utils.handle_puzzle_input import is_example_input
+
 def part2(puzzle_input):
+
+    if is_example_input(2018, 6, puzzle_input):
+        max_distance = 32
+    else:
+        max_distance = 10_000
+
+
     coords = [tuple(map(int, line.split(', '))) for line in puzzle_input.split('\n')]
     areas = {(x, y): 0 for x, y in coords}
     proximity_region = []
@@ -11,7 +20,7 @@ def part2(puzzle_input):
     def get_nearest_coord(x, y):
         distances = {(v, w): abs(x-v) + abs(y-w) for v, w in coords}
         sorted_distances = sorted(distances.items(), key=lambda x: x[1])
-        if sum(distances.values()) < 10_000:
+        if sum(distances.values()) < max_distance:
             proximity_region.append(1)
         if sorted_distances[0][1] == sorted_distances[1][1]:
             return None

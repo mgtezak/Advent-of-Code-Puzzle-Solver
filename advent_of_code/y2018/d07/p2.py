@@ -1,6 +1,14 @@
 from string import ascii_uppercase
+from utils.handle_puzzle_input import is_example_input
 
 def part2(puzzle_input):
+
+    if is_example_input(2018, 7, puzzle_input):
+        min_time = 1
+        time_elapsed = 1
+    else:
+        min_time = 61
+        time_elapsed = 0
 
     instructions = [line.split() for line in puzzle_input.split('\n')]
     requirements = {}
@@ -15,8 +23,7 @@ def part2(puzzle_input):
             requirements[later] = [earlier]
 
     possible_steps = [s for s in all_steps if s not in requirements]
-    time_required = {s: 61 + ascii_uppercase.index(s) for s in all_steps}
-    time_elapsed = 0
+    time_required = {s: min_time + ascii_uppercase.index(s) for s in all_steps}
     idle = 5
     in_progress = {}
 

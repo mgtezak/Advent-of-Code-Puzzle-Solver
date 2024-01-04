@@ -1,0 +1,10 @@
+{
+  "0": [
+    "abcde\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab",
+    1
+  ],
+  "1": [
+    "abcde\nfghij\nklmno\npqrst\nfguij\naxcye\nwvxyz",
+    3
+  ]
+}

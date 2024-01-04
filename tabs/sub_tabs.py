@@ -7,8 +7,8 @@ from utils.handle_solutions import get_source_code
 
 
 
-def description_tab(description):
-    st.write(description)
+# def description_tab(description):
+#     st.write(description)
 
 
 
@@ -23,9 +23,11 @@ def source_code_tab(year, day):
 
 
 
-def video_tab(video_link):
+def video_tab(video_link, description):
     st.write()
     st.markdown(video_link, unsafe_allow_html=True)
+    st.divider()
+    st.write(description)
 
 
 
