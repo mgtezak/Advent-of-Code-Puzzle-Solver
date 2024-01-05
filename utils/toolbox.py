@@ -4,27 +4,26 @@ import numpy as np
 
 # Native imports
 from datetime import datetime, timedelta
-import os
 
 # Local imports
 from config import PUZZLE_DATA, TEMP_STORAGE, MAX_YEAR
-from .handle_puzzle_data import get_puzzle_db
+from .handle_puzzle_data import get_puzzle_db, get_puzzle_dir_path
 from .handle_puzzle_input import is_example_input
 from .handle_solutions import solve
 
 
 
-def display_example_inputs(inputs):
+def display_example_inputs(example_inputs: list) -> None:
+    """Displays example inputs."""
 
-    n = len(inputs)
-    for i in range(n):
-        st.divider()
-        if i == 0:
-            st.write(f'Example input{"s" if n > 1 else ""}:')
-        example_input, compatibility = inputs[str(i)]
+    st.divider()
+    st.write(f'Example input{"s" if len(example_inputs) > 1 else ""}:')
+    for example_input, compatibility in example_inputs:
         st.code(example_input)
         if compatibility != 3:
             st.caption(f'(Only works with part {compatibility})')
+        st.divider()
+
 
 
 
@@ -54,10 +53,13 @@ def get_valid_days(year: int) -> list[int]:
 
     return [day for day in range(1, 26) if solution_exists(year, day)]
 
+
+
 def get_valid_years() -> list[int]:
     """Returns list of currently available years in reverse order."""
 
     return list(range(MAX_YEAR, 2014, -1))
+
 
 
 def get_completed_stat() -> str:
@@ -66,20 +68,19 @@ def get_completed_stat() -> str:
     df = get_puzzle_db()
     completed = df.solution_1.count()
     total = df.shape[0]
+    pct = int(completed/total * 100)
+    return f"So far I've completed {completed} ({pct}%) of the available total of {total} two-part daily challenges."
 
-    return f"So far I've completed {completed} ({int(completed/total * 100)}%) of the available total of {total} two-part daily challenges."
 
 
-
-def display_fail_msg(year, day) -> None:
+def display_fail_msg(year: int, day: int) -> None:
     """Failure message gets displayed if the solving function throws an error."""
-    if is_example_input(year, day):
 
+    if is_example_input(year, day):
         st.error("""
             :man-tipping-hand: This example input only works with the other part.  
             :star: Try entering your own input.
         """)
-
     else:
         st.error("""
             :scream: Oops, something went wrong!  
@@ -90,9 +91,10 @@ def display_fail_msg(year, day) -> None:
 
 
 
-def solution_exists(year, day):
-    path = f'advent_of_code/y{year}/d{day:02}'
-    return os.path.exists(path)
+def solution_exists(year: int, day: int) -> bool:
+    """Checks whether or not I have solved a given puzzle yet."""
+
+    return get_puzzle_dir_path(year, day).exists()
 
 
 
@@ -117,6 +119,3 @@ def put_my_results(year: int, day: int) -> None:
     df = get_puzzle_db()
     df.loc[puzzle_id, 'solution_1':'runtime_2'] = results
     df.to_csv(PUZZLE_DATA)
-
-
-

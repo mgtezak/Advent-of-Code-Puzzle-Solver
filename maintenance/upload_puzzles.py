@@ -3,6 +3,7 @@ import os
 import shutil
 
 # Local imports
+from utils.handle_puzzle_data import get_puzzle_dir_path
 from utils.handle_puzzle_input import get_example_inputs
 from utils.handle_solutions import get_solving_func
 
@@ -35,20 +36,19 @@ def check_part_compatibility(year: int, day: int, example_input: str) -> int:
 def add_example_inputs(year: int, day: int, input_list: list[str], overwrite: bool = False) -> None:
     """Adds example input for a given year and day to a json file."""
 
-    path = f'advent_of_code/y{year}/d{day:02}/example_input.json'
-    if not overwrite and os.path.exists(path):
-        raise ValueError(f"{year}-{day} already has example puzzle input.")
+    path = get_puzzle_dir_path(year, day) / 'example_input.json'
+    if not overwrite and path.exists():
+        raise FileExistsError("Set overwrite to True.")
 
-    input_dict = {}
-    for i, example in enumerate(input_list):
+    tuple_list = []
+    for example in input_list:
         print(f'Input: \n{example}\n')
         compatibility = check_part_compatibility(year, day, example)
         print(f'Compatibility: {compatibility}\n\n')
         assert compatibility > 0, "Incompatible with either part"
-        input_dict[i] = (example, compatibility)
+        tuple_list.append(example, compatibility)
 
-    with open(path, 'w') as f:
-        json.dump(input_dict, f, indent=2)
+    path.write_text(json.dumps(tuple_list, indent=2))
 
 
 
@@ -56,10 +56,9 @@ def update_compatibility(year: int, day: int, idx: int, new_value: int) -> None:
     """Useful in cases where the example input is compatible with both parts, when it should 
     actually only work with one of them.
     """
-    idx = str(idx)
-    input_dict = get_example_inputs(year, day)
-    input_dict[idx] = (input_dict[idx][0], new_value)
-    print(f'Puzzle input:\n{input_dict[idx][0]}\n\nUpdated compatibility: {new_value}')
+    input_list = get_example_inputs(year, day)
+    input_list[idx] = (input_list[idx][0], new_value)
+    print(f'Puzzle input:\n{input_list[idx][0]}\n\nUpdated compatibility: {new_value}')
 
 
 
@@ -78,9 +77,8 @@ def copy_solution_scripts(year: int, day: int) -> None:
 def upload_description(year: int, day: int, description: str, overwrite: bool = False) -> None:
     """Upload a puzzle description, to be viewed on the main page."""
 
-    path = f'advent_of_code/y{year}/d{day:02}/description.txt'
-    if os.path.exists(path) and overwrite == False:
+    path =  get_puzzle_dir_path(year, day) / 'description.txt'
+    if not overwrite and path.exists():
         raise FileExistsError("Set overwrite to true.")
     
-    with open(path, 'w') as f:
-        f.write(description)
+    path.write_text(description)

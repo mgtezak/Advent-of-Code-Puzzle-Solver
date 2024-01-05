@@ -9,12 +9,16 @@ from .handle_puzzle_data import get_puzzle_dir_path
 
 
 
-def get_temp_inp_path():
+def get_temp_inp_path() -> Path:
+    """Get path for storing temporary inputs, based on the users unique session id."""
+
     return TEMP_STORAGE / f'{get_session_id()}.json'
 
 
 
-def get_puzzle_id(year, day):
+def get_puzzle_id(year: int, day: int) -> str:
+    """Combine year and day into a single indentifier."""
+
     return str(year*100 + day)
 
 
@@ -23,7 +27,6 @@ def get_temp_puzzle_input_db() -> dict:
     """Returns temporary puzzle inputs as dictionary."""
 
     path = get_temp_inp_path()
-    
     if path.exists():
         return json.loads(path.read_text())
     return {}  
@@ -70,23 +73,24 @@ def get_my_puzzle_input(year: int, day: int) -> str:
     
 
 
-def get_example_inputs(year, day):
-    """"""
+def get_example_inputs(year: int, day: int) -> list[tuple[str, int]]:
+    """Retrieves example inputs for a given puzzle."""
 
     path = get_puzzle_dir_path(year, day) / 'example_input.json'
     if path.exists():
         return json.loads(path.read_text())
-    return {}
+    return []
 
 
-def is_example_input(year: int, day: int, puzzle_input: str|None = None) -> bool:
-    """"""
+
+def is_example_input(year: int, day: int, puzzle_input: str | None = None) -> bool:
+    """Checks whether a given puzzle input is part of the example inputs."""
     
     if puzzle_input is None:
         puzzle_input = get_temp_puzzle_input(year, day)
 
-    example_inputs = get_example_inputs(year, day).values()
+    example_inputs = get_example_inputs(year, day)
     if example_inputs:
-        return puzzle_input in list(zip(*example_inputs))[0]
+        return puzzle_input in [item[0] for item in example_inputs]
     else:
         return False

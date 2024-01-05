@@ -1,18 +1,25 @@
+# Third party
 import streamlit as st
 
+# Local
 from utils.handle_puzzle_input import get_temp_puzzle_input, put_temp_puzzle_input, get_example_inputs
-from utils.handle_solutions import get_temp_solution, put_temp_solution, del_temp_solution, display_solution, solve
+from utils.handle_solutions import get_temp_solution, put_temp_solution, del_temp_solution, display_solution, solve, get_source_code
 from utils.toolbox import display_fail_msg, display_example_inputs
-from utils.handle_solutions import get_source_code
 
 
 
-# def description_tab(description):
-#     st.write(description)
+def description_tab(description: str, video_link: str | None = None) -> None:
+    """Display my description & approach (and video link if available ) for a given puzzle."""
+
+    st.write(description)
+    if video_link:
+        st.markdown(video_link, unsafe_allow_html=True)
 
 
 
-def source_code_tab(year, day):
+def source_code_tab(year: int, day: int) -> None:
+    """Display my solution functions for a given puzzle."""
+
     col1, col2, _ = st.columns(3)
 
     if col1.button('Part 1'):
@@ -20,18 +27,11 @@ def source_code_tab(year, day):
 
     if day < 25 and col2.button('Part 2'):            
         st.code(get_source_code(year, day, 2))
+    
 
 
-
-def video_tab(video_link, description):
-    st.write()
-    st.markdown(video_link, unsafe_allow_html=True)
-    st.divider()
-    st.write(description)
-
-
-
-def interactive_tab(year, day):
+def interactive_tab(year: int, day: int) -> None:
+    """Allows to interactively engage with my solution functions, by trying them with one's own puzzle input."""
 
     # GET PUZZLE INPUT
     if not st.session_state.get('solution', False):
@@ -44,7 +44,7 @@ def interactive_tab(year, day):
 
             example_inputs = get_example_inputs(year, day)
             if example_inputs:
-                st.write('Enter puzzle input (scroll down for example inputs):')
+                st.write('Enter puzzle input (example inputs below):')
             else:
                 st.write('Enter puzzle input:')
 

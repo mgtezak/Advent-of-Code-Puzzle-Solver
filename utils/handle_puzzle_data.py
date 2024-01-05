@@ -2,15 +2,18 @@
 import pandas as pd
 
 # Native
-import os
 from pathlib import Path
 
 # Local
 from config import PUZZLE_DATA
 
 
-def get_puzzle_dir_path(year, day):
+
+def get_puzzle_dir_path(year, day) -> Path:
+    """Returns a Path object for the directory of a given year and day's puzzle."""
+
     return Path(f'advent_of_code/y{year}/d{day:02}')
+
 
 
 def get_puzzle_db() -> pd.DataFrame:
@@ -74,7 +77,7 @@ def del_vid_link(year: int, day: int) -> None:
 
 
 def get_puzzle_description(year: int, day: int) -> str | None:
-    """"""
+    """Retrieves the content of a given puzzle's description file if it exists."""
 
     path = get_puzzle_dir_path(year, day) / 'description.txt'
     if path.exists():

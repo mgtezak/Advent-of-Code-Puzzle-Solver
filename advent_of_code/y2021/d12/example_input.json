@@ -1,14 +1,14 @@
-{
-  "0": [
+[
+  [
     "start-A\nstart-b\nA-c\nA-b\nb-d\nA-end\nb-end",
     3
   ],
-  "1": [
+  [
     "dc-end\nHN-start\nstart-kj\ndc-start\ndc-HN\nLN-dc\nHN-end\nkj-sa\nkj-HN\nkj-dc",
     3
   ],
-  "2": [
+  [
     "fs-end\nhe-DX\nfs-he\nstart-DX\npj-DX\nend-zg\nzg-sl\nzg-pj\npj-he\nRW-he\nfs-DX\npj-RW\nzg-RW\nstart-pj\nhe-WI\nzg-he\npj-fs\nstart-RW",
     3
   ]
-}
+]

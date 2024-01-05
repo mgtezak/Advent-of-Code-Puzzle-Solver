@@ -1,6 +1,6 @@
-{
-  "0": [
+[
+  [
     "broadcaster -> a, b, c\n%a -> b\n%b -> c\n%c -> inv\n&inv -> a",
     1
   ]
-}
+]
