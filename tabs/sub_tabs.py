@@ -44,7 +44,7 @@ def interactive_tab(year: int, day: int) -> None:
 
             example_inputs = get_example_inputs(year, day)
             if example_inputs:
-                st.write('Enter puzzle input (example inputs below):')
+                st.write(f'Enter puzzle input (example{"s" if len(example_inputs)>1 else ""} below):')
             else:
                 st.write('Enter puzzle input:')
 

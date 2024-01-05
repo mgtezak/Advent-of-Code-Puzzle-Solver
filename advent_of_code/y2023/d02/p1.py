@@ -1,19 +1,13 @@
-def part1(puzzle_input):
+import re
 
+def part1(puzzle_input):
     possible = {'red': 12, 'green': 13, 'blue': 14}
-    possible_games = 0
+    total = 0
     for id, game in enumerate(puzzle_input.split('\n'), start=1):
-        game = game.split(': ')[1]
-        for hand in game.split('; '):
-            is_impossible = False
-            for subset in hand.split(', '):
-                n, color = subset.split()
-                if int(n) > possible[color]:
-                    is_impossible = True
-                    break
-            if is_impossible:
+        for n, color in re.findall(r'(\d+) (red|green|blue)', game):
+            if possible[color] < int(n):
                 break
         else:
-            possible_games += id
+            total += id
 
-    return possible_games
+    return total

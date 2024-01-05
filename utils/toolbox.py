@@ -98,12 +98,12 @@ def solution_exists(year: int, day: int) -> bool:
 
 
 
-def get_valid_parts(year, day):
-    if not solution_exists(year, day):
-        return []
-    if day == 25:
-        return [1]
-    return [1, 2]
+# def get_valid_parts(year, day):
+#     if not solution_exists(year, day):
+#         return []
+#     if day == 25:
+#         return [1]
+#     return [1, 2]
 
 
 
