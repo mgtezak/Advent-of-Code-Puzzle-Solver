@@ -2,8 +2,8 @@
 
 - Each line represents a single game, where an elf picks out a handful of differently colored cubes multiple times
 - He shows them to you and puts them back in the bag before taking out the next handful
-- The question is, if there were only 12 red cubes, 13 green cubes, and 14 blue cubes in bag, which of the games would be possible?
-- Return the sum of the IDs of possible games (first game's ID = 1, second game's ID = 2 etc.)
+- Now, if there were only 12 red cubes, 13 green cubes, and 14 blue cubes in bag, some of these games would not be possible
+- What is the sum of the IDs of possible games (first game's ID = 1, second game's ID = 2 etc.)?
 
 
 #### My approach:
@@ -12,7 +12,7 @@
 - Iterate the lines. Since we need the line IDs (or indices) we use the in-built `enumerate` function with `start=1`
 - Iterate each line using a `re.findall` to match digits `\d+` followed by a color
 - For each number-color pair check if the number exceeds the max value of that color. If it does, we `break` out of the loop
-- If the loop never breaks, it enters the `else` clause which adds the ID to the total (to learn more about `for/else` loops with `break` statements [*read this*](https://book.pythontips.com/en/latest/for_-_else.html))
+- If the loop never breaks, it enters the `else` clause which adds the ID to the total ([*learn more about*](https://book.pythontips.com/en/latest/for_-_else.html) `for/else` loops with `break` statements)
 - Return `total`
 
 ___
@@ -20,9 +20,9 @@ ___
 
 #### Part 2 task:
 
-- Now the question is: What is the fewest number of cubes of each color that could have been in the bag to make the game possible?
+- Now we're interested in the fewest number of cubes of each color that could have been in the bag to make each game possible
 - For each game calculate the product of the minimum numbers of each color
-- Return the sum of these products
+- What is the sum of these products?
 
 #### My approach:
 

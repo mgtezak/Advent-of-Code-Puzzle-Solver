@@ -1,7 +1,7 @@
 #### Part 1 task:
 - Pick out the first and last digit of every line (can potentially be the same one)
 - Concatenate them to form a two-digit number
-- Return the sum of these two-digit numbers
+- What is the sum of these two-digit numbers?
 
 
 

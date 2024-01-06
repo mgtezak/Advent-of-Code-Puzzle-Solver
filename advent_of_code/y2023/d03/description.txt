@@ -1,0 +1,38 @@
+#### Part 1 task:
+
+- We get a grid of numbers, dots and other symbols
+- We're interested in numbers that are adjacent (even diagonally) to one or more symbols
+- What is the sum of these numbers?
+
+
+#### My approach:
+
+- Make a `set` of all (row, col) coordinates around each symbol
+    - Do this by using a regex which matches anything but dots `\.` and digits `\d` together with `re.finditer` (`re.findall` won't help because we need the index) 
+    - Iterate the coordinates adjacent to each symbol and add them to the `set`
+- Find the index-span and value of each number `\d+` and check if `any` of its indices is inside the `set`
+- Return the sum of the `int` value of such numbers
+
+
+___
+
+
+
+#### Part 2 task:
+
+- Now we're interested in `*` symbols, which have exactly two numbers adjacent to it
+- Such a symbol represents a gear and its gear ratio is the product of the two numbers around it 
+- What is the sum of all gear ratios?
+
+
+#### My approach:
+
+- Create a `dict` with the coordinates of every `*` symbol as key and an empty `list` as value
+- Find the rox index, the column index-span and the value of each number. 
+- Iterate the coordinates adjacent to its index-span and check if any of them are in the `dict`. 
+- If so, `append` the number value its entry
+- Finally, iterate through the `list` values of the `dict` to find those with a `len` of 2 and take their product
+- Return the sum of these products
+
+
+___
