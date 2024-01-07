@@ -7,7 +7,7 @@ from config import PROGRESS_PLOT, RUNTIME_PLOT
 
 
 def run():
-    st.title("💫🎁 Stats-n-Graphs 🎁💫")
+    st.title("💫🦌 Personal Stats 🦌💫")
 
     st.divider()
     for _ in range(2):

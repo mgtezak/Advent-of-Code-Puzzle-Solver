@@ -6,13 +6,13 @@
 - What is the sum of the IDs of possible games (first game's ID = 1, second game's ID = 2 etc.)?
 
 
-#### My approach:
+#### My suggested approach:
 
 - Create a `dict` which maps the three colors to their max values (12, 13 & 14) and a variable `total = 0` which keeps track of our return value
-- Iterate the lines. Since we need the line IDs (or indices) we use the in-built `enumerate` function with `start=1`
-- Iterate each line using a `re.findall` to match digits `\d+` followed by a color
-- For each number-color pair check if the number exceeds the max value of that color. If it does, we `break` out of the loop
-- If the loop never breaks, it enters the `else` clause which adds the ID to the total ([*learn more about*](https://book.pythontips.com/en/latest/for_-_else.html) `for/else` loops with `break` statements)
+- Iterate the lines and keep track of their indices
+- For each line find all numbers followed by a color
+- For each number-color pair check if the number exceeds the max value of that color
+- If it does move on to the next line, if it never does add the ID to the total (I used a `for/else` loop with a `break` statement for this – [*learn more*](https://book.pythontips.com/en/latest/for_-_else.html))
 - Return `total`
 
 ___
@@ -24,7 +24,7 @@ ___
 - For each game calculate the product of the minimum numbers of each color
 - What is the sum of these products?
 
-#### My approach:
+#### My suggested approach:
 
 - Again, initiate the return variable `total = 0` and iterate the lines
 - For each line initialize a `dict` which keeps track of the max value of each color (starting at `0`)
