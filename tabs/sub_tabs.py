@@ -65,7 +65,7 @@ def interactive_tab(year: int, day: int) -> None:
         else:                                           # puzzle input stored in memory to be stored in db
             puzzle_input = st.session_state['puzzle_memory'].rstrip()
             if not puzzle_input:
-                st.error('You did not provide any puzzle input.')
+                st.error('You did not provide any input.')
                 st.session_state['solution'] = False
                 st.button('Try again!')
 

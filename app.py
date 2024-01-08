@@ -7,7 +7,7 @@ from collections import OrderedDict
 # Local imports
 from config import SIDEBAR_IMG, STYLE
 from utils.toolbox import reboot_app, reset_puzzle_solver
-from tabs import main_puzzle_tab, personal_stats_tab, about_tab, public_stats_tab
+from tabs import main_puzzle_tab, personal_stats_tab, about_tab, public_stats_tab, grid_letter_tab
 
 
 st.set_page_config(
@@ -27,6 +27,7 @@ def run():
 
     tabs = OrderedDict({
         '🎄 Puzzle Solutions': main_puzzle_tab,
+        '⛄ Grid Decoding ': grid_letter_tab,        
         '🎁 Public Stats': public_stats_tab,
         '🦌 Personal Stats': personal_stats_tab,
         '🎅🏻 About': about_tab,

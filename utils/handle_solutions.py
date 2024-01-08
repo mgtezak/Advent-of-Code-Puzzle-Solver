@@ -11,7 +11,7 @@ from pathlib import Path
 # Local
 from config import TEMP_STORAGE
 from base import get_session_id
-from .read_letter_grid import read_grid
+from .handle_grids import read_grid
 from .handle_puzzle_input import get_temp_puzzle_input, get_my_puzzle_input
 from .handle_puzzle_data import get_puzzle_dir_path
 
@@ -67,8 +67,8 @@ def display_solution(solution: str, runtime: float) -> None:
     if '\n' in solution:
         st.text('Visual output:\n\n' + solution)
         letters = read_grid(solution)
-        if letters:
-            st.subheader(letters)
+        st.subheader(letters if letters else 'Unfortunately could not decipher the message.')
+
     else:
         st.subheader(solution)
 

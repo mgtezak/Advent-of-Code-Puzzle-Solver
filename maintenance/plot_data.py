@@ -95,17 +95,17 @@ def get_public_stats_plot_df():
     df['day'] = df.index % 100
     df = df[['year', 'day'] + original_cols]
     df = df.drop(columns=['title', 'solution_1', 'solution_2', 'video_link'])
-    df['only_1'] = df.gold + df.silver
+    df['total'] = 2*df.gold + df.silver
     return df
 
 
 
-def plot_current_completion_stats() -> None:
+def plot_current_completion_stats(savefig: bool = True) -> None:
     """Make 3D plot of current completion stats."""
 
     df = get_public_stats_plot_df()
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(15, 5))
     ax = fig.add_subplot(111, projection='3d')
 
     ax.set_title('Current Completion Statistics', fontsize=9)
@@ -133,14 +133,6 @@ def plot_current_completion_stats() -> None:
         ax.plot3D([2023.8]*2, [0, 25], [z-11000]*2, **linestyle)
         ax.plot3D([2015, 2023.8], [0]*2, [z-11000]*2, **linestyle)
 
-    cols = ['year', 'day', 'gold', 'silver']
-    max_year_both, max_day_both, max_gold_both, max_silver_both = map(int, df.loc[df.gold.idxmax(), cols])
-    min_year_both, min_day_both, min_gold_both, min_silver_both = map(int, df.loc[df.gold.idxmin(), cols])
-    max_year_1, max_day_1, max_gold_1, max_silver_1 = map(int, df.loc[df.only_1.idxmax(), cols])
-    min_year_1, min_day_1, min_gold_1, min_silver_1 = map(int, df.loc[df.only_1.idxmin(), cols])
-    max_year_diff, max_day_diff, max_gold_diff, max_silver_diff = map(int, df.loc[df.silver.idxmax(), cols])
-    min_year_diff, min_day_diff, min_gold_diff, min_silver_diff = map(int, df.loc[df.silver.idxmin(), cols])
-
     for year in range(2023, 2014, -1):
         xs = df[df['year']==year]['year']
         ys = df[df['year']==year]['day']
@@ -155,47 +147,79 @@ def plot_current_completion_stats() -> None:
     ax.set_box_aspect([1,2.77777,1])
     ax.view_init(elev=30, azim=-45)
 
-    legend_elements = [Patch(facecolor=TEXT_COLOR, label='Both Parts'),
-                    Patch(facecolor='red', label='Only Part 1')]
+    legend_elements = [Patch(facecolor=TEXT_COLOR, label='Single (only part 1)'),
+                       Patch(facecolor='red', label='Double (both parts)')]
     ax.legend(handles=legend_elements, loc=(0.85, 0.86), fontsize=4.5)
 
-    max_text = f'''
-    Max completion of both parts (Red): 
-        AoC {max_year_both} – Day {max_day_both}
-        Gold: {max_gold_both:,} 
-        Silver: {max_silver_both:,}
-
-    Max completion of part 1 (Yellow & Red):
-        AoC {max_year_1} – Day {max_day_1}
-        Gold: {max_gold_1:,} 
-        Silver: {max_silver_1:,}
-
-    Max difference between 1 & 2 (Yellow): 
-        AoC {max_year_diff} – Day {max_day_diff}
-        Gold: {max_gold_diff:,} 
-        Silver: {max_silver_diff:,}'''
-
-    min_text = f'''
-    Min completion of both parts (Red): 
-        AoC {min_year_both} – Day {min_day_both}
-        Gold: {min_gold_both:,} 
-        Silver: {min_silver_both:,}
-
-    Min completion of part 1 (Yellow & Red):
-        AoC {min_year_1} – Day {min_day_1}
-        Gold: {min_gold_1:,} 
-        Silver: {min_silver_1:,}
-
-    Min difference between 1 & 2 (Yellow): 
-        AoC {min_year_diff} – Day {min_day_diff}
-        Gold: {min_gold_diff:,} 
-        Silver: {min_silver_diff:,}'''
-
-    update = f'(Last update: {datetime.now().strftime("%Y-%m-%d")})'
-
-    ax.text(2040, 11, 0, max_text, fontsize=4.5)
-    ax.text(2009, 17, -180_000, min_text, fontsize=4.5)
-    ax.text(2036, -1, 300_000, update, fontsize=4)
+    max_text, min_text, update_text = get_formatted_texts(df)
+    ax.text(2040, 11, -50_000, max_text, fontsize=4.5)
+    ax.text(2012, 12, -330_000, min_text, fontsize=4.5)
+    ax.text(2036, -1, 300_000, update_text, fontsize=4)
 
     plt.tight_layout()
-    plt.savefig(PUBLIC_COMPLETION_PLOT)
+
+    # Save the plot
+    if savefig:
+        plt.savefig(PUBLIC_COMPLETION_PLOT)
+
+
+
+def format(num: int, bold=False) -> str:
+    """Uses MacTeX syntax for printing bold."""
+    
+    num = f'{num:,}'
+    if bold:
+        num =  r'$\mathbf{' + num + '}$'
+    return num
+
+
+
+def get_formatted_texts(df):
+    cols = ['year', 'day', 'total', 'gold', 'silver']
+    max_total_year, max_total_day, max_total_total, max_total_double, max_total_single,  = map(int, df.loc[df.total.idxmax(), cols])
+    max_double_year, max_double_day, max_double_total, max_double_double, max_double_single,  = map(int, df.loc[df.gold.idxmax(), cols])
+    max_single_year, max_single_day, max_single_total, max_single_double, max_single_single,  = map(int, df.loc[df.silver.idxmax(), cols])
+    min_total_year, min_total_day, min_total_total, min_total_double, min_total_single,  = map(int, df.loc[df.total.idxmin(), cols])
+    min_double_year, min_double_day, min_double_total, min_double_double, min_double_single,  = map(int, df.loc[df.gold.idxmin(), cols])
+    min_single_year, min_single_day, min_single_total, min_single_double, min_single_single,  = map(int, df.loc[df.silver.idxmin(), cols])
+
+    max_text = f'''
+    Max total completions (2$\cdot$Red + Yellow):
+        AoC {max_total_year} – Day {max_total_day}
+        Total: {format(max_total_total, True)}
+        Double: {format(max_total_double)} 
+        Single: {format(max_total_single)}
+
+    Max double completions (Red): 
+        AoC {max_double_year} – Day {max_double_day}
+        Total: {format(max_double_total)}
+        Double: {format(max_double_double, True)} 
+        Single: {format(max_double_single)}
+
+    Max single completions (Yellow): 
+        AoC {max_single_year} – Day {max_single_day}
+        Total: {format(max_single_total)}
+        Double: {format(max_single_double)} 
+        Single: {format(max_single_single, True)}'''
+
+    min_text = f'''
+    Min total completions (2$\cdot$Red + Yellow):
+        AoC {min_total_year} – Day {min_total_day}
+        Total: {format(min_total_total, True)}
+        Double: {format(min_total_double)}
+        Single: {format(min_total_single)}
+
+    Min double completions (Red): 
+        AoC {min_double_year} – Day {min_double_day}
+        Total: {format(min_double_total)}
+        Double: {format(min_double_double, True)} 
+        Single: {format(min_double_single)}
+
+    Min single completions (Yellow): 
+        AoC {min_single_year} – Day {min_single_day}
+        Total: {format(min_single_total)}
+        Double: {format(min_single_double)} 
+        Single: {format(min_single_single, True)}'''
+    
+    update_text = f'(Last update: {datetime.now().strftime("%Y-%m-%d")})'
+    return max_text, min_text, update_text

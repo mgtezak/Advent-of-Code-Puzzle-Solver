@@ -10,10 +10,23 @@ from config import PUZZLE_DATA, TEMP_STORAGE, MAX_YEAR
 from .handle_puzzle_data import get_puzzle_db, get_puzzle_dir_path
 from .handle_puzzle_input import is_example_input
 from .handle_solutions import solve
+from .handle_grids import generate_grids
 
 
 
-def display_example_inputs(example_inputs: list) -> None:
+def display_generated_grids(letters):
+    """"""
+    
+    for label, result, unknown in generate_grids(letters):
+        st.text(f'Your message in a {label} grid:\n\n' + result)
+        if unknown:
+            s, are = ('s', 'are') if len(unknown) > 1 else ('', 'is')
+            unknown = "".join(unknown)
+            st.caption(f'Unfortunately the character{s} "{unknown}" {are} not included in this alphabet.')
+        st.divider()
+
+
+def display_example_inputs(example_inputs: list[tuple[str, int]]) -> None:
     """Displays example inputs."""
 
     st.divider()
@@ -23,7 +36,6 @@ def display_example_inputs(example_inputs: list) -> None:
         if compatibility != 3:
             st.caption(f'(Only works with part {compatibility})')
         st.divider()
-
 
 
 
