@@ -21,6 +21,7 @@ LETTER_TO_GRID_SMALL = Path('assets/grid_letter_dicts/letter_to_grid_small.json'
 
 # Data
 PUZZLE_DATA = 'data/puzzle_data.csv'
+LEADERBOARD_DATA = 'data/leaderboard.csv'
 EXAMPLE_GRIDS = Path('data/example_grids.json')
 
 
