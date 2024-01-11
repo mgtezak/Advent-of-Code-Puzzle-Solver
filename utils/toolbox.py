@@ -86,7 +86,7 @@ def get_completed_stat() -> str:
     """Returns formatted string describing the current progress."""
 
     df = get_puzzle_db()
-    completed = df.solution_1.count()
+    completed = df.runtime_1.count()
     total = df.shape[0]
     pct = int(completed/total * 100)
     return f"So far I've completed {completed} ({pct}%) of the available total of {total} two-part daily challenges."
