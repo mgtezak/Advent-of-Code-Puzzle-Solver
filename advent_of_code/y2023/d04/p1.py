@@ -1,14 +1,11 @@
 import re
 
 def part1(puzzle_input):
-    regex = r':(.*?)\|(.*)'
+    regex = r':(.*)\|(.*)'
     points = 0
-    for line in puzzle_input.split('\n'):
-        nums = re.search(regex, line)
-        win_nums = set(map(int, nums.group(1).split()))
-        true_nums = set(map(int, nums.group(2).split()))
-        n_matches = len(win_nums & true_nums)
-        if n_matches:
-            points += 2 ** (n_matches - 1)
+    for win_nums, true_nums in re.findall(regex, puzzle_input):
+        overlap = set(win_nums.split()) & set(true_nums.split())
+        if overlap:
+            points += 2 ** (len(overlap) - 1)
 
     return points

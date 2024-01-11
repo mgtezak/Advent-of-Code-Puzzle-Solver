@@ -1,11 +1,13 @@
-#### Part 1 task:
+### Part 1 
+
+***Problem:***
 - Pick out the first and last digit of every line (can potentially be the same one)
 - Use them to form a two-digit number
 - What is the sum of these two-digit numbers?
 
 
 
-#### My suggested approach:
+***Approach:***
 - Initiate the return variable `total`
 - Iterate through lines and extract the digits of each (e.g. with `re.findall` or `str.isdigit`)
 - Select the first and last digit and concatenate them (`+` works because they're still `str` type)
@@ -16,14 +18,13 @@
 
 ___
 
+### Part 2 
 
-
-#### Part 2 task:
+***Problem:***
 - The same as part 1, but now words such as *one*, *two* etc. also count
 
 
-
-#### My suggested approach:
+***Approach:***
 - Create a data structure to map words to their corresponding numbers (`dict` or `list`)
 - Create a new regular expression pattern that captures not only digits `\d` but also words (when trying to match different things use the OR operator `|` for the regex)
 - Careful, some words overlap: in *oneight* 1 and 8 share the letter *e*. In order to capture not just the 1, but also the 8 we need a "lookahead" assertion `?=`

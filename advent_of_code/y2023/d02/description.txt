@@ -1,31 +1,31 @@
-#### Part 1 task:
+### Part 1 
 
+***Problem:***
 - Each line represents a single game, where an elf picks out a handful of differently colored cubes multiple times
 - He shows them to you and puts them back in the bag before taking out the next handful
 - Now, if there were only 12 red cubes, 13 green cubes, and 14 blue cubes in bag, some of these games would not be possible
 - What is the sum of the IDs of possible games (first game's ID = 1, second game's ID = 2 etc.)?
 
 
-#### My suggested approach:
-
+***Approach:***
 - Create a `dict` which maps the three colors to their max values (12, 13 & 14) and a variable `total = 0` which keeps track of our return value
 - Iterate the lines and keep track of their indices
 - For each line find all numbers followed by a color
 - For each number-color pair check if the number exceeds the max value of that color
-- If it does move on to the next line, if it never does add the ID to the total (I used a `for/else` loop with a `break` statement for this – [*learn more*](https://book.pythontips.com/en/latest/for_-_else.html))
+- If it does, move on to the next line, if it never does, add the ID to the total (I used a `for/else` loop with a `break` statement for this – [*learn more*](https://book.pythontips.com/en/latest/for_-_else.html))
 - Return `total`
 
 ___
 
 
-#### Part 2 task:
+### Part 2 
 
+***Problem:***
 - Now we're interested in the fewest number of cubes of each color that could have been in the bag to make each game possible
-- For each game calculate the product of the minimum numbers of each color
+- For each game, what is the product of the minimum numbers of each color?
 - What is the sum of these products?
 
-#### My suggested approach:
-
+***Approach:***
 - Again, initiate the return variable `total = 0` and iterate the lines
 - For each line initialize a `dict` which keeps track of the max value of each color (starting at `0`)
 - Iterate line and update the max values of each color

@@ -1,0 +1,40 @@
+### Part 1 
+
+***Problem:***
+- We get a series of cards with winning numbers on one side and actual numbers on the other
+- We're interested in how many of the actual numbers are winning numbers
+- If there is a winning number among the actual ones, we get 1 point, for each additional winning number we double the points: 2 -> 2, 3 -> 4, 4 -> 8 etc.
+- How many points do we get in total for all cards?
+
+
+
+***Approach:***
+- Iterate lines and extract the winning and the actual numbers
+- Find their overlap through `set.intersection` or simply `&`
+- Raise 2 to the power of the size of this overlap (minus 1) to calculate the points gained and add them to the total
+- Return the total
+
+
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- We're no longer interested in how many points we get, but rather how many cards we end up with
+- We start out with one instance of each card
+- If a card has winning numbers among its actual numbers then we receive more of the following cards => For 1 match we get an instance of the next card, for 5 matches we get an instance of each of the next 5 cards
+- This process accumulates: if the current card contains matches, then we receive as many instances of the following cards as we have instances of the current one
+- When this process is over, how many cards did we go through in total?
+
+
+
+***Approach:***
+- Initialize a list/array `cards`  which keeps track of how many instances we have of each card. It needs to have the same length as our number of cards and start out with 1 at each position
+- Again, use set intersections to find matches between the winning and the actual cards
+- Use the number of matches as a range: starting from the current card's index `i`, add to the cards with the following indices `i+1`, `i+2` ... `i+n_matches`
+- Don't just add 1 to the subsequent cards, but as many as there are cards at the current index
+- Finally return the sum of all the entries of the cards list
+___
