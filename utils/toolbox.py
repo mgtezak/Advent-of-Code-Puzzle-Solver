@@ -39,6 +39,14 @@ def display_example_inputs(example_inputs: list[tuple[str, int]]) -> None:
 
 
 
+def display_video(video_id):
+    """"""
+
+    embedded_link = f'<iframe width="960" height="540" src="https://www.youtube.com/embed/{video_id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+    st.markdown(embedded_link, unsafe_allow_html=True)
+
+
+
 def reboot_app() -> None:
     """Temporary storage gets cleared of all files that haven't been modified for over an hour."""
 

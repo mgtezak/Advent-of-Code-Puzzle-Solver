@@ -4,16 +4,16 @@ import streamlit as st
 # Local
 from utils.handle_puzzle_input import get_temp_puzzle_input, put_temp_puzzle_input, get_example_inputs
 from utils.handle_solutions import get_temp_solution, put_temp_solution, del_temp_solution, display_solution, solve, get_source_code
-from utils.toolbox import display_fail_msg, display_example_inputs
+from utils.toolbox import display_fail_msg, display_example_inputs, display_video
 
 
 
-def description_tab(description: str, video_link: str | None = None) -> None:
+def description_tab(description: str, video: str | None = None) -> None:
     """Display my description & approach (and video link if available ) for a given puzzle."""
 
     st.write(description)
-    if video_link:
-        st.markdown(video_link, unsafe_allow_html=True)
+    if video:
+        display_video(video)
 
 
 
@@ -30,7 +30,7 @@ def source_code_tab(year: int, day: int) -> None:
     
 
 
-def interactive_tab(year: int, day: int) -> None:
+def interactive_tab(year: int, day: int, runtimes: tuple[int, int | None]) -> None:
     """Allows to interactively engage with my solution functions, by trying them with one's own puzzle input."""
 
     # GET PUZZLE INPUT
@@ -90,6 +90,8 @@ def interactive_tab(year: int, day: int) -> None:
             else:
                 try:
                     with st.spinner('Calculating solution...'):
+                        if runtimes[0] > 20:
+                            st.warning('Unfortunately my solution function\'s runtime for this puzzle exceeds 20 seconds. I will revisit this problem to try to solve it more efficient.')
                         solution, runtime = solve(year, day, 1)
                     put_temp_solution(year, day, 1, solution, runtime)
                     st.session_state['show_solution_1'] = True
@@ -110,6 +112,8 @@ def interactive_tab(year: int, day: int) -> None:
             else:
                 try:
                     with st.spinner('Calculating solution...'):
+                        if runtimes[1] and runtimes[1] > 20:
+                            st.warning('Unfortunately my solution function\'s runtime for this puzzle exceeds 20 seconds. I will revisit this problem to try to solve it more efficient.')
                         solution, runtime = solve(year, day, 2)
                     put_temp_solution(year, day, 2, solution, runtime)
                     st.session_state['show_solution_2'] = True

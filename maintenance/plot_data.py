@@ -20,38 +20,39 @@ plt.style.use(MLP_STYLE_PATH)
 
 
 def get_plot_df():
-    """Prepare data for plotting by stacking solutions 1&2 and runtime 1&2,
-    resulting in one row for each puzzle part.
-    """
+    """Prepare data for plotting by stacking runtimes, resulting in one row for each puzzle part."""
+    
     df = get_puzzle_db()
     df.index = df.index.astype(str)
     df['year'] = df.index.str.slice(0, 4).astype(int)
     df['day'] = df.index.str.slice(4, 6).astype(int)
-    df_part1 = df[['year', 'day', 'solution_1', 'runtime_1']].copy().assign(part=1)
-    df_part2 = df[['year', 'day', 'solution_2', 'runtime_2']].copy().assign(part=2)
-    df_part1.rename(columns={'solution_1': 'solution', 'runtime_1': 'runtime'}, inplace=True)
-    df_part2.rename(columns={'solution_2': 'solution', 'runtime_2': 'runtime'}, inplace=True)
-    df_stacked = pd.concat([df_part1, df_part2]).dropna().reset_index(drop=True)
-    return df_stacked
+    df_part1 = df[['year', 'day', 'runtime_1', 'video_id']].copy().assign(part=1)
+    df_part2 = df[['year', 'day', 'runtime_2', 'video_id']].copy().assign(part=2)
+    df_part1.rename(columns={'runtime_1': 'runtime'}, inplace=True)
+    df_part2.rename(columns={'runtime_2': 'runtime'}, inplace=True)
+    df_stacked = pd.concat([df_part1, df_part2])
+    return df_stacked[df_stacked.runtime.notna()].reset_index(drop=True)
 
 
 
 def plot_my_progress(savefig=True):
-    """Scatterplot with a red dot for each completed puzzle."""
+    """Scatterplot with a dot for each completed puzzle."""
 
     # Get data
     df = get_plot_df()
 
     # Create figure and plot
     ax = plt.subplots(figsize=(15, 5))[1]
-    sns.scatterplot(data=df, x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9)
+    sns.scatterplot(data=df[df.video_id.notna()], x='day', y='year', marker='o', color=TEXT_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='Yes')
+    sns.scatterplot(data=df[df.video_id.isna()], x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=TEXT_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='No')
     ax.set_title('My Advent of Code Progress')
     ax.set_xlabel('Day')
     ax.set_ylabel('Year')
+    ax.legend(title='Has video')
     ax.invert_yaxis()
     ax.set_xticks(np.arange(1, 26, 1))
     ax.set_xlim(0.6, 25.4)
-
+    
     # Save the plot
     if savefig:
         plt.savefig(PROGRESS_PLOT)
@@ -94,7 +95,7 @@ def get_public_stats_plot_df():
     df['year'] = df.index // 100
     df['day'] = df.index % 100
     df = df[['year', 'day'] + original_cols]
-    df = df.drop(columns=['title', 'solution_1', 'solution_2', 'video_link'])
+    df = df.drop(columns=['title', 'video_id'])
     df['total'] = 2*df.gold + df.silver
     return df
 
