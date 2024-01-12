@@ -36,6 +36,6 @@ ___
 - Each interval starts out with a segment index of 1 (0 is the index of the seed numbers) and if an interval passes the segment at index 7, then it is done
 - Further tips:
     1. *To-do-lists* work well with a `while` statement: "while we have stuff to do, do the next thing..."
-    2. A `for`/`else` loop with a `break` statement will also be helpful: if none of the conversion intervals overlap, the `else` clause will make sure the current interval passes to the next segment
+    2. A `for`/`else` loop with a `break` statement will also be helpful: if none of the conversion intervals overlap, then the `else` clause will make sure the current interval passes to the next segment unchanged
 
 ___
