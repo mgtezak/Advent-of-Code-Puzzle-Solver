@@ -3,7 +3,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Patch
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import FuncFormatter, StrMethodFormatter
+
 import numpy as np
 import pandas as pd
 
@@ -11,8 +12,8 @@ import pandas as pd
 from datetime import datetime
 
 # Local imports
-from config import TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH
-from config import PROGRESS_PLOT, RUNTIME_PLOT, PUBLIC_COMPLETION_PLOT
+from config import TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH, LEADERBOARD_DATA
+from config import PROGRESS_PLOT, RUNTIME_PLOT, PUBLIC_COMPLETION_PLOT, TOP_TEN_PLOT
 from utils.handle_puzzle_data import get_puzzle_db
 
 plt.style.use(MLP_STYLE_PATH)
@@ -224,3 +225,52 @@ def get_formatted_texts(df):
     
     update_text = f'(Last update: {datetime.now().strftime("%Y-%m-%d")})'
     return max_text, min_text, update_text
+
+def get_leaderboard_data():
+    """"""
+    return pd.read_csv(LEADERBOARD_DATA, parse_dates=['timestamp'])
+
+def get_annual_leaderboard_data():
+    """"""
+    df = get_leaderboard_data()
+    df['year'] = df['timestamp'].dt.year
+    df_annual = df.groupby(['user_name', 'year'])['points'].sum().reset_index()
+    df_annual = df_annual.pivot(index='year', columns='user_name')
+    df_annual.columns = [name for _, name in df_annual.columns]
+    df_annual = df_annual.fillna(0).astype(int)
+
+    df_cumsum = df_annual.copy()
+    for year in range(2016, 2024):
+        df_cumsum.loc[year] = df_cumsum.loc[[year-1, year]].sum()
+
+    sorted_cols = df_cumsum.loc[2023].sort_values().index
+    df_cumsum = df_cumsum[sorted_cols]
+
+    return df_annual, df_cumsum
+
+
+
+def plot_top_ten(savefig=True):
+    """"""
+    # get data
+    df_cumsum = get_annual_leaderboard_data()[1]
+    sorted_cols = df_cumsum.loc[2023].sort_values().index
+    top_ten = df_cumsum[sorted_cols].iloc[:, -10:]
+
+    plt.figure(figsize=(15, 9))
+    colors = ['orange', 'blue', 'green', PRIMARY_COLOR, TEXT_COLOR] * 2 
+    for i, (name, color) in enumerate(zip(top_ten.columns, colors)):
+        linestyle = ':' if i<4 else '-.' if i<7 else '-'
+        plt.plot(top_ten.index, top_ten[name], label=name, linewidth=1+i*(1/3), alpha=0.7, color=color, marker='o', linestyle=linestyle )
+        if i > 6:
+            y_final = top_ten.loc[2023, name]
+            plt.text(2023.05, y_final, f'{y_final:,}', fontsize=8)
+
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend(reversed(handles), reversed(labels), loc='upper left')
+    plt.xlabel('Year')
+    plt.ylabel('Cumulative Points')
+    plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.0f}'))
+    plt.title('Top Ten Cumulative Scores')
+    if savefig:
+        plt.savefig(TOP_TEN_PLOT)

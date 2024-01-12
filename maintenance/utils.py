@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup as bs
 import re
 import urllib
 
+
 # Local
 from config import PUZZLE_DATA
 from utils.handle_puzzle_data import get_puzzle_db

@@ -1,0 +1,41 @@
+### Part 1 
+
+***Problem:***
+- We start out with a couple of seeds, each represented by an integer
+- Each seed number then undergoes a series of integer to integer mappings: seed -> soil -> fertilizer -> water -> light -> temperature -> humidity -> location
+- If we map each seed to its respective location, what is the lowest location number?
+
+***Approach:***
+- Split the puzzle input into its individual segments
+- Create a triple nested `for` loop:
+    1. Iterate the seed numbers (extracted from the first segment)
+    2. Iterate the remaining segments
+    3. Iterate the conversions in each segment
+- If the current seed number falls into the range specified by the conversion, then map it to its appropriate destination number and `break` to avoid further mappings inside of the same segment 
+- Keep track of the resulting location numbers and return the lowest of them 
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- The question remains the same, but we need to reinterpret the seed numbers
+- They now need to be interpreted as intervals, where each pair of numbers represents the start and the range of the interval
+
+
+***Approach:***
+- When we run an entire interval through a conversion, we need to check for overlap between the initial interval and the conversion interval. One of three things can happen:
+    1. No overlap -> no problem, move on 
+    2. Perfect overlap -> no problem, the seed interval is contained inside the conversion interval and can therefore be fully converted
+    3. Partial overlap -> this is where things get tricky, because we need to split our seed interval into two or even three smaller ones
+- We can deal with this problem of fractionation by implementing a kind of *to-do-list* data-structure like a *queue* or a *stack* (either works)
+- Whenever our current interval gets split into parts, we decide to deal with the part that gets converted now, and we put any other part onto our *to-do-list* so we can deal with it later
+- A *to-do-list* entries needs to contain information about the lower and upper bounds of the interval as well as a segment index with which we can access the appropriate conversions in our list of segments
+- Each interval starts out with a segment index of 1 (0 is the index of the seed numbers) and if an interval passes the segment at index 7, then it is done
+- Further tips:
+    1. *To-do-lists* work well with a `while` statement: "while we have stuff to do, do the next thing..."
+    2. A `for`/`else` loop with a `break` statement will also be helpful: if none of the conversion intervals overlap, the `else` clause will make sure the current interval passes to the next segment
+
+___

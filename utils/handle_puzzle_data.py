@@ -61,8 +61,10 @@ def put_vid_link(year: int, day: int, link: str) -> None:
 
     if '?si=' in link:
         video_id = link.split('?si=')[0].split('embed/')[1]
-    if '?watch=' in link:
-        video_id = link.split('?watch=')[1]
+    elif 'watch?v=' in link:
+        video_id = link.split('watch?v=')[1]
+    else:
+        video_id = link
 
     puzzle_id = 100 * year + day
     df = get_puzzle_db()

@@ -3,7 +3,7 @@ import streamlit as st
 
 # Local imports
 # from utils.toolbox import get_completed_stat
-from config import PUBLIC_COMPLETION_PLOT
+from config import PUBLIC_COMPLETION_PLOT,TOP_TEN_PLOT
 
 
 def run():
@@ -19,12 +19,6 @@ def run():
     st.divider()
     st.write('')
 
-    # st.write("""
-    #     As is clearly visible in the following barplots, most of the solution functions uploaded so far, 
-    #     execute in just a few milliseconds. 
-    #     However there are a few outliers with a much longer runtime resulting in a large 
-    #     difference between the mean and the median. 
-    # """)
-    # st.write('')
-    # st.image(RUNTIME_PLOT)
-    # st.divider()
+
+    st.image(TOP_TEN_PLOT)
+    st.divider()

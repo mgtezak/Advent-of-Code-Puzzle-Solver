@@ -13,6 +13,7 @@ MLP_STYLE_PATH = 'assets/.mlpstyle'
 PROGRESS_PLOT = 'assets/plots/my_progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/my_runtime_plot.png'
 PUBLIC_COMPLETION_PLOT = 'assets/plots/completion_plot.png'
+TOP_TEN_PLOT = 'assets/plots/top_ten.png'
 
 GRID_TO_LETTER_DICT = Path('assets/grid_letter_dicts/grid_to_letter.json')
 LETTER_TO_GRID_LARGE = Path('assets/grid_letter_dicts/letter_to_grid_large.json')
