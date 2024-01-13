@@ -1,0 +1,39 @@
+### Part 1 
+
+***Problem:***
+- We're participating in a number of races and have to decide how many *discrete* units of time we spend accelerating
+- As we accelerate we don't move, once we start moving, we can no longer accelerate (nor do we lose speed)
+- For each unit of time spent accelerating, we gain an additional speed of 1 unit of distance per unit of time
+- We are given two equal length lists of numbers: *Time* & *Distance*
+- *Time* describes the total length of each race and *Distance* the distance we need to beat in order to win
+- What is the product of the total number of possibilities to win in each game?
+
+
+***Brute force approach:***
+- Iterate time & distance tuples `(t, d)`
+- Iterate all possible acceleration times (from `1` to `t-1`)
+- Calculate final distance and check whether it exceeds `d`
+- In each game count up all the times, in which `d` is exceeded and return the product of these numbers
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- Concatenate the numbers in *Time* and *Distance* to form two very large numbers
+- How many discrete winning strategies are there now?
+
+
+***Approach:***
+- Brute force approach won't work, because numbers are too big -> we need math!
+- Distance travelled $f$ is a quadratic function of total time $t$ and acceleration time $x$: $f(x, t) = (t-x) \cdot x$
+- Now we plug in the minimum distance we need to beat and solve for $x$ (this will be the minimum $x$ needed to win): 
+- $d = (t-x) \cdot x \quad => \quad x = \frac{t - \sqrt{t^2 - 4d}}{2}$
+- We get $t$ and $d$ from out puzzle input, so we can calculate $x$ which will be a `float`
+- To get the discrete number of ways to win we need to turn it into the minimum possible `int` ($x_{min}$)
+- For reasons of symmetry, we can simply subtract $x_{min}$ from both sides of the range
+- Since there are a total of $t+1$ discrete numbers in the inclusive range $[0, t]$ the final answer is $t+1 - 2 x_{min}$
+
+___
