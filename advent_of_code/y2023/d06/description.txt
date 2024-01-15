@@ -27,13 +27,13 @@ ___
 
 
 ***Approach:***
-- Brute force approach won't work, because numbers are too big -> we need math!
-- Distance travelled $f$ is a quadratic function of total time $t$ and acceleration time $x$: $f(x, t) = (t-x) \cdot x$
-- Now we plug in the minimum distance we need to beat and solve for $x$ (this will be the minimum $x$ needed to win): 
-- $d = (t-x) \cdot x \quad => \quad x = \frac{t - \sqrt{t^2 - 4d}}{2}$
-- We get $t$ and $d$ from out puzzle input, so we can calculate $x$ which will be a `float`
-- To get the discrete number of ways to win we need to turn it into the minimum possible `int` ($x_{min}$)
-- For reasons of symmetry, we can simply subtract $x_{min}$ from both sides of the range
-- Since there are a total of $t+1$ discrete numbers in the inclusive range $[0, t]$ the final answer is $t+1 - 2 x_{min}$
+- Brute force approach won't work, because numbers are too big –> we need math!
+- Distance travelled $d$ is a quadratic function of total time $t$ and acceleration time $x$: $\ d = (t-x) \cdot x$
+- Solve for $x$ to get the formula that directly calculates the minimum $x$ needed to win: 
+- $d = (t-x) \cdot x \quad => \quad x_{low} = \frac{t - \sqrt{t^2 - 4d}}{2}$ and $ \ x_{high} = \frac{t + \sqrt{t^2 - 4d}}{2}$
+- For reasons of symmetry, we only need $x_{low}$, which we can get by simply plugging in $t$ and $d$ from out puzzle input
+- The result is a `float` and we need the next highest `int` ($x_{int}$)
+- Now we can simply subtract $x_{int}$ from both sides of the inclusive range $[0, t]$
+- Since there are a total of $\ t+1$ discrete numbers in the range, the final answer is $\ t+1 - 2 x_{int}$
 
 ___
