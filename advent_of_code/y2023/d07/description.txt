@@ -1,0 +1,36 @@
+### Part 1 
+
+***Problem:***
+- We're playing *Camel Cards* (similar to poker) and we have to evaluate a set of hands and their corresponding bids
+- First we need to rank the hands according to their strength, where the weakest hand gets rank 1
+- Card hierarchy: *A* > *K* > *Q* > *J* > *T* > *9* > *8* > *7* > *6* > *5* > *4* > *3* > *2*
+- Hand hierarchy: *five of a kind* > *four of a kind* > *full house* > *three of a kind* > *two pair* > *one pair* > *high card*
+- For two hands with same type, the first index (left to right) at which the hands differ decides which is stronger
+- Each hand wins its bid multiplied by its card
+- What are the total winnings?
+
+***Approach:***
+- Parse puzzle input and create a `list` of (hand, bid) `tuples`
+- `functools.cmp_to_key` ([read more](https://www.geeksforgeeks.org/how-does-the-functools-cmp_to_key-function-works-in-python/)) allows us to sort a list according to a custom comparison function, as long as it
+    1. accepts exactly two arguments (two list elements to compare)
+    2. returns either 1, -1 or 0, depending on whether the first element, the second, or neither element is greater than the other
+- Build such a comparison function with the help of another, which returns the type of each hand (here `collections.Counter` can be [useful](https://www.digitalocean.com/community/tutorials/python-counter-python-collections-counter))
+- Once the `get_type` and the `compare` functions are in place, sort the hands and use `enumerate` to get their rank 
+- Return the sum of the products of each card's rank and the bid
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- *J* cards are now jokers and must be used in whichever way maximizes the hand's value
+- Individually *J* cards are now the least valuable ones (below *2*)
+
+***Approach:***
+- Same basic structure as part 1
+- Modify the `get_type` function to count up jokers seperately and add it to the most frequent card's count
+- Modify the `compare` function to value *J* less than *2*
+
+___
