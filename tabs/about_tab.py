@@ -7,7 +7,7 @@ def run():
     st.divider()
     st.write('')
     st.write("""
-        Hello, I'm [Michael Tezak](https://mgtezak.github.io) and I like solving puzzles on [Advent of Code](https://adventofcode.com) with python.
+        Hello, I'm [Michael Tezak](https://mgtezak.github.io) and I like solving [Advent of Code](https://adventofcode.com) puzzles with python.
         If you're not familiar with this christmas-themed coding calendar and you're into sharpening your problem-solving skills 
         using your favorite programming language, I highly recommend you check it out!
 
@@ -16,8 +16,8 @@ def run():
         A cool thing about these challenges is that everyone gets their own individual puzzle input, such that everyone's puzzle answer 
         will be different as well. 
 
-        If you get stuck there's a huge community on [reddit](https://www.reddit.com/r/adventofcode/), 
-        youtube and various other platforms, of people sharing their approaches to each problem.
+        If you get stuck there's a huge community of people on [reddit](https://www.reddit.com/r/adventofcode/), 
+        youtube and various other platforms, who share their approaches to each problem.
         I learned a ton about programming in python by trying to solve these problems and then going online and comparing my solution to those of others.
         With this website I'd like to contribute to this community, by sharing my own code and creating a fun interface to play around with.
         If you're interested in how I built it, check out its 
