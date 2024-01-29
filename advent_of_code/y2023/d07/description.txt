@@ -6,7 +6,7 @@
 - Card hierarchy: *A* > *K* > *Q* > *J* > *T* > *9* > *8* > *7* > *6* > *5* > *4* > *3* > *2*
 - Hand hierarchy: *five of a kind* > *four of a kind* > *full house* > *three of a kind* > *two pair* > *one pair* > *high card*
 - For two hands with same type, the first index (left to right) at which the hands differ decides which is stronger
-- Each hand wins its bid multiplied by its card
+- Each hand wins its bid multiplied by its rank
 - What are the total winnings?
 
 ***Approach:***
