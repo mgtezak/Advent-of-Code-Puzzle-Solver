@@ -9,7 +9,7 @@ from config import (PUBLIC_COMPLETION_PLOT, PUBLIC_COMPLETION_PLOT_2, SUBMISSION
 def run():
 
     st.title("🌜🎁 Public Stats 🎁🌜")
-    st.caption('*(Check out my original notebook on [kaggle](https://www.kaggle.com/code/michaeltezak/visualizing-advent-of-code-stats))*')
+    st.caption('*(Check out my original notebook on [kaggle](https://www.kaggle.com/code/michaeltezak/visualizing-advent-of-code-public-stats))*')
     st.divider()
 
 
