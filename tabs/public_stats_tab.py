@@ -45,9 +45,9 @@ def run():
         - Day 22 has the highest mean submission time: 46 minutes (part 2)
         - The longest it ever took to fill up the leaderboard was day 19, 2015: 3 hours and 52 minutes
         - There are 3 leaderboard entries under 20 seconds (*highly sus if you ask me...*):
-                1. 2022–3–1: 10 seconds by ostwilkens 
-                2. 2023–1–1: 12 seconds by (anonymous user #640116)
-                3. 2022–4–1: 16 seconds by max-sixty
+            1. 2022–3–1: 10 seconds by ostwilkens 
+            2. 2023–1–1: 12 seconds by (anonymous user #640116)
+            3. 2022–4–1: 16 seconds by max-sixty
     ''')    
     st.image(SUBMISSION_TIMES_PLOT)
 
