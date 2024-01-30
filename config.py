@@ -13,7 +13,12 @@ MLP_STYLE_PATH = 'assets/.mlpstyle'
 PROGRESS_PLOT = 'assets/plots/my_progress_plot.png'
 RUNTIME_PLOT = 'assets/plots/my_runtime_plot.png'
 PUBLIC_COMPLETION_PLOT = 'assets/plots/completion_plot.png'
-TOP_TEN_PLOT = 'assets/plots/top_ten.png'
+PUBLIC_COMPLETION_PLOT_2 = 'assets/plots/completion_plot_2.png'
+SUBMISSION_TIMES_PLOT = 'assets/plots/submission_times_plot.png'
+USER_INFO_PLOT = 'assets/plots/user_info_plot.png'
+TOP100_ACCUMULATED_PLOT = 'assets/plots/top100_accumulated_plot.png'
+TOP10_ACCUMULATED_PLOT = 'assets/plots/top10_accumulated_plot.png'
+TOP10_ANNUAL_PLOT = 'assets/plots/top10_annual_plot.png'
 
 GRID_TO_LETTER_DICT = Path('assets/grid_letter_dicts/grid_to_letter.json')
 LETTER_TO_GRID_LARGE = Path('assets/grid_letter_dicts/letter_to_grid_large.json')
@@ -23,6 +28,7 @@ LETTER_TO_GRID_SMALL = Path('assets/grid_letter_dicts/letter_to_grid_small.json'
 # Data
 PUZZLE_DATA = 'data/puzzle_db.csv'
 LEADERBOARD_DATA = 'data/leaderboard.csv'
+COMPLETIONS_DATA = 'data/completions.csv'
 EXAMPLE_GRIDS = Path('data/example_grids.json')
 
 

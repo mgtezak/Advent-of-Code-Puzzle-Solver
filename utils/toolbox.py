@@ -56,7 +56,7 @@ def reboot_app() -> None:
     for file in TEMP_STORAGE.iterdir():
         latest_update = datetime.fromtimestamp(file.stat().st_mtime)
 
-        if now - latest_update > timedelta(hours=15):
+        if now - latest_update > timedelta(days=1):
             file.unlink()
     
 

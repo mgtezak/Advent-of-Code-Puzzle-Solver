@@ -1,0 +1,39 @@
+### Part 1 
+
+***Problem:***
+- We navigate through a network (directed graph) from AAA to ZZZ where each node has a left and a right path
+- There is a sequence of left/right instructions (e. g. LLR: left-left-right)
+- If we reach the end of the sequence without passing by ZZZ, the instructions repeat
+- Following the instructions, how many steps does it take to reach ZZZ?
+
+***Approach:***
+- Separate puzzle input into directions and connections
+- Convert directions from `'L'` & `'R'` into `0` & `1` and use `itertools.cycle` to turn them into an infinitely repeating iterator
+- Build a `dict` representing the graph where each dictionary-key represents a starting node and its respective value is a `tuple` of its left/right connections
+- Move along the graph according to the instructions, always updating the current node and the number of steps taken so far
+- If the current node is ZZZ, return the total number of steps taken
+
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- Instead of having just one starting node (AAA), we start at each node that ends in A simultaneously
+- There are also multiple destinations: any node that ends in Z
+- Following the same instructions for each path, how many steps does it take until all paths reach a destination simultaneously?
+
+
+***Preliminary thoughts:***
+- Brute force approach (*walk each path and check at each step if all destinations are reached*) doesn't work in practice because it takes forever
+- Theoretically this could be an extremely hard puzzle to solve, but it becomes very easy if we assume two things about how the puzzle input is structured:
+    - Assumption 1: each path cycles around perfectly (each cycle length is some multiple of the length of the instructions)
+    - Assumption 2: destination nodes are always reached at the very end of a cycle
+
+***Approach:***
+- Record the number of steps it takes for each path to reach its destination (this is its cycle length)
+- Return the least common multiple (`math.lcm`) of all the cycle lengths
+
+___

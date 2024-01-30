@@ -27,9 +27,10 @@ def get_temp_puzzle_input_db() -> dict:
     """Returns temporary puzzle inputs as dictionary."""
 
     path = get_temp_inp_path()
-    if path.exists():
+    try:
         return json.loads(path.read_text())
-    return {}  
+    except:
+        return {}  
 
     
 

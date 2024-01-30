@@ -12,8 +12,8 @@ import pandas as pd
 from datetime import datetime
 
 # Local imports
-from config import TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH, LEADERBOARD_DATA
-from config import PROGRESS_PLOT, RUNTIME_PLOT, PUBLIC_COMPLETION_PLOT, TOP_TEN_PLOT
+from config import (TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH, LEADERBOARD_DATA, PROGRESS_PLOT, 
+                    RUNTIME_PLOT, PUBLIC_COMPLETION_PLOT, TOP10_ANNUAL_PLOT, TOP10_ACCUMULATED_PLOT, TOP100_ACCUMULATED_PLOT)
 from utils.handle_puzzle_data import get_puzzle_db
 
 plt.style.use(MLP_STYLE_PATH)
@@ -250,27 +250,27 @@ def get_annual_leaderboard_data():
 
 
 
-def plot_top_ten(savefig=True):
-    """"""
-    # get data
-    df_cumsum = get_annual_leaderboard_data()[1]
-    sorted_cols = df_cumsum.loc[2023].sort_values().index
-    top_ten = df_cumsum[sorted_cols].iloc[:, -10:]
+# def plot_top_ten(savefig=True):
+#     """"""
+#     # get data
+#     df_cumsum = get_annual_leaderboard_data()[1]
+#     sorted_cols = df_cumsum.loc[2023].sort_values().index
+#     top_ten = df_cumsum[sorted_cols].iloc[:, -10:]
 
-    plt.figure(figsize=(15, 9))
-    colors = ['orange', 'blue', 'green', PRIMARY_COLOR, TEXT_COLOR] * 2 
-    for i, (name, color) in enumerate(zip(top_ten.columns, colors)):
-        linestyle = ':' if i<4 else '-.' if i<7 else '-'
-        plt.plot(top_ten.index, top_ten[name], label=name, linewidth=1+i*(1/3), alpha=0.7, color=color, marker='o', linestyle=linestyle )
-        if i > 6:
-            y_final = top_ten.loc[2023, name]
-            plt.text(2023.05, y_final, f'{y_final:,}', fontsize=8)
+#     plt.figure(figsize=(15, 9))
+#     colors = ['orange', 'blue', 'green', PRIMARY_COLOR, TEXT_COLOR] * 2 
+#     for i, (name, color) in enumerate(zip(top_ten.columns, colors)):
+#         linestyle = ':' if i<4 else '-.' if i<7 else '-'
+#         plt.plot(top_ten.index, top_ten[name], label=name, linewidth=1+i*(1/3), alpha=0.7, color=color, marker='o', linestyle=linestyle )
+#         if i > 6:
+#             y_final = top_ten.loc[2023, name]
+#             plt.text(2023.05, y_final, f'{y_final:,}', fontsize=8)
 
-    handles, labels = plt.gca().get_legend_handles_labels()
-    plt.legend(reversed(handles), reversed(labels), loc='upper left')
-    plt.xlabel('Year')
-    plt.ylabel('Cumulative Points')
-    plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.0f}'))
-    plt.title('Top Ten Cumulative Scores')
-    if savefig:
-        plt.savefig(TOP_TEN_PLOT)
+#     handles, labels = plt.gca().get_legend_handles_labels()
+#     plt.legend(reversed(handles), reversed(labels), loc='upper left')
+#     plt.xlabel('Year')
+#     plt.ylabel('Cumulative Points')
+#     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.0f}'))
+#     plt.title('Top Ten Cumulative Scores')
+#     if savefig:
+#         plt.savefig(TOP_TEN_PLOT)
