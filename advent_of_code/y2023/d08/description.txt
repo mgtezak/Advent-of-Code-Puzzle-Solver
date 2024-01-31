@@ -29,8 +29,8 @@ ___
 ***Preliminary thoughts:***
 - Brute force approach (*walk each path and check at each step if all destinations are reached*) doesn't work in practice because it takes forever
 - Theoretically this could be an extremely hard puzzle to solve, but it becomes very easy if we assume two things about how the puzzle input is structured:
-    - Assumption 1: each path cycles around perfectly (each cycle length is some multiple of the length of the instructions)
-    - Assumption 2: destination nodes are always reached at the very end of a cycle
+    - Assumption 1: each path cycles around perfectly and contains only 1 destination node 
+    - Assumption 2: in each path the destination nodes are always reached at the very end of the cycle
 
 ***Approach:***
 - Record the number of steps it takes for each path to reach its destination (this is its cycle length)
