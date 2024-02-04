@@ -1,15 +1,15 @@
 ### Part 1 
 
 ***Problem:***
-- We get sequences of numbers and for each sequence we need to predict the next number through repeated differencing
-- What is the sum of the predicted next number of each sequence
+- We get sequences of numbers and for each sequence we need to extrapolate the next number through repeated differencing
+- What is the sum of the extrapolated next number of each sequence?
 
 ***Approach:***
 - Differencing a sequence of length $n$ means creating a new sequence of length $n-1$ where each element expresses the difference between each pair of adjacent numbers in the original sequence
 - For each sequence create a `while` loop to difference it as many times as necessary until it consists only of $0$s
-- At each iteration of the loop store the last number of the sequence
+- At each iteration of the differencing-loop store the last number of the current sequence
 - The final number of the original sequence will be the sum of these
-- Return the sum of all of these final numbers
+- Return the sum of the extrapolated final numbers
 
 
 ___
@@ -17,5 +17,14 @@ ___
 
 
 ### Part 2 
+
+***Problem:***
+- Instead of forward we need to extrapolate backward
+- What is the sum of the extrapolated previous number of each sequence?
+
+***Approach:***
+- Again, difference as many times as necessary, but this time store the first number at each iteration
+- From this list of first numbers add up all the numbers with even indices and subtract all the ones with odd indices to get the previous number of the original sequence
+- Return the sum of the extrapolated previous numbers
 
 ___
