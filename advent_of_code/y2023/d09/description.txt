@@ -23,7 +23,7 @@ ___
 - What is the sum of the extrapolated previous number of each sequence?
 
 ***Approach:***
-- Again, difference as many times as necessary, but this time store the first number at each iteration
+- Again, perform differencing on each sequence as many times as necessary, but this time at each iteration store the first number instead of the last
 - From this list of first numbers add up all the numbers with even indices and subtract all the ones with odd indices to get the previous number of the original sequence
 - Return the sum of the extrapolated previous numbers
 
