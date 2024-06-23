@@ -30,7 +30,7 @@ def run():
         grid_provided = st.session_state.get('grid_memory')
 
         if not grid_provided or not grid_provided.strip():
-            st.write('Enter a 2D letter to decode (examples below):')
+            st.write('Enter a 2D letter grid to decode (examples below):')
             st.text_area('Grid input:', key='grid_memory', label_visibility='collapsed')
             st.button('Decode grid')
             for reference, link, grid in grids['examples']:
