@@ -1,0 +1,22 @@
+### Part 1 
+
+***Problem:***
+- We're in a two-dimensional grid where each tile is made up either of empty space (`.`) or a different shaped pipe (`|` and `-` are straight pipes, whereas `L`, `J`, `7` and `F` are 90° curved pipes)
+- We start out at `S` which is layered on top of a pipe tile, although it's not yet clear which type of pipe
+- There is a closed loop of connected pipes starting at `S`
+- How many steps along the loop does it take to get to the point farthest from the starting position?
+
+***Approach:***
+
+___
+
+
+
+### Part 2 
+
+***Problem:***
+- How many tiles are enclosed by the loop?
+
+***Approach:***
+
+___
