@@ -24,14 +24,14 @@ def run():
 
     sub_tabs = OrderedDict()
 
+    runtimes = (puzzle_info['runtime_1'], puzzle_info['runtime_2'])
+    sub_tabs['Get Your Solution'] = (interactive_tab, year, day, runtimes)
+    sub_tabs['View Source Code'] = (source_code_tab, year, day)
+
     if (video := puzzle_info['video_id']):
         sub_tabs['Description & Approach (+Video)'] = (description_tab, description, video)
     elif description:
         sub_tabs['Description & Approach'] = (description_tab, description)
-
-    runtimes = (puzzle_info['runtime_1'], puzzle_info['runtime_2'])
-    sub_tabs['Get Your Solution'] = (interactive_tab, year, day, runtimes)
-    sub_tabs['View Source Code'] = (source_code_tab, year, day)
     
     st.header(puzzle_info['title'])
     st.caption(f'[*(link to the puzzle)*](https://adventofcode.com/{year}/day/{day})')

@@ -87,6 +87,9 @@ def get_puzzle_description(year: int, day: int) -> str | None:
     """Retrieves the content of a given puzzle's description file if it exists."""
 
     path = get_puzzle_dir_path(year, day) / 'description.txt'
+    path_alt = get_puzzle_dir_path(year, day) / 'walkthrough.md'
     if path.exists():
         return path.read_text()
+    if path_alt.exists():
+        return path_alt.read_text()
     return None

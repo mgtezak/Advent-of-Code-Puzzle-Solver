@@ -29,6 +29,9 @@ def display_generated_grids(letters):
 def display_example_inputs(example_inputs: list[tuple[str, int]]) -> None:
     """Displays example inputs."""
 
+    if type(example_inputs[0]) == dict:
+        example_inputs = reformat_example_inputs(example_inputs)
+        
     st.divider()
     st.write(f'Example input{"s" if len(example_inputs) > 1 else ""}:')
     for example_input, compatibility in example_inputs:
@@ -37,6 +40,14 @@ def display_example_inputs(example_inputs: list[tuple[str, int]]) -> None:
             st.caption(f'(Only works with part {compatibility})')
         st.divider()
 
+
+def reformat_example_inputs(example_inputs):
+    old_format = []
+    for d in example_inputs:
+        compatibility = 3 if d['part1'] and d['part2'] else 1 if d['part1'] else 2
+        old_format.append([d['input'], compatibility])
+
+    return old_format
 
 
 def display_video(video_id):
