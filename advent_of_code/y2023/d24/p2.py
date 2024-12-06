@@ -16,4 +16,4 @@ def part2(puzzle_input):
         equations.append(sp.Eq(z + t*dz, h[2] + t*h[5]))
 
     solution = sp.solve(equations, (x, y, z, dx, dy, dz, *time)).pop()
-    return sum(solution[:3])
+    return int(sum(solution[:3]))

@@ -36,21 +36,26 @@ def get_plot_df():
 
 
 
-def plot_my_progress(savefig=True):
+def plot_my_progress(plot_video=True, savefig=True):
     """Scatterplot with a dot for each completed puzzle."""
 
     # Get data
     df = get_plot_df()
 
     # Create figure and plot
-    ax = plt.subplots(figsize=(15, 5))[1]
-    sns.scatterplot(data=df[df.video_id.notna()], x='day', y='year', marker='o', color=TEXT_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='Yes')
-    sns.scatterplot(data=df[df.video_id.isna()], x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=TEXT_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='No')
+    ax = plt.subplots(figsize=(15, 6))[1]
+    if plot_video:
+        sns.scatterplot(data=df[df.video_id.notna()], x='day', y='year', marker='o', color=TEXT_COLOR, edgecolor=PRIMARY_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='Yes')
+        sns.scatterplot(data=df[df.video_id.isna()], x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=TEXT_COLOR, s=140, ax=ax, zorder=2, alpha=0.9, label='No')
+        ax.legend(title='Has video')
+    else:
+        sns.scatterplot(data=df, x='day', y='year', marker='o', color=PRIMARY_COLOR, edgecolor=TEXT_COLOR, s=140, ax=ax, zorder=2, alpha=0.9)
+
     ax.set_title('My Advent of Code Progress')
     ax.set_xlabel('Day')
     ax.set_ylabel('Year')
-    ax.legend(title='Has video')
     ax.invert_yaxis()
+    ax.set_yticks(np.arange(2015, 2025, 1))
     ax.set_xticks(np.arange(1, 26, 1))
     ax.set_xlim(0.6, 25.4)
     
