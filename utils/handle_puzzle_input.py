@@ -92,6 +92,8 @@ def is_example_input(year: int, day: int, puzzle_input: str | None = None) -> bo
 
     example_inputs = get_example_inputs(year, day)
     if example_inputs:
-        return puzzle_input in [item[0] for item in example_inputs]
+        if type(example_inputs[0]) == list:
+            return puzzle_input in [item[0] for item in example_inputs]
+        return puzzle_input in [item['input'] for item in example_inputs]
     else:
         return False
