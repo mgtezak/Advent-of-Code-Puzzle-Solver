@@ -12,7 +12,7 @@ import pandas as pd
 from datetime import datetime
 
 # Local imports
-from config import (TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH, LEADERBOARD_DATA, PROGRESS_PLOT, 
+from config import (MAX_YEAR, TEXT_COLOR, PRIMARY_COLOR, BACKGROUND_COLOR, MLP_STYLE_PATH, LEADERBOARD_DATA, PROGRESS_PLOT, 
                     RUNTIME_PLOT, PUBLIC_COMPLETION_PLOT, TOP10_ANNUAL_PLOT, TOP10_ACCUMULATED_PLOT, TOP100_ACCUMULATED_PLOT)
 from utils.handle_puzzle_data import get_puzzle_db
 
@@ -55,7 +55,7 @@ def plot_my_progress(plot_video=True, savefig=True):
     ax.set_xlabel('Day')
     ax.set_ylabel('Year')
     ax.invert_yaxis()
-    ax.set_yticks(np.arange(2015, 2025, 1))
+    ax.set_yticks(np.arange(2015, MAX_YEAR+1, 1))
     ax.set_xticks(np.arange(1, 26, 1))
     ax.set_xlim(0.6, 25.4)
     
@@ -116,7 +116,7 @@ def plot_current_completion_stats(savefig: bool = True) -> None:
     ax = fig.add_subplot(111, projection='3d')
 
     ax.set_title('Current Completion Statistics', fontsize=9)
-    ax.set_xlim(2023, 2015)
+    ax.set_xlim(MAX_YEAR, 2015)
     ax.set_ylim(25, 1)
     ax.set_zlim(0, 320_000)
     ax.set_yticks(range(1, 26))
@@ -191,7 +191,7 @@ def get_formatted_texts(df):
     min_single_year, min_single_day, min_single_total, min_single_double, min_single_single,  = map(int, df.loc[df.silver.idxmin(), cols])
 
     max_text = f'''
-    Max total completions (2$\cdot$Red + Yellow):
+    Max total completions (2$\\cdot$Red + Yellow):
         AoC {max_total_year} – Day {max_total_day}
         Total: {format(max_total_total, True)}
         Double: {format(max_total_double)} 
@@ -210,7 +210,7 @@ def get_formatted_texts(df):
         Single: {format(max_single_single, True)}'''
 
     min_text = f'''
-    Min total completions (2$\cdot$Red + Yellow):
+    Min total completions (2$\\cdot$Red + Yellow):
         AoC {min_total_year} – Day {min_total_day}
         Total: {format(min_total_total, True)}
         Double: {format(min_total_double)}
