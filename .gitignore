@@ -1,3 +1,6 @@
 __pycache__
 temp_storage/*
 playground.ipynb
+my_input.txt
+.DS_Store
+.venv

@@ -2,6 +2,15 @@
 
 *[link to the project](https://aoc-puzzle-solver.streamlit.app/)*
 
+## Local development
+
+This project now uses [`uv`](https://docs.astral.sh/uv/) and targets Python `3.14`.
+
+```bash
+uv sync
+uv run streamlit run app.py
+```
+
 Hello, I'm [Michael Tezak](https://mgtezak.github.io) and I like solving puzzles on [Advent of Code](https://adventofcode.com) with python.
 If you're not familiar with this christmas-themed coding calendar and you're into sharpening your problem-solving skills 
 using your favorite programming language, I highly recommend you check it out!

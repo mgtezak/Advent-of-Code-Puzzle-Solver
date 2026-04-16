@@ -1,0 +1,20 @@
+[project]
+name = "aoc-puzzle-solver"
+version = "0.1.0"
+description = "A Streamlit app for exploring Advent of Code puzzle solutions and stats."
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "beautifulsoup4",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pytz",
+    "scipy",
+    "seaborn",
+    "streamlit",
+    "sympy",
+]
+
+[tool.uv]
+package = false

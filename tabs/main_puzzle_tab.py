@@ -36,7 +36,7 @@ def run():
     st.header(puzzle_info['title'])
     st.caption(f'[*(link to the puzzle)*](https://adventofcode.com/{year}/day/{day})')
 
-    for tab, (run_tab, *args) in zip(st.tabs(sub_tabs), sub_tabs.values()):
+    for tab, (run_tab, *args) in zip(st.tabs(list(sub_tabs)), sub_tabs.values()):
 
         with tab:
             st.write('')
